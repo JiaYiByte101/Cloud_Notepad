@@ -14,9 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('users/', include('apps.users.urls')),
+    path('notes/', include('apps.notes.urls')),
+    path('storage/', include('apps.storage.urls')),  # 若需要接口暴露
+    path('community/', include('apps.community.urls')),
+    path('', include('apps.notes.urls')),  # 默认首页指向 notes
 ]
+
