@@ -1,0 +1,77 @@
+<!-- templates/notebooks/notebook_form.html -->
+{% extends 'base.html' %}
+
+{% block extra_css %}
+{{ form.media.css }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">{{ title }}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">标题</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.title.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="{{ form.category.id_for_label }}" class="form-label">分类</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.category.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.tags.id_for_label }}" class="form-label">标签</label>
+                        {{ form.tags }}
+                        {% if form.tags.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.tags.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.content.id_for_label }}" class="form-label">内容</label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.content.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form.is_public }}
+                    <label class="form-check-label" for="{{ form.is_public.id_for_label }}">
+                        公开笔记（其他用户可以查看）
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-end">
+            <a href="{% url 'notebooks:list' %}" class="btn btn-outline-secondary me-2">取消</a>
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ form.media.js }}
+{% endblock %}
