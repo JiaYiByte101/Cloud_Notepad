@@ -1,0 +1,103 @@
+<!-- templates/notebooks/notebook_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <!-- 侧边栏 -->
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">筛选</h5>
+            </div>
+            <div class="card-body">
+                <!-- 搜索框 -->
+                <form method="get" action="{% url 'notebooks:list' %}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="搜索笔记..."
+                               value="{{ search_query|default:'' }}">
+                        <button class="btn btn-outline-primary" type="submit">搜索</button>
+                    </div>
+                </form>
+
+                <!-- 分类列表 -->
+                <h6 class="mt-3">分类</h6>
+                <div class="list-group mb-3">
+                    <a href="{% url 'notebooks:list' %}" class="list-group-item list-group-item-action
+                              {% if not selected_category %}active{% endif %}">
+                        全部
+                    </a>
+                    {% for category in categories %}
+                    <a href="{% url 'notebooks:list' %}?category={{ category.id }}"
+                       class="list-group-item list-group-item-action
+                              {% if selected_category == category.id|stringformat:'i' %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+
+                <!-- 标签列表 -->
+                <h6 class="mt-3">标签</h6>
+                <div class="list-group">
+                    <a href="{% url 'notebooks:list' %}" class="list-group-item list-group-item-action
+                              {% if not selected_tag %}active{% endif %}">
+                        全部
+                    </a>
+                    {% for tag in tags %}
+                    <a href="{% url 'notebooks:list' %}?tag={{ tag.id }}"
+                       class="list-group-item list-group-item-action
+                              {% if selected_tag == tag.id|stringformat:'i' %}active{% endif %}">
+                        {{ tag.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 笔记列表 -->
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>我的笔记</h1>
+            <a href="{% url 'notebooks:create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> 新建笔记
+            </a>
+        </div>
+
+        {% if notebooks %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for notebook in notebooks %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ notebook.title }}</h5>
+                            <p class="card-text text-muted">
+                                <small>
+                                    {% if notebook.category %}
+                                    <span class="badge bg-secondary">{{ notebook.category.name }}</span>
+                                    {% endif %}
+                                    {% for tag in notebook.tags.all %}
+                                    <span class="badge bg-info text-dark">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </small>
+                            </p>
+                            <p class="card-text">{{ notebook.content|striptags|truncatewords:20 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{% url 'notebooks:detail' notebook.id %}" class="btn btn-sm btn-outline-primary">查看</a>
+                                    <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-sm btn-outline-secondary">编辑</a>
+                                </div>
+                                <small class="text-muted">{{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                您还没有创建任何笔记。点击"新建笔记"按钮开始使用吧！
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
