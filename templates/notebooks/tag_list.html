@@ -1,0 +1,161 @@
+<!-- templates/notebooks/tag_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>标签管理</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTagModal">
+            <i class="fas fa-plus"></i> 新建标签
+        </button>
+    </div>
+
+    {% if tags %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>笔记数量</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tag in tags %}
+                    <tr>
+                        <td>{{ tag.name }}</td>
+                        <td>{{ tag.notebooks.count }}</td>
+                        <td>{{ tag.created_at|date:"Y-m-d" }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-outline-primary edit-tag"
+                                        data-id="{{ tag.id }}" data-name="{{ tag.name }}">
+                                    编辑
+                                </button>
+                                <button type="button" class="btn btn-outline-danger delete-tag"
+                                        data-id="{{ tag.id }}" data-name="{{ tag.name }}">
+                                    删除
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            您还没有创建任何标签。点击"新建标签"按钮开始创建吧！
+        </div>
+    {% endif %}
+</div>
+
+<!-- 新建标签模态框 -->
+<!-- templates/notebooks/tag_list.html 的剩余部分 -->
+<div class="modal fade" id="newTagModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新建标签</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'notebooks:create_tag' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="tagName" class="form-label">标签名称</label>
+                        <input type="text" class="form-control" id="tagName" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑标签模态框 -->
+<div class="modal fade" id="editTagModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑标签</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'notebooks:edit_tag' %}">
+                {% csrf_token %}
+                <input type="hidden" id="editTagId" name="tag_id">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editTagName" class="form-label">标签名称</label>
+                        <input type="text" class="form-control" id="editTagName" name="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 删除标签确认模态框 -->
+<div class="modal fade" id="deleteTagModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">删除标签</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'notebooks:delete_tag' %}">
+                {% csrf_token %}
+                <input type="hidden" id="deleteTagId" name="tag_id">
+                <div class="modal-body">
+                    <p>您确定要删除标签 "<span id="deleteTagName"></span>" 吗？</p>
+                    <p class="text-danger">该标签将从所有关联的笔记中移除。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-danger">确认删除</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // 编辑标签
+    document.querySelectorAll('.edit-tag').forEach(button => {
+        button.addEventListener('click', function() {
+            const tagId = this.dataset.id;
+            const tagName = this.dataset.name;
+
+            document.getElementById('editTagId').value = tagId;
+            document.getElementById('editTagName').value = tagName;
+
+            const editModal = new bootstrap.Modal(document.getElementById('editTagModal'));
+            editModal.show();
+        });
+    });
+
+    // 删除标签
+    document.querySelectorAll('.delete-tag').forEach(button => {
+        button.addEventListener('click', function() {
+            const tagId = this.dataset.id;
+            const tagName = this.dataset.name;
+
+            document.getElementById('deleteTagId').value = tagId;
+            document.getElementById('deleteTagName').textContent = tagName;
+
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteTagModal'));
+            deleteModal.show();
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}
