@@ -1,0 +1,110 @@
+<!-- templates/sharing/view_shared_note.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="mb-3">
+        <a href="{% url 'sharing:public' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回笔记广场
+        </a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h1 class="card-title h2 mb-0">{{ notebook.title }}</h1>
+            <div>
+                {% if notebook.is_featured %}
+                <span class="badge bg-warning text-dark me-2">
+                    <i class="bi bi-star-fill"></i> 精选
+                </span>
+                {% endif %}
+                <form method="post" action="{% url 'sharing:toggle_like' notebook.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-{% if user_liked %}danger{% else %}outline-danger{% endif %}">
+                        <i class="bi bi-heart{% if user_liked %}-fill{% endif %}"></i>
+                        {% if user_liked %}已点赞{% else %}点赞{% endif %} ({{ like_count }})
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mb-3 text-muted small">
+                <span>
+                    <i class="bi bi-person"></i> {{ notebook.user.username }}
+                </span>
+                <span class="ms-3">
+                    <i class="bi bi-calendar3"></i> {{ notebook.created_at|date:"Y-m-d H:i" }}
+                </span>
+                <!-- templates/sharing/view_shared_note.html 的剩余部分 -->
+                <span class="ms-3">
+                    <i class="bi bi-eye"></i> 阅读量（待实现）
+                </span>
+            </div>
+
+            <!-- 笔记内容 -->
+            <div class="content mb-4">
+                {{ notebook.content|safe }}
+            </div>
+
+            <!-- 标签 -->
+            {% if notebook.tags.all %}
+            <div class="mb-3">
+                {% for tag in notebook.tags.all %}
+                <span class="badge bg-info text-dark">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 评论区 -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="h5 mb-0">评论 ({{ comments.count }})</h3>
+        </div>
+        <div class="card-body">
+            <!-- 发表评论 -->
+            <form method="post" action="{% url 'sharing:view_note' notebook.id %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ comment_form.content }}
+                    {% if comment_form.content.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ comment_form.content.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">发表评论</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <!-- 评论列表 -->
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                        <img src="{{ comment.user.profile.avatar.url }}" alt="{{ comment.user.username }}"
+                             class="rounded-circle" width="50" height="50">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">{{ comment.user.username }}</h6>
+                            <small class="text-muted">{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+                        </div>
+                        <p class="mb-1">{{ comment.content }}</p>
+                    </div>
+                </div>
+                {% if not forloop.last %}<hr>{% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="text-center my-4 text-muted">
+                    <p>暂无评论，成为第一个发表评论的人吧！</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

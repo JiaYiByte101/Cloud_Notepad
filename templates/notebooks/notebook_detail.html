@@ -1,0 +1,77 @@
+<!-- templates/notebooks/notebook_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{% url 'notebooks:list' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> 返回列表
+            </a>
+        </div>
+        <div class="col-auto">
+            <div class="btn-group">
+                <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i> 编辑
+                </a>
+                <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> 删除
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{ notebook.title }}</h1>
+            <div class="text-muted">
+                <small>
+                    创建于 {{ notebook.created_at|date:"Y-m-d H:i" }} |
+                    最后更新 {{ notebook.updated_at|date:"Y-m-d H:i" }}
+                </small>
+            </div>
+            <div class="mt-2">
+                {% if notebook.category %}
+                <span class="badge bg-secondary">{{ notebook.category.name }}</span>
+                {% endif %}
+                {% for tag in notebook.tags.all %}
+                <span class="badge bg-info text-dark">{{ tag.name }}</span>
+                {% endfor %}
+                {% if notebook.is_public %}
+                <span class="badge bg-success">公开</span>
+                {% else %}
+                <span class="badge bg-secondary">私有</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="content">
+                {{ notebook.content|safe }}
+            </div>
+        </div>
+    </div>
+
+    {% if notebook.attachments.all %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">附件</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for attachment in notebook.attachments.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-file"></i>
+                        <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file_name }}</a>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ attachment.file_size|filesizeformat }}
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

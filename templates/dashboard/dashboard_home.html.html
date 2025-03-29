@@ -1,0 +1,137 @@
+<!-- templates/dashboard/dashboard_home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">管理员仪表板</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{% url 'dashboard:home' %}" class="list-group-item list-group-item-action active">
+                    <i class="bi bi-speedometer2"></i> 仪表板
+                </a>
+                <a href="{% url 'dashboard:manage_public_notes' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-journal-text"></i> 管理公开笔记
+                </a>
+                <a href="{% url 'dashboard:manage_users' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-people"></i> 管理用户
+                </a>
+                <a href="{% url 'admin:index' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-gear"></i> Django 管理站点
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- 概览统计 -->
+            <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
+                <div class="col">
+                    <div class="card text-white bg-primary h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">总用户数</h5>
+                            <p class="card-text display-6">{{ total_users }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-success h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">笔记总数</h5>
+                            <p class="card-text display-6">{{ total_notebooks }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">公开笔记</h5>
+                            <p class="card-text display-6">{{ public_notebooks }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">精选笔记</h5>
+                            <p class="card-text display-6">{{ featured_notebooks }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- 最近用户 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">最近加入的用户</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                {% for user in recent_users %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">{{ user.username }}</h6>
+                                        <small class="text-muted">{{ user.email }}</small>
+                                    </div>
+                                    <small class="text-muted">{{ user.date_joined|date:"Y-m-d" }}</small>
+                                </div>
+                                {% empty %}
+                                <div class="list-group-item">暂无用户</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 热门笔记 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">热门笔记</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                {% for notebook in popular_notebooks %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0">{{ notebook.title }}</h6>
+                                        <small class="text-muted">作者: {{ notebook.user.username }}</small>
+                                    </div>
+                                    <span class="badge bg-danger rounded-pill">{{ notebook.like_count }} 赞</span>
+                                </div>
+                                {% empty %}
+                                <div class="list-group-item">暂无热门笔记</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最新公开笔记 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">最新公开笔记</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for notebook in latest_public_notebooks %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">{{ notebook.title }}</h6>
+                                <small class="text-muted">作者: {{ notebook.user.username }}</small>
+                            </div>
+                            <small class="text-muted">{{ notebook.created_at|date:"Y-m-d H:i" }}</small>
+                        </div>
+                        {% empty %}
+                        <div class="list-group-item">暂无公开笔记</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
