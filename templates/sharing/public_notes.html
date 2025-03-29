@@ -1,0 +1,66 @@
+<!-- templates/sharing/public_notes.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">公共笔记广场</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" action="{% url 'sharing:public' %}" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="搜索公开笔记..."
+                       value="{{ search_query|default:'' }}">
+                <button class="btn btn-outline-primary" type="submit">搜索</button>
+            </form>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <div class="btn-group">
+                <a href="{% url 'sharing:public' %}?sort=recent{% if search_query %}&search={{ search_query }}{% endif %}"
+                   class="btn btn-outline-primary {% if sort_by == 'recent' %}active{% endif %}">最新</a>
+                <a href="{% url 'sharing:public' %}?sort=popular{% if search_query %}&search={{ search_query }}{% endif %}"
+                   class="btn btn-outline-primary {% if sort_by == 'popular' %}active{% endif %}">热门</a>
+                <a href="{% url 'sharing:public' %}?sort=featured{% if search_query %}&search={{ search_query }}{% endif %}"
+                   class="btn btn-outline-primary {% if sort_by == 'featured' %}active{% endif %}">精选</a>
+            </div>
+        </div>
+    </div>
+
+    {% if notebooks %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for notebook in notebooks %}
+            <div class="col">
+                <div class="card h-100">
+                    {% if notebook.is_featured %}
+                    <div class="card-header bg-warning text-dark">
+                        <i class="bi bi-star-fill"></i> 精选笔记
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ notebook.title }}</h5>
+                        <div class="text-muted small mb-2">
+                            <span>
+                                <i class="bi bi-person"></i> {{ notebook.user.username }}
+                            </span>
+                            <span class="ms-2">
+                                <i class="bi bi-calendar3"></i> {{ notebook.created_at|date:"Y-m-d" }}
+                            </span>
+                            <span class="ms-2">
+                                <i class="bi bi-heart-fill text-danger"></i> {{ notebook.likes.count }}
+                            </span>
+                        </div>
+                        <p class="card-text">{{ notebook.content|striptags|truncatewords:20 }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'sharing:view_note' notebook.id %}" class="btn btn-sm btn-outline-primary">查看详情</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            暂时没有公开的笔记。您可以将自己的笔记设为公开，与他人分享！
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

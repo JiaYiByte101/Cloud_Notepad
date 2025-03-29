@@ -1,0 +1,27 @@
+<!-- templates/accounts/edit_profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2>编辑个人资料</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">个人信息</legend>
+                        {{ u_form.as_p }}
+                        {{ p_form.as_p }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">更新</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
