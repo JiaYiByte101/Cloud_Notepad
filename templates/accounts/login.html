@@ -1,27 +1,43 @@
 <!-- templates/accounts/login.html -->
 {% extends 'base.html' %}
+{% load form_filters %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-header">
-                <h2>登录</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0 mb-5">
+            <div class="card-header text-center py-4">
+                <i class="bi bi-box-arrow-in-right text-primary fs-1 mb-3"></i>
+                <h2 class="fw-bold">欢迎回来</h2>
+                <p class="text-muted">登录您的云记事本账户</p>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4 p-md-5">
                 <form method="POST">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        {{ form.as_p }}
+                        {% for field in form %}
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field|addclass:'form-control' }}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
                     </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">登录</button>
+                    <div class="form-group mt-4">
+                        <button class="btn btn-primary w-100 py-2" type="submit">登录</button>
                     </div>
                 </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                        没有账户？ <a class="ml-2" href="{% url 'accounts:register' %}">注册</a>
-                    </small>
+                <div class="text-center mt-4">
+                    <span class="text-muted">
+                        没有账户？ <a class="text-primary fw-bold" href="{% url 'accounts:register' %}">立即注册</a>
+                    </span>
                 </div>
             </div>
         </div>
