@@ -1,27 +1,76 @@
 <!-- templates/accounts/edit_profile.html -->
 {% extends 'base.html' %}
+{% load form_filters %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <div class="card">
-            <div class="card-header">
-                <h2>编辑个人资料</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 mb-5">
+            <div class="card-header text-center py-4">
+                <i class="bi bi-person-gear text-primary fs-1 mb-3"></i>
+                <h2 class="fw-bold">编辑个人资料</h2>
+                <p class="text-muted">更新您的个人信息和头像</p>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">个人信息</legend>
-                        {{ u_form.as_p }}
-                        {{ p_form.as_p }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">更新</button>
+                    <div class="row g-4">
+                        <div class="col-12 text-center">
+                            <div class="position-relative d-inline-block">
+                                <img id="avatar-preview" class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="Profile Picture">
+                                <div class="position-absolute bottom-0 end-0">
+                                    <label for="{{ p_form.avatar.id_for_label }}" class="btn btn-sm btn-primary rounded-circle" title="更换头像">
+                                        <i class="bi bi-camera-fill"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            {{ p_form.avatar|addclass:'d-none' }}
+                        </div>
+                        
+                        <div class="col-12">
+                            <h5 class="mb-3">基本信息</h5>
+                            {% for field in u_form %}
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field|addclass:'form-control' }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary py-2" type="submit">
+                                    <i class="bi bi-check-lg me-1"></i>保存更改
+                                </button>
+                                <a class="btn btn-outline-secondary py-2" href="{% url 'accounts:profile' %}">
+                                    <i class="bi bi-x-lg me-1"></i>取消
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('{{ p_form.avatar.id_for_label }}').addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('avatar-preview').src = e.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+</script>
 {% endblock %}
