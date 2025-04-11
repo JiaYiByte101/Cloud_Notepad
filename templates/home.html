@@ -2,49 +2,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold text-primary">云记事本</h1>
+<div class="home-hero px-4 py-5 my-5 text-center position-relative overflow-hidden">
+    <div class="hero-bg-animation"></div>
+    <h1 class="display-4 fw-bold text-primary hero-title mb-4">云记事本</h1>
     <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">随时随地记录想法，支持图文混排、云端同步和笔记分享</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <p class="lead mb-4 hero-subtitle">随时随地记录想法，支持图文混排、云端同步和笔记分享</p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mt-5">
             {% if user.is_authenticated %}
-                <a href="{% url 'notebooks:list' %}" class="btn btn-primary btn-lg px-4 gap-3">我的笔记</a>
-                <a href="{% url 'notebooks:create' %}" class="btn btn-outline-primary btn-lg px-4">创建笔记</a>
+                <a href="{% url 'notebooks:list' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg"><i class="bi bi-journal-richtext me-2"></i>我的笔记</a>
+                <a href="{% url 'notebooks:create' %}" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill"><i class="bi bi-plus-circle me-2"></i>创建笔记</a>
             {% else %}
-                <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg px-4 gap-3">立即注册</a>
-                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-lg px-4">登录</a>
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg"><i class="bi bi-person-plus me-2"></i>立即注册</a>
+                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill"><i class="bi bi-box-arrow-in-right me-2"></i>登录</a>
             {% endif %}
         </div>
     </div>
 </div>
 
 <div class="container py-5">
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        <div class="col d-flex align-items-start">
-            <div class="bg-light text-dark p-3 rounded-3 d-inline-flex">
-                <i class="bi bi-pencil-square fs-2"></i>
-            </div>
-            <div class="ms-3">
-                <h3 class="fw-bold mb-0 fs-4">强大编辑功能</h3>
-                <p>支持富文本编辑，轻松创建格式丰富的笔记，插入图片、表格等多媒体内容</p>
-            </div>
-        </div>
-        <div class="col d-flex align-items-start">
-            <div class="bg-light text-dark p-3 rounded-3 d-inline-flex">
-                <i class="bi bi-cloud-check fs-2"></i>
-            </div>
-            <div class="ms-3">
-                <h3 class="fw-bold mb-0 fs-4">云端安全存储</h3>
-                <p>笔记自动保存至云端，多设备同步访问，重要内容不丢失</p>
+    <h2 class="text-center mb-5 fw-bold">为什么选择我们？</h2>
+    <div class="row g-4 py-3 row-cols-1 row-cols-md-3">
+        <div class="col">
+            <div class="card h-100 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon-wrapper mb-4">
+                        <i class="bi bi-pencil-square fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3 fs-4">强大编辑功能</h3>
+                    <p class="text-muted">支持富文本编辑，轻松创建格式丰富的笔记，插入图片、表格等多媒体内容</p>
+                </div>
             </div>
         </div>
-        <div class="col d-flex align-items-start">
-            <div class="bg-light text-dark p-3 rounded-3 d-inline-flex">
-                <i class="bi bi-share fs-2"></i>
+        <div class="col">
+            <div class="card h-100 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon-wrapper mb-4">
+                        <i class="bi bi-cloud-check fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3 fs-4">云端安全存储</h3>
+                    <p class="text-muted">笔记自动保存至云端，多设备同步访问，重要内容不丢失</p>
+                </div>
             </div>
-            <div class="ms-3">
-                <h3 class="fw-bold mb-0 fs-4">便捷分享互动</h3>
-                <p>一键分享笔记，探索他人优质内容，支持多人协作编辑</p>
+        </div>
+        <div class="col">
+            <div class="card h-100 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon-wrapper mb-4">
+                        <i class="bi bi-share fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3 fs-4">便捷分享互动</h3>
+                    <p class="text-muted">一键分享笔记，探索他人优质内容，支持多人协作编辑</p>
+                </div>
             </div>
         </div>
     </div>
