@@ -1,30 +1,102 @@
 <!-- templates/accounts/register.html -->
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card">
-            <div class="card-header">
-                <h2>注册账户</h2>
-            </div>
-            <div class="card-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        {{ form.as_p }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">注册</button>
-                    </div>
-                </form>
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                        已有账户？ <a class="ml-2" href="{% url 'accounts:login' %}">登录</a>
-                    </small>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">注册</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">用户名</label>
+                            <input type="text" name="username" id="id_username" class="form-control" required>
+                            <ul class="list-unstyled mb-0">
+                                <li><i class="bi bi-check-circle-fill text-success"></i> 长度为150字符以内</li>
+                                <li><i class="bi bi-check-circle-fill text-success"></i> 只能包含字母、数字、特殊字符“@”、“.”、“-”和“_”</li>
+                            </ul>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.username.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">邮箱</label>
+                            <input type="email" name="email" id="id_email" class="form-control" required>
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">密码</label>
+                            <input type="password" name="password1" id="id_password1" class="form-control" required>
+                            <div class="form-text">
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> 密码长度至少8位</li>
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> 不能是一个常见密码</li>
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> 必须包含至少一个字母</li>
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> 不能与其他人密码相似</li>
+                                </ul>
+                            </div>
+                            {% if form.password1.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.password1.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password2" class="form-label">确认密码</label>
+                            <input type="password" name="password2" id="id_password2" class="form-control" required>
+                            {% if form.password2.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.password2.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">注册</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="mb-0">已有账号？ <a href="{% url 'accounts:login' %}">立即登录</a></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card {
+        border-radius: 10px;
+    }
+    .form-control {
+        border-radius: 5px;
+    }
+    .btn {
+        border-radius: 5px;
+    }
+    .form-text ul {
+        margin-top: 0.5rem;
+    }
+    .form-text li {
+        margin-bottom: 0.25rem;
+    }
+    .form-text i {
+        margin-right: 0.5rem;
+    }
+</style>
 {% endblock %}
