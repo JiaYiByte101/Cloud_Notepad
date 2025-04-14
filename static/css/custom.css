@@ -521,9 +521,9 @@ body {
     color: var(--primary-color);
 }
 
-/* 移除重复的样式定义 */
-    background-color: #fff;
-}
+/*!* 移除重复的样式定义 *!*/
+/*    background-color: #fff;*/
+/*}*/
 
 .form-label {
     font-weight: 600;
