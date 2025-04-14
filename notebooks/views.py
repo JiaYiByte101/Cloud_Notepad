@@ -69,7 +69,7 @@ def notebook_create(request):
             messages.success(request, '笔记创建成功！')
             return redirect('notebooks:detail', notebook_id=notebook.id)
     else:
-        form = NotebookForm(user=request.user)
+        form = NotebookForm(user=request.user)  # 确保传递用户参数
 
     return render(request, 'notebooks/notebook_form.html', {
         'form': form,
@@ -129,14 +129,26 @@ def tag_list(request):
 def create_category(request):
     """创建新分类"""
     if request.method == 'POST':
-        form = CategoryForm(request.POST, user=request.user)
-        if form.is_valid():
-            category = form.save(commit=False)
-            category.user = request.user
-            category.save()
-            messages.success(request, '分类创建成功！')
+        name = request.POST.get('name')
+        parent_id = request.POST.get('parent')
+
+        if name:
+            try:
+                parent = None
+                if parent_id:
+                    parent = get_object_or_404(Category, id=parent_id, user=request.user)
+
+                Category.objects.create(
+                    name=name,
+                    user=request.user,
+                    parent=parent
+                )
+                messages.success(request, '分类创建成功！')
+            except Exception as e:
+                messages.error(request, f'分类创建失败：{str(e)}')
         else:
-            messages.error(request, '分类创建失败，请检查输入。')
+            messages.error(request, '分类名称不能为空。')
+
     return redirect('notebooks:categories')
 
 
@@ -163,9 +175,7 @@ def delete_category(request):
         category_id = request.POST.get('category_id')
         category = get_object_or_404(Category, id=category_id, user=request.user)
 
-        # 检查是否有笔记使用此分类
         if Notebook.objects.filter(category=category).exists():
-            # 将笔记的分类设为空
             Notebook.objects.filter(category=category).update(category=None)
 
         category.delete()
@@ -182,7 +192,6 @@ def create_tag(request):
             tag = form.save(commit=False)
             tag.user = request.user
 
-            # 检查是否存在同名标签
             if Tag.objects.filter(name=tag.name, user=request.user).exists():
                 messages.error(request, f'标签 "{tag.name}" 已存在！')
             else:
@@ -202,7 +211,6 @@ def edit_tag(request):
 
         form = TagForm(request.POST, instance=tag)
         if form.is_valid():
-            # 检查新名称是否已存在
             new_name = form.cleaned_data['name']
             if new_name != tag.name and Tag.objects.filter(name=new_name, user=request.user).exists():
                 messages.error(request, f'标签 "{new_name}" 已存在！')
