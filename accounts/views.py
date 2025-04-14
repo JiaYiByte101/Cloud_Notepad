@@ -1,14 +1,49 @@
 # accounts/views.py
 
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.http import JsonResponse, HttpResponse
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
+from .utils import verify_captcha, generate_captcha, generate_captcha_image
+import base64
 
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        captcha = request.POST.get('captcha', '')
+        stored_captcha = request.session.get('captcha', '')
+
+        if not verify_captcha(captcha, stored_captcha):
+            messages.error(request, '验证码错误，请重新输入')
+        elif form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'欢迎回来，{username}！')
+                return redirect('home')
+            else:
+                messages.error(request, '用户名或密码错误')
+    else:
+        form = AuthenticationForm()
+
+    # 生成新的验证码
+    captcha = generate_captcha()
+    request.session['captcha'] = captcha
+    captcha_image = generate_captcha_image(captcha)
+
+    return render(request, 'accounts/login.html', {
+        'form': form,
+        'captcha': captcha,
+        'captcha_image': captcha_image
+    })
 
 def register(request):
     if request.method == 'POST':
@@ -69,3 +104,11 @@ def logout_confirm(request):
         logout(request)
         return redirect('home')
     return render(request, 'accounts/logout.html')
+
+def refresh_captcha(request):
+    captcha = generate_captcha()
+    request.session['captcha'] = captcha
+    captcha_image = generate_captcha_image(captcha)
+    # 从base64字符串中提取实际的图片数据
+    image_data = base64.b64decode(captcha_image.split(',')[1])
+    return HttpResponse(image_data, content_type='image/png')
