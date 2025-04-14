@@ -9,17 +9,17 @@ import os
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    avatar = models.ImageField(default='user_dark.png', upload_to='profile_pics')
 
     def __str__(self):
         return f'{self.user.username} 的个人资料'
     
     def save(self, *args, **kwargs):
         # 如果是默认头像且文件不存在，从静态目录复制
-        if self.avatar.name == 'default.jpg' and not os.path.exists(self.avatar.path):
+        if self.avatar.name == 'user_dark.png' and not os.path.exists(self.avatar.path):
             from django.conf import settings
             import shutil
-            static_default = os.path.join(settings.STATIC_ROOT, 'img', 'default.jpg')
+            static_default = os.path.join(settings.STATIC_ROOT, 'img', 'user_dark.png')
             if os.path.exists(static_default):
                 # 确保media目录存在
                 media_dir = os.path.dirname(self.avatar.path)
@@ -41,7 +41,7 @@ class Profile(models.Model):
         except Exception as e:
             print(f"处理头像时出错: {str(e)}")
             # 如果处理失败，设置为默认头像
-            self.avatar = 'default.jpg'
+            self.avatar = 'user_dark.png'
             super().save(*args, **kwargs)
 
 
