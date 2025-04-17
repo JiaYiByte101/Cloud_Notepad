@@ -53,8 +53,9 @@
                         </div>
                     {% else %}
                         <div class="text-center py-5">
-                            <img src="{% static 'img/empty-chat.svg' %}" alt="暂无聊天" 
-                                 class="img-fluid mb-3" style="max-height: 200px;">
+                            <div class="empty-state-icon bg-light rounded-circle mx-auto mb-4">
+                                <i class="bi bi-chat-text text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
                             <h4 class="text-muted mb-3">暂无聊天记录</h4>
                             <p class="text-muted mb-4">选择一位好友开始聊天吧！</p>
                             <a href="{% url 'friends:home' %}" class="btn btn-primary rounded-pill">
@@ -67,4 +68,15 @@
         </div>
     </div>
 </div>
+
+<style>
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+</style>
 {% endblock %} 
