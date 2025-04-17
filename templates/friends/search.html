@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}查找好友 - 云记事本{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-search me-2"></i>查找好友</h5>
+                        <a href="{% url 'friends:home' %}" class="btn btn-light btn-sm rounded-pill">
+                            <i class="bi bi-arrow-left me-1"></i>返回好友列表
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" class="mb-4">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            {{ form.query }}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search me-1"></i>搜索
+                            </button>
+                        </div>
+                        <small class="form-text text-muted">您可以通过用户名或邮箱查找用户</small>
+                    </form>
+                    
+                    <div class="alert alert-info rounded-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-info-circle-fill fs-4"></i>
+                            </div>
+                            <div>
+                                <h5>如何添加好友？</h5>
+                                <ol class="mb-0">
+                                    <li>搜索您想添加的好友的用户名或邮箱</li>
+                                    <li>在搜索结果中找到该用户，点击"发送好友请求"</li>
+                                    <li>等待对方接受您的好友请求</li>
+                                    <li>请求被接受后，您就可以开始聊天了</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
