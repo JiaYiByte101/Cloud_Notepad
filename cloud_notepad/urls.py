@@ -12,10 +12,10 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('accounts/', include('accounts.urls')),
     path('notebooks/', include('notebooks.urls')),
-    path('editor/', include('editor.urls')),
     path('storage/', include('storage.urls')),
     path('sharing/', include('sharing.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('friends/', include('friends.urls')),
 ]
 
 # 添加媒体文件URL配置（仅在开发环境中）
