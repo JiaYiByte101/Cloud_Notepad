@@ -28,6 +28,9 @@ class NotebookForm(forms.ModelForm):
             self.fields['category'].queryset = Category.objects.filter(user=user)
             self.fields['tags'].queryset = Tag.objects.filter(user=user)
 
+            self.fields['category'].widget.attrs.update({'class': 'form-select'})
+            self.fields['tags'].widget.attrs.update({'class': 'form-select'})
+
 
 class CategoryForm(forms.ModelForm):
     """分类表单"""

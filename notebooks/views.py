@@ -6,7 +6,18 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Notebook, Category, Tag
 from .forms import NotebookForm, CategoryForm, TagForm
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+import json
+import os
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import datetime
+from django.template.loader import render_to_string
+from django.utils.text import slugify
+from io import BytesIO
+from xhtml2pdf import pisa
+from html import unescape
+import re
 
 
 @login_required
@@ -69,7 +80,7 @@ def notebook_create(request):
             messages.success(request, '笔记创建成功！')
             return redirect('notebooks:detail', notebook_id=notebook.id)
     else:
-        form = NotebookForm(user=request.user)
+        form = NotebookForm(user=request.user)  # 确保传递用户参数
 
     return render(request, 'notebooks/notebook_form.html', {
         'form': form,
@@ -129,14 +140,26 @@ def tag_list(request):
 def create_category(request):
     """创建新分类"""
     if request.method == 'POST':
-        form = CategoryForm(request.POST, user=request.user)
-        if form.is_valid():
-            category = form.save(commit=False)
-            category.user = request.user
-            category.save()
-            messages.success(request, '分类创建成功！')
+        name = request.POST.get('name')
+        parent_id = request.POST.get('parent')
+
+        if name:
+            try:
+                parent = None
+                if parent_id:
+                    parent = get_object_or_404(Category, id=parent_id, user=request.user)
+
+                Category.objects.create(
+                    name=name,
+                    user=request.user,
+                    parent=parent
+                )
+                messages.success(request, '分类创建成功！')
+            except Exception as e:
+                messages.error(request, f'分类创建失败：{str(e)}')
         else:
-            messages.error(request, '分类创建失败，请检查输入。')
+            messages.error(request, '分类名称不能为空。')
+
     return redirect('notebooks:categories')
 
 
@@ -163,9 +186,7 @@ def delete_category(request):
         category_id = request.POST.get('category_id')
         category = get_object_or_404(Category, id=category_id, user=request.user)
 
-        # 检查是否有笔记使用此分类
         if Notebook.objects.filter(category=category).exists():
-            # 将笔记的分类设为空
             Notebook.objects.filter(category=category).update(category=None)
 
         category.delete()
@@ -182,7 +203,6 @@ def create_tag(request):
             tag = form.save(commit=False)
             tag.user = request.user
 
-            # 检查是否存在同名标签
             if Tag.objects.filter(name=tag.name, user=request.user).exists():
                 messages.error(request, f'标签 "{tag.name}" 已存在！')
             else:
@@ -202,7 +222,6 @@ def edit_tag(request):
 
         form = TagForm(request.POST, instance=tag)
         if form.is_valid():
-            # 检查新名称是否已存在
             new_name = form.cleaned_data['name']
             if new_name != tag.name and Tag.objects.filter(name=new_name, user=request.user).exists():
                 messages.error(request, f'标签 "{new_name}" 已存在！')
@@ -224,4 +243,92 @@ def delete_tag(request):
         tag.delete()
         messages.success(request, '标签已删除！')
     return redirect('notebooks:tags')
+
+
+@login_required
+@csrf_exempt
+def upload_file(request):
+    """处理TinyMCE编辑器中的文件上传（图片和视频）"""
+    if request.method == 'POST':
+        file_obj = request.FILES.get('file')
+        if file_obj:
+            # 创建存储目录
+            today = datetime.datetime.now().strftime('%Y%m%d')
+            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', request.user.username, today)
+            os.makedirs(upload_dir, exist_ok=True)
+            
+            # 保存文件
+            file_path = os.path.join(upload_dir, file_obj.name)
+            with open(file_path, 'wb+') as destination:
+                for chunk in file_obj.chunks():
+                    destination.write(chunk)
+                    
+            # 生成URL
+            relative_path = os.path.join('uploads', request.user.username, today, file_obj.name)
+            file_url = settings.MEDIA_URL + relative_path
+            
+            # 返回上传成功的响应
+            return JsonResponse({
+                'location': file_url
+            })
+            
+    # 上传失败
+    return JsonResponse({'error': '文件上传失败'}, status=400)
+
+
+@login_required
+def notebook_download_pdf(request, notebook_id):
+    """下载笔记为PDF格式"""
+    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    
+    # 生成HTML内容
+    html_string = render_to_string('notebooks/notebook_pdf_template.html', {
+        'notebook': notebook,
+        'request': request
+    })
+    
+    # 创建HTTP响应
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{slugify(notebook.title)}.pdf"'
+    
+    # 将CSS链接转换为绝对路径，确保在PDF中能正确加载样式
+    base_url = request.build_absolute_uri('/')[:-1]  # 移除末尾的斜杠
+    
+    # 创建PDF
+    buffer = BytesIO()
+    pisa_status = pisa.CreatePDF(
+        html_string,
+        dest=buffer,
+        encoding='utf-8',
+        link_callback=lambda uri, rel: os.path.join(base_url, uri) if uri.startswith('/') else uri
+    )
+    
+    if pisa_status.err:
+        return HttpResponse('PDF生成时出现错误', status=500)
+    
+    # 获取PDF内容
+    pdf = buffer.getvalue()
+    buffer.close()
+    
+    # 写入响应
+    response.write(pdf)
+    return response
+
+
+@login_required
+def notebook_download_html(request, notebook_id):
+    """下载笔记为HTML格式"""
+    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    
+    # 生成HTML内容
+    html_string = render_to_string('notebooks/notebook_html_template.html', {
+        'notebook': notebook
+    })
+    
+    # 创建HTTP响应
+    response = HttpResponse(content_type='text/html')
+    response['Content-Disposition'] = f'attachment; filename="{slugify(notebook.title)}.html"'
+    response.write(html_string)
+    
+    return response
 

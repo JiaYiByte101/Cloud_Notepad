@@ -14,6 +14,23 @@
                 <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-outline-primary">
                     <i class="fas fa-edit"></i> 编辑
                 </a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-download"></i> 下载
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'notebooks:download_pdf' notebook.id %}">
+                                <i class="far fa-file-pdf me-2"></i> PDF格式
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}">
+                                <i class="far fa-file-code me-2"></i> HTML格式
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-outline-danger">
                     <i class="fas fa-trash"></i> 删除
                 </a>
