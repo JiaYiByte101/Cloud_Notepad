@@ -23,6 +23,7 @@
 /* 基础样式 */
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
@@ -30,8 +31,14 @@ body {
     font-family: var(--font-family);
     transition: background-color var(--transition-speed) ease;
     overflow-x: hidden;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 ::selection {
@@ -183,6 +190,8 @@ body {
 .footer {
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.02);
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .bg-gradient-light {

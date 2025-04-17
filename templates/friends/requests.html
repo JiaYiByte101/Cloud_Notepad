@@ -51,8 +51,9 @@
                         </div>
                     {% else %}
                         <div class="text-center py-5">
-                            <img src="{% static 'img/empty-list.svg' %}" alt="暂无请求" 
-                                 class="img-fluid mb-3" style="max-height: 200px;">
+                            <div class="empty-state-icon bg-light rounded-circle mx-auto mb-4">
+                                <i class="bi bi-people text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
                             <h4 class="text-muted mb-3">暂无好友请求</h4>
                             <p class="text-muted mb-4">当其他用户向您发送好友请求时，将会显示在这里</p>
                             <a href="{% url 'friends:search_users' %}" class="btn btn-primary rounded-pill">
@@ -65,4 +66,15 @@
         </div>
     </div>
 </div>
+
+<style>
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+</style>
 {% endblock %} 
