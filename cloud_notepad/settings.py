@@ -30,10 +30,10 @@ INSTALLED_APPS = [
     # 项目应用
     'accounts',
     'notebooks',
-    'editor',
     'storage',
     'sharing',
     'dashboard',
+    'friends',  # 新添加的好友应用
 ]
 
 MIDDLEWARE = [
@@ -77,7 +77,7 @@ TINYMCE_DEFAULT_CONFIG = {
         table code lists fullscreen insertdatetime nonbreaking
         contextmenu directionality searchreplace wordcount visualblocks
         visualchars code fullscreen autolink lists charmap print hr
-        anchor pagebreak
+        anchor pagebreak imagetools
     ''',
     'toolbar1': '''
         fullscreen preview bold italic underline | fontselect,
@@ -92,6 +92,12 @@ TINYMCE_DEFAULT_CONFIG = {
     'contextmenu': 'formats | link image',
     'menubar': True,
     'statusbar': True,
+    'image_advtab': True,
+    'images_upload_url': '/notebooks/upload/',
+    'automatic_uploads': True,
+    'file_picker_types': 'image media',
+    'relative_urls': False,
+    'remove_script_host': False,
 }
 
 WSGI_APPLICATION = 'cloud_notepad.wsgi.application'
