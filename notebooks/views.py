@@ -6,7 +6,18 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Notebook, Category, Tag
 from .forms import NotebookForm, CategoryForm, TagForm
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+import json
+import os
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import datetime
+from django.template.loader import render_to_string
+from django.utils.text import slugify
+from io import BytesIO
+from xhtml2pdf import pisa
+from html import unescape
+import re
 
 
 @login_required
@@ -232,4 +243,92 @@ def delete_tag(request):
         tag.delete()
         messages.success(request, '标签已删除！')
     return redirect('notebooks:tags')
+
+
+@login_required
+@csrf_exempt
+def upload_file(request):
+    """处理TinyMCE编辑器中的文件上传（图片和视频）"""
+    if request.method == 'POST':
+        file_obj = request.FILES.get('file')
+        if file_obj:
+            # 创建存储目录
+            today = datetime.datetime.now().strftime('%Y%m%d')
+            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', request.user.username, today)
+            os.makedirs(upload_dir, exist_ok=True)
+            
+            # 保存文件
+            file_path = os.path.join(upload_dir, file_obj.name)
+            with open(file_path, 'wb+') as destination:
+                for chunk in file_obj.chunks():
+                    destination.write(chunk)
+                    
+            # 生成URL
+            relative_path = os.path.join('uploads', request.user.username, today, file_obj.name)
+            file_url = settings.MEDIA_URL + relative_path
+            
+            # 返回上传成功的响应
+            return JsonResponse({
+                'location': file_url
+            })
+            
+    # 上传失败
+    return JsonResponse({'error': '文件上传失败'}, status=400)
+
+
+@login_required
+def notebook_download_pdf(request, notebook_id):
+    """下载笔记为PDF格式"""
+    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    
+    # 生成HTML内容
+    html_string = render_to_string('notebooks/notebook_pdf_template.html', {
+        'notebook': notebook,
+        'request': request
+    })
+    
+    # 创建HTTP响应
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{slugify(notebook.title)}.pdf"'
+    
+    # 将CSS链接转换为绝对路径，确保在PDF中能正确加载样式
+    base_url = request.build_absolute_uri('/')[:-1]  # 移除末尾的斜杠
+    
+    # 创建PDF
+    buffer = BytesIO()
+    pisa_status = pisa.CreatePDF(
+        html_string,
+        dest=buffer,
+        encoding='utf-8',
+        link_callback=lambda uri, rel: os.path.join(base_url, uri) if uri.startswith('/') else uri
+    )
+    
+    if pisa_status.err:
+        return HttpResponse('PDF生成时出现错误', status=500)
+    
+    # 获取PDF内容
+    pdf = buffer.getvalue()
+    buffer.close()
+    
+    # 写入响应
+    response.write(pdf)
+    return response
+
+
+@login_required
+def notebook_download_html(request, notebook_id):
+    """下载笔记为HTML格式"""
+    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    
+    # 生成HTML内容
+    html_string = render_to_string('notebooks/notebook_html_template.html', {
+        'notebook': notebook
+    })
+    
+    # 创建HTTP响应
+    response = HttpResponse(content_type='text/html')
+    response['Content-Disposition'] = f'attachment; filename="{slugify(notebook.title)}.html"'
+    response.write(html_string)
+    
+    return response
 
