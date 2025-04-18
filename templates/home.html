@@ -1,43 +1,83 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}首页 - 云记事本{% endblock %}
 
 {% block content %}
-<div class="home-hero px-4 py-5 my-5 text-center position-relative overflow-hidden">
-    <div class="hero-bg-animation"></div>
-    <h1 class="display-4 fw-bold text-primary hero-title mb-4">云记事本</h1>
-    <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4 hero-subtitle">随时随地记录想法，支持图文混排、云端同步和笔记分享</p>
-        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mt-5">
-            {% if user.is_authenticated %}
-                <a href="{% url 'notebooks:list' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg"><i class="bi bi-journal-richtext me-2"></i>我的笔记</a>
-                <a href="{% url 'notebooks:create' %}" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill"><i class="bi bi-plus-circle me-2"></i>创建笔记</a>
-            {% else %}
-                <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg"><i class="bi bi-person-plus me-2"></i>立即注册</a>
-                <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill"><i class="bi bi-box-arrow-in-right me-2"></i>登录</a>
-            {% endif %}
+<div class="hero-section py-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <h1 class="fw-bold display-4 text-primary mb-3">云端记事本应用</h1>
+                <h2 class="fw-light h3 mb-4">随时随地记录灵感，便捷管理您的笔记</h2>
+                <p class="lead mb-4">云记事本是一款现代化的云端笔记应用，让您轻松创建、编辑和管理笔记。支持富文本编辑、笔记分类、云端存储和多人协作。</p>
+                <div class="d-flex flex-wrap">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'notebooks:list' %}" class="btn btn-primary rounded-pill px-4 py-2 mb-3 mb-sm-0 me-sm-3">
+                            <i class="bi bi-journal-plus me-2"></i>我的笔记
+                        </a>
+                        <a href="{% url 'sharing:public' %}" class="btn btn-outline-primary rounded-pill px-4 py-2">
+                            <i class="bi bi-people me-2"></i>公共广场
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:register' %}" class="btn btn-primary rounded-pill px-4 py-2 mb-3 mb-sm-0 me-sm-3">
+                            <i class="bi bi-person-plus me-2"></i>免费注册
+                        </a>
+                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary rounded-pill px-4 py-2">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>登录账号
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5 text-center">
+                <div class="display-1 text-primary">
+                    <i class="bi bi-journal-text"></i>
+                </div>
+                <div class="mt-3 bg-light p-4 rounded-4 shadow-sm">
+                    <h4 class="text-primary">云笔记，随心所记</h4>
+                    <p class="mb-0">让思考与灵感永不遗失</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="container py-5">
-    <h2 class="text-center mb-5 fw-bold">为什么选择我们？</h2>
-    <div class="row g-4 py-3 row-cols-1 row-cols-md-3">
+<div class="container mb-5">
+    <div class="row mb-4 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="fw-bold mb-3">强大功能，简洁体验</h2>
+            <p class="lead text-muted">我们提供丰富实用的功能，使您的笔记管理更高效</p>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         <div class="col">
-            <div class="card h-100 feature-card">
+            <div class="card h-100 feature-card border-0 shadow-sm">
                 <div class="card-body text-center p-4">
                     <div class="feature-icon-wrapper mb-4">
-                        <i class="bi bi-pencil-square fs-1 text-primary"></i>
+                        <i class="bi bi-journal-text fs-1 text-primary"></i>
                     </div>
-                    <h3 class="fw-bold mb-3 fs-4">强大编辑功能</h3>
-                    <p class="text-muted">支持富文本编辑，轻松创建格式丰富的笔记，插入图片、表格等多媒体内容</p>
+                    <h3 class="fw-bold mb-3 fs-4">富文本编辑</h3>
+                    <p class="text-muted">支持格式化文本、图片插入、列表等多种编辑功能</p>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 feature-card">
+            <div class="card h-100 feature-card border-0 shadow-sm">
                 <div class="card-body text-center p-4">
                     <div class="feature-icon-wrapper mb-4">
-                        <i class="bi bi-cloud-check fs-1 text-primary"></i>
+                        <i class="bi bi-folder fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3 fs-4">分类与标签</h3>
+                    <p class="text-muted">强大的组织功能，轻松整理您的笔记集合</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 feature-card border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon-wrapper mb-4">
+                        <i class="bi bi-cloud-arrow-up fs-1 text-primary"></i>
                     </div>
                     <h3 class="fw-bold mb-3 fs-4">云端安全存储</h3>
                     <p class="text-muted">笔记自动保存至云端，多设备同步访问，重要内容不丢失</p>
@@ -45,7 +85,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card h-100 feature-card">
+            <div class="card h-100 feature-card border-0 shadow-sm">
                 <div class="card-body text-center p-4">
                     <div class="feature-icon-wrapper mb-4">
                         <i class="bi bi-share fs-1 text-primary"></i>
@@ -58,23 +98,169 @@
     </div>
 </div>
 
-<div class="bg-light py-5">
+<!-- 好友与聊天模块 -->
+<div class="bg-light py-5 rounded-5 my-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-6">
-                <h2>开始使用云记事本</h2>
-                <p class="lead">无论是工作笔记、学习资料还是创意灵感，云记事本都能满足您的需求</p>
+            <div class="col-md-6 order-md-2">
+                <h2 class="fw-bold mb-4">好友与即时聊天功能</h2>
+                <p class="lead">添加好友，随时交流沟通，分享笔记灵感</p>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> 简洁直观的操作界面</li>
-                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> 强大的笔记分类与标签系统</li>
-                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> 全文搜索功能</li>
-                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> 安全稳定的数据存储</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>搜索并添加好友</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>实时消息通知</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>简洁友好的聊天界面</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>轻松分享笔记内容</li>
                 </ul>
+                <a href="{% url 'friends:home' %}" class="btn btn-primary rounded-pill px-4 py-2 mt-3">
+                    <i class="bi bi-person-lines-fill me-2"></i>管理好友
+                </a>
+                <a href="{% url 'friends:chat_list' %}" class="btn btn-outline-primary rounded-pill px-4 py-2 mt-3 ms-2">
+                    <i class="bi bi-chat-dots me-2"></i>我的聊天
+                </a>
             </div>
-            <div class="col-md-5 offset-md-1 text-center">
-                <img src="static/img/logo.jpg" class="img-fluid rounded" style="width: 80%;" alt="云记事本演示">
+            <div class="col-md-6 text-center mt-4 mt-md-0 order-md-1">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="chat-illustration bg-white p-4 rounded-4 shadow-sm position-relative" style="width: 300px; max-width: 100%;">
+                        <div class="chat-header d-flex align-items-center mb-3">
+                            <i class="bi bi-person-circle fs-4 me-2"></i>
+                            <h5 class="mb-0">好友聊天</h5>
+                        </div>
+                        <div class="chat-bubble friend mb-2 p-2 px-3 bg-light rounded-pill text-start w-75">
+                            你好！最近在写什么笔记？
+                        </div>
+                        <div class="chat-bubble self mb-2 p-2 px-3 bg-primary text-white rounded-pill text-end ms-auto w-75">
+                            我在整理学习笔记，一会分享给你！
+                        </div>
+                        <div class="chat-input bg-light rounded-pill d-flex align-items-center px-3 py-1 mt-3">
+                            <i class="bi bi-emoji-smile text-muted me-2"></i>
+                            <div class="flex-grow-1 text-start text-muted small">输入消息...</div>
+                            <i class="bi bi-send text-primary"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="bg-light py-5 rounded-5 my-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-4">开始使用云记事本</h2>
+                <p class="lead">无论是工作笔记、学习资料还是创意灵感，云记事本都能满足您的需求</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>简洁直观的操作界面</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>强大的笔记分类与标签系统</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>全文搜索功能</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i>安全稳定的数据存储</li>
+                </ul>
+                <a href="{% url 'accounts:register' %}" class="btn btn-primary rounded-pill px-4 py-2 mt-3">
+                    <i class="bi bi-rocket me-2"></i>立即开始
+                </a>
+            </div>
+            <div class="col-md-6 text-center mt-4 mt-md-0">
+                <img src="/static/img/logo.jpg" class="img-fluid rounded-4 shadow" alt="云记事本演示" style="max-width: 80%;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="fw-bold mb-3 section-title position-relative">用户评价</h2>
+            <p class="lead text-muted">听听其他用户怎么说</p>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm testimonial-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="testimonial-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3">
+                        <span class="fw-bold">Q</span>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Qyc</h5>
+                        <p class="text-muted mb-0 small">学生</p>
+                    </div>
+                </div>
+                <p class="mb-0 testimonial-text">「云记事本帮助我整理了所有学习笔记，界面简洁易用，分类功能很实用！」</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm testimonial-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="testimonial-avatar bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3">
+                        <span class="fw-bold">Z</span>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Zyk</h5>
+                        <p class="text-muted mb-0 small">学生</p>
+                    </div>
+                </div>
+                <p class="mb-0 testimonial-text">「作为自由撰稿人，云记事本让我可以随时记录灵感，云同步功能太棒了！」</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm testimonial-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="testimonial-avatar bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3">
+                        <span class="fw-bold">H</span>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Hjy</h5>
+                        <p class="text-muted mb-0 small">依旧学生</p>
+                    </div>
+                </div>
+                <p class="mb-0 testimonial-text">「团队协作功能帮助我们高效管理项目文档，分享功能使知识传递变得简单！」</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 15px auto 0;
+}
+
+.testimonial-avatar {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+}
+
+.testimonial-card {
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.chat-bubble {
+    border-radius: 18px;
+    position: relative;
+}
+
+.chat-bubble.friend {
+    border-bottom-left-radius: 5px;
+}
+
+.chat-bubble.self {
+    border-bottom-right-radius: 5px;
+}
+
+.chat-illustration {
+    border-radius: 20px;
+}
+</style>
 {% endblock %}

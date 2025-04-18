@@ -15,9 +15,9 @@
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row g-4">
-                        <div class="col-12 text-center">
+                        <div class="col-12 text-center mb-4">
                             <div class="position-relative d-inline-block">
-                                <img id="avatar-preview" class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="Profile Picture">
+                                <img id="avatar-preview" class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="Profile Picture" style="width: 120px; height: 120px; object-fit: cover;">
                                 <div class="position-absolute bottom-0 end-0">
                                     <label for="{{ p_form.avatar.id_for_label }}" class="btn btn-sm btn-primary rounded-circle" title="更换头像">
                                         <i class="bi bi-camera-fill"></i>

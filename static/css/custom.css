@@ -23,6 +23,7 @@
 /* 基础样式 */
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
@@ -30,8 +31,14 @@ body {
     font-family: var(--font-family);
     transition: background-color var(--transition-speed) ease;
     overflow-x: hidden;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 ::selection {
@@ -183,6 +190,8 @@ body {
 .footer {
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.02);
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .bg-gradient-light {
@@ -781,18 +790,31 @@ body {
 
 /* 个人资料页面样式 */
 .rounded-circle.account-img {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
-    border: 5px solid white;
-    box-shadow: var(--box-shadow);
-    transition: all var(--transition-speed) ease;
-    position: relative;
+    border: 3px solid white;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: block;
+    background-color: #f8f9fc;
+}
+
+/* 预览图像样式 */
+#avatar-preview {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: block;
+    background-color: #f8f9fc;
 }
 
 .rounded-circle.account-img:hover {
-    transform: scale(1.05);
-    box-shadow: var(--box-shadow-hover);
+    transform: scale(1.03);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .media-body h2 {
