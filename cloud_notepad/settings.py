@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'storage',
     'sharing',
     'dashboard',
-    'friends',  # 新添加的好友应用
+    'friends',  # 好友应用
+    'collaboration',  # 多人协作应用
 ]
 
 MIDDLEWARE = [

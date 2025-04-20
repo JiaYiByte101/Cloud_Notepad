@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.name }} - 多人协作 - 云笔记{% endblock %}
+
+{% block extra_css %}
+<style>
+  .notebook-card {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+  .notebook-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .notebook-title {
+    color: #333;
+    font-weight: 500;
+  }
+  .member-table th, .member-table td {
+    vertical-align: middle;
+  }
+  .locked-badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+  }
+  .project-header {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+  }
+  .member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e9ecef;
+    color: #6c757d;
+    font-weight: bold;
+  }
+  .notebook-meta {
+    color: #6c757d;
+    font-size: 0.85rem;
+  }
+  .nav-tabs .nav-link {
+    border-radius: 0.25rem 0.25rem 0 0;
+  }
+  .nav-tabs .nav-link.active {
+    border-bottom-color: #fff;
+    font-weight: 500;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="project-header">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h1 class="h3 mb-2">{{ project.name }}</h1>
+        <p class="mb-2 text-muted">{{ project.description }}</p>
+        <div class="text-muted small">
+          <span><i class="fas fa-user"></i> 创建者: {{ project.owner.username }}</span> |
+          <span><i class="fas fa-calendar-alt"></i> 创建时间: {{ project.created_at|date:"Y-m-d H:i" }}</span> |
+          <span><i class="fas fa-clock"></i> 最后更新: {{ project.updated_at|date:"Y-m-d H:i" }}</span>
+        </div>
+      </div>
+      <div>
+        {% if is_owner %}
+        <div class="btn-group">
+          <a href="{% url 'collaboration:edit_project' project.id %}" class="btn btn-outline-primary">
+            <i class="fas fa-edit"></i> 编辑项目
+          </a>
+          <a href="{% url 'collaboration:invite_member' project.id %}" class="btn btn-outline-success">
+            <i class="fas fa-user-plus"></i> 邀请成员
+          </a>
+          <a href="{% url 'collaboration:delete_project' project.id %}" class="btn btn-outline-danger">
+            <i class="fas fa-trash"></i> 删除项目
+          </a>
+        </div>
+        {% else %}
+        <a href="{% url 'collaboration:remove_member' project.id user.id %}" class="btn btn-outline-danger">
+          <i class="fas fa-sign-out-alt"></i> 退出项目
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a class="nav-link active" id="notebooks-tab" data-toggle="tab" href="#notebooks" role="tab">
+        <i class="fas fa-book"></i> 协作笔记
+        <span class="badge badge-pill badge-primary">{{ notebooks|length }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="members-tab" data-toggle="tab" href="#members" role="tab">
+        <i class="fas fa-users"></i> 项目成员
+        <span class="badge badge-pill badge-primary">{{ members|length }}</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="notebooks" role="tabpanel">
+      <div class="row">
+        {% if notebooks %}
+        {% for notebook in notebooks %}
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card notebook-card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h5 class="notebook-title mb-0">{{ notebook.title }}</h5>
+                {% if notebook.id in locked_notebooks %}
+                <span class="badge badge-danger locked-badge">
+                  <i class="fas fa-lock"></i> 
+                  {{ locked_notebooks.notebook.id.user }} 正在编辑
+                </span>
+                {% endif %}
+              </div>
+              <p class="notebook-meta mb-3">
+                <span><i class="fas fa-user"></i> 创建者: {{ notebook.user.username }}</span><br>
+                <span><i class="fas fa-calendar-alt"></i> 创建时间: {{ notebook.created_at|date:"Y-m-d" }}</span><br>
+                <span><i class="fas fa-edit"></i> 最后更新: {{ notebook.updated_at|date:"Y-m-d H:i" }}</span>
+              </p>
+              <div class="d-flex justify-content-between">
+                <div class="btn-group">
+                  <a href="{% url 'notebooks:detail' notebook.id %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-eye"></i> 查看
+                  </a>
+                  <button class="btn btn-sm btn-outline-warning edit-notebook" data-id="{{ notebook.id }}">
+                    <i class="fas fa-edit"></i> 编辑
+                  </button>
+                </div>
+                <div>
+                  {% if notebook.user == user %}
+                  <span class="badge badge-secondary">我的笔记</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 text-center py-5">
+          <div class="mb-3">
+            <i class="fas fa-book fa-4x text-muted"></i>
+          </div>
+          <h5 class="text-muted">该项目还没有关联的笔记</h5>
+          {% if is_owner %}
+          <a href="{% url 'collaboration:edit_project' project.id %}" class="btn btn-primary mt-3">
+            <i class="fas fa-link"></i> 关联笔记
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="members" role="tabpanel">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">项目成员</h5>
+            {% if is_owner %}
+            <a href="{% url 'collaboration:invite_member' project.id %}" class="btn btn-sm btn-success">
+              <i class="fas fa-user-plus"></i> 邀请好友
+            </a>
+            {% endif %}
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover member-table">
+              <thead>
+                <tr>
+                  <th width="5%">#</th>
+                  <th width="30%">用户名</th>
+                  <th width="20%">角色</th>
+                  <th width="20%">加入时间</th>
+                  <th width="25%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-active">
+                  <td>
+                    <div class="member-avatar bg-primary text-white">
+                      {{ project.owner.username|first|upper }}
+                    </div>
+                  </td>
+                  <td>
+                    <strong>{{ project.owner.username }}</strong>
+                    {% if project.owner == user %}
+                    <span class="badge badge-primary">我</span>
+                    {% endif %}
+                  </td>
+                  <td><span class="badge badge-pill badge-primary">创建者</span></td>
+                  <td>{{ project.created_at|date:"Y-m-d H:i" }}</td>
+                  <td>-</td>
+                </tr>
+                
+                {% for member in members %}
+                {% if member.status == 'accepted' and member.user != project.owner %}
+                <tr>
+                  <td>
+                    <div class="member-avatar">
+                      {{ member.user.username|first|upper }}
+                    </div>
+                  </td>
+                  <td>
+                    {{ member.user.username }}
+                    {% if member.user == user %}
+                    <span class="badge badge-primary">我</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <span class="badge badge-pill badge-{% if member.role == 'editor' %}success{% else %}info{% endif %}">
+                      {{ member.get_role_display }}
+                    </span>
+                  </td>
+                  <td>{{ member.joined_at|date:"Y-m-d H:i" }}</td>
+                  <td>
+                    {% if is_owner %}
+                    <div class="btn-group btn-group-sm">
+                      <button class="btn btn-outline-primary change-role-btn" 
+                              data-toggle="modal" 
+                              data-target="#changeRoleModal" 
+                              data-id="{{ member.id }}"
+                              data-username="{{ member.user.username }}"
+                              data-role="{{ member.role }}">
+                        <i class="fas fa-user-tag"></i> 更改角色
+                      </button>
+                      <a href="{% url 'collaboration:remove_member' project.id member.id %}" class="btn btn-outline-danger">
+                        <i class="fas fa-user-minus"></i> 移除
+                      </a>
+                    </div>
+                    {% elif member.user == user %}
+                    <a href="{% url 'collaboration:remove_member' project.id member.id %}" class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-sign-out-alt"></i> 退出项目
+                    </a>
+                    {% else %}
+                    -
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          
+          {% if is_owner and members|length > 0 %}
+          <div class="mt-3">
+            <h6 class="text-muted mb-3">待接受邀请</h6>
+            <div class="table-responsive">
+              <table class="table table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th>用户名</th>
+                    <th>邀请时间</th>
+                    <th>角色</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for member in members %}
+                  {% if member.status == 'pending' %}
+                  <tr>
+                    <td>{{ member.user.username }}</td>
+                    <td>{{ member.invited_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ member.get_role_display }}</td>
+                    <td>
+                      <a href="{% url 'collaboration:remove_member' project.id member.id %}" class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-times"></i> 取消邀请
+                      </a>
+                    </td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 修改角色模态框 -->
+<div class="modal fade" id="changeRoleModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">更改成员角色</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="changeRoleForm" method="post" action="">
+        {% csrf_token %}
+        <div class="modal-body">
+          <p>为 <strong id="memberUsername"></strong> 选择新角色:</p>
+          <div class="form-group">
+            <select name="role" class="form-control" id="roleSelect">
+              <option value="viewer">查看者</option>
+              <option value="editor">编辑者</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  $(document).ready(function() {
+    // 点击编辑笔记按钮
+    $('.edit-notebook').click(function() {
+      var notebookId = $(this).data('id');
+      
+      // 发送请求获取锁
+      $.ajax({
+        url: '{% url "collaboration:lock_notebook" 0 %}'.replace('0', notebookId),
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            // 成功获取锁，重定向到编辑页面
+            window.location.href = '/notebooks/' + notebookId + '/edit/';
+          } else {
+            // 未能获取锁，显示错误消息
+            alert(response.message);
+          }
+        },
+        error: function() {
+          alert('请求失败，请稍后再试');
+        }
+      });
+    });
+    
+    // 修改角色模态框
+    $('.change-role-btn').click(function() {
+      var memberId = $(this).data('id');
+      var username = $(this).data('username');
+      var role = $(this).data('role');
+      
+      $('#memberUsername').text(username);
+      $('#roleSelect').val(role);
+      $('#changeRoleForm').attr('action', '{% url "collaboration:change_member_role" 0 %}'.replace('0', memberId));
+    });
+  });
+</script>
+{% endblock %} 

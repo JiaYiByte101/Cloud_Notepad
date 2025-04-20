@@ -3,6 +3,30 @@
 
 {% block title %}我的好友 - 云记事本{% endblock %}
 
+{% block extra_css %}
+<style>
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+    .hover-card {
+        transition: all 0.3s ease;
+    }
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+    .friend-action-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
     <div class="row">
@@ -27,6 +51,9 @@
                             <a href="{% url 'friends:chat_list' %}" class="btn btn-light btn-sm rounded-pill">
                                 <i class="bi bi-chat-dots me-1"></i>我的聊天
                             </a>
+                            <a href="{% url 'collaboration:project_list' %}" class="btn btn-light btn-sm rounded-pill">
+                                <i class="bi bi-people-fill me-1"></i>协作项目
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -45,11 +72,37 @@
                                                     <p class="text-muted small mb-0">{{ friend.email }}</p>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-between mt-3">
-                                                <a href="{% url 'friends:chat_detail' friend.id %}" class="btn btn-outline-primary btn-sm rounded-pill">
+                                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                                <a href="{% url 'friends:chat_detail' friend.id %}" class="btn btn-outline-primary btn-sm rounded-pill friend-action-btn">
                                                     <i class="bi bi-chat-text me-1"></i>发送消息
                                                 </a>
-                                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill" 
+                                                <div class="dropdown">
+                                                    <button class="btn btn-outline-purple btn-sm rounded-pill friend-action-btn dropdown-toggle" 
+                                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-people me-1"></i>邀请协作
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><h6 class="dropdown-header">选择协作项目</h6></li>
+                                                        {% for project in user.owned_projects.all %}
+                                                        <li>
+                                                            <a class="dropdown-item" href="{% url 'collaboration:invite_member' project.id %}">
+                                                                <i class="bi bi-folder me-2"></i>{{ project.name }}
+                                                            </a>
+                                                        </li>
+                                                        {% empty %}
+                                                        <li><a class="dropdown-item text-muted" href="{% url 'collaboration:create_project' %}">
+                                                            <i class="bi bi-plus-circle me-2"></i>创建新项目
+                                                        </a></li>
+                                                        {% endfor %}
+                                                        {% if user.owned_projects.exists %}
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
+                                                            <i class="bi bi-plus-circle me-2"></i>创建新项目
+                                                        </a></li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill friend-action-btn" 
                                                         data-bs-toggle="modal" data-bs-target="#removeFriend{{ friend.id }}">
                                                     <i class="bi bi-person-dash me-1"></i>删除好友
                                                 </button>
@@ -83,7 +136,7 @@
                         <div class="text-center py-5">
                             <img src="{% static 'img/empty-list.svg' %}" alt="暂无好友" class="img-fluid mb-3" style="max-height: 200px;">
                             <h4 class="text-muted mb-3">您还没有添加任何好友</h4>
-                            <p class="text-muted mb-4">添加好友后，您可以与他们私聊、分享笔记等</p>
+                            <p class="text-muted mb-4">添加好友后，您可以与他们私聊、邀请协作、分享笔记等</p>
                             <a href="{% url 'friends:search_users' %}" class="btn btn-primary rounded-pill px-4">
                                 <i class="bi bi-search me-2"></i>立即查找好友
                             </a>
