@@ -1,6 +1,43 @@
 <!-- templates/notebooks/notebook_detail.html -->
 {% extends 'base.html' %}
 
+{% block extra_css %}
+<style>
+    .collaboration-section {
+        margin-top: 20px;
+    }
+    .project-card {
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+    }
+    .project-card:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .project-title {
+        font-weight: 600;
+        color: #6f42c1;
+    }
+    .badge.bg-purple {
+        background-color: #6f42c1 !important;
+        color: white;
+    }
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+    .collab-icon {
+        width: 20px;
+        text-align: center;
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row mb-3">
@@ -31,6 +68,29 @@
                         </li>
                     </ul>
                 </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-purple dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-users"></i> 协作
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
+                                <i class="fas fa-folder-plus collab-icon"></i> 添加到新项目
+                            </a>
+                        </li>
+                        {% if notebook.collaboration_projects.exists %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><h6 class="dropdown-header">已在项目中</h6></li>
+                        {% for project in notebook.collaboration_projects.all %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'collaboration:project_detail' project.id %}">
+                                <i class="fas fa-folder-open collab-icon"></i> {{ project.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
                 <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-outline-danger">
                     <i class="fas fa-trash"></i> 删除
                 </a>
@@ -58,6 +118,11 @@
                 <span class="badge bg-success">公开</span>
                 {% else %}
                 <span class="badge bg-secondary">私有</span>
+                {% endif %}
+                {% if notebook.collaboration_projects.exists %}
+                <span class="badge bg-purple">
+                    <i class="fas fa-users"></i> 多人协作
+                </span>
                 {% endif %}
             </div>
         </div>
@@ -87,6 +152,37 @@
                 </li>
                 {% endfor %}
             </ul>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if notebook.collaboration_projects.exists %}
+    <div class="card mt-4 collaboration-section">
+        <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="fas fa-users"></i> 协作项目</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for project in notebook.collaboration_projects.all %}
+                <div class="col-md-6">
+                    <div class="card project-card">
+                        <div class="card-body">
+                            <h5 class="project-title">{{ project.name }}</h5>
+                            <p class="text-muted small mb-2">
+                                <i class="fas fa-user"></i> 创建者: {{ project.owner.username }}
+                                <br>
+                                <i class="fas fa-users"></i> 协作成员: {{ project.members_count }} 人
+                            </p>
+                            <div class="mt-2">
+                                <a href="{% url 'collaboration:project_detail' project.id %}" class="btn btn-sm btn-outline-purple">
+                                    <i class="fas fa-external-link-alt"></i> 查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     {% endif %}

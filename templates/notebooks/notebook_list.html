@@ -30,6 +30,10 @@
         background-color: #0dcaf0 !important;
         color: #212529 !important;
     }
+    .badge.bg-purple {
+        background-color: #6f42c1 !important;
+        color: white !important;
+    }
     
     /* 按钮样式 */
     .btn-sm {
@@ -47,6 +51,14 @@
     }
     .btn-outline-danger:hover {
         background-color: #dc3545;
+        color: white;
+    }
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
         color: white;
     }
     
@@ -104,6 +116,14 @@
     .dropdown-menu.download-menu a i {
         width: 20px;
     }
+    
+    /* 协作标记 */
+    .collaboration-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 0.7rem;
+    }
 </style>
 {% endblock %}
 
@@ -158,6 +178,13 @@
                     </a>
                     {% endfor %}
                 </div>
+                
+                <!-- 协作项目链接 -->
+                <div class="mt-4 text-center">
+                    <a href="{% url 'collaboration:project_list' %}" class="btn btn-outline-purple w-100">
+                        <i class="fas fa-users"></i> 我的协作项目
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -166,16 +193,26 @@
     <div class="col-md-9">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="fw-bold">我的笔记</h1>
-            <a href="{% url 'notebooks:create' %}" class="btn btn-primary">
-                <i class="fas fa-plus me-1"></i> 新建笔记
-            </a>
+            <div class="btn-group">
+                <a href="{% url 'notebooks:create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> 新建笔记
+                </a>
+                <a href="{% url 'collaboration:create_project' %}" class="btn btn-purple" style="background-color: #6f42c1; color: white;">
+                    <i class="fas fa-users me-1"></i> 创建协作项目
+                </a>
+            </div>
         </div>
 
         {% if notebooks %}
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 {% for notebook in notebooks %}
                 <div class="col">
-                    <div class="card h-100">
+                    <div class="card h-100 position-relative">
+                        {% if notebook.collaboration_projects.exists %}
+                        <span class="badge bg-purple collaboration-badge">
+                            <i class="fas fa-users"></i> 协作中
+                        </span>
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ notebook.title }}</h5>
                             <div class="tags-container">
@@ -200,7 +237,7 @@
                                                 class="btn btn-sm btn-outline-success dropdown-toggle" 
                                                 data-bs-toggle="dropdown" 
                                                 aria-expanded="false">
-                                            <i class="fas fa-download me-1"></i> 下载
+                                            <i class="fas fa-download me-1"></i> 导出
                                         </button>
                                         <ul class="dropdown-menu download-menu">
                                             <li>
@@ -215,21 +252,51 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-sm btn-outline-danger" 
-                                       onclick="return confirm('确定要删除这个笔记吗？此操作不可恢复。')">
-                                        <i class="fas fa-trash-alt me-1"></i> 删除
-                                    </a>
                                 </div>
-                                <small class="text-muted">{{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-purple dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-users"></i> 协作
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {% if notebook.collaboration_projects.exists %}
+                                        <li><h6 class="dropdown-header">已在项目中</h6></li>
+                                        {% for project in notebook.collaboration_projects.all %}
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'collaboration:project_detail' project.id %}">
+                                                <i class="fas fa-folder-open"></i> {{ project.name }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                        <li><hr class="dropdown-divider"></li>
+                                        {% endif %}
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
+                                                <i class="fas fa-plus-circle"></i> 添加到新项目
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                        </div>
+                        <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                            <small>更新于 {{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
+                            <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="alert alert-info shadow-sm">
-                <i class="fas fa-info-circle me-2"></i> 您还没有创建任何笔记。点击"新建笔记"按钮开始使用吧！
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h5 class="mb-3">您还没有创建任何笔记</h5>
+                    <p class="text-muted mb-4">点击上方的"新建笔记"按钮开始记录您的想法吧!</p>
+                    <a href="{% url 'notebooks:create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> 创建第一篇笔记
+                    </a>
+                </div>
             </div>
         {% endif %}
     </div>
