@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}我的协作项目 - 云笔记{% endblock %}
+
+{% block extra_css %}
+<style>
+  .project-card {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    height: 100%;
+  }
+  .project-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-color: #aaa;
+  }
+  .invitation-card {
+    border-left: 4px solid #007bff;
+  }
+  .action-buttons .btn {
+    margin-right: 5px;
+  }
+  .project-description {
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .project-meta {
+    color: #888;
+    font-size: 0.85rem;
+  }
+  .notebook-badge {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  .role-badge {
+    font-size: 0.8rem;
+  }
+  .add-project-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    height: 100%;
+    min-height: 180px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .add-project-card:hover {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+  }
+  .add-project-icon {
+    font-size: 3rem;
+    color: #ccc;
+    transition: all 0.3s ease;
+  }
+  .add-project-card:hover .add-project-icon {
+    color: #007bff;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">多人协作项目</h1>
+    <a href="{% url 'collaboration:create_project' %}" class="btn btn-primary">
+      <i class="fas fa-plus"></i> 创建项目
+    </a>
+  </div>
+
+  {% if pending_invitations %}
+  <div class="card mb-4">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0"><i class="fas fa-bell"></i> 待处理的协作邀请</h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        {% for invitation in pending_invitations %}
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div class="card invitation-card">
+            <div class="card-body">
+              <h5 class="card-title">{{ invitation.project.name }}</h5>
+              <p class="card-text project-description">{{ invitation.project.description|truncatechars:100 }}</p>
+              <p class="project-meta">
+                <span><i class="fas fa-user"></i> 邀请人: {{ invitation.invited_by.username }}</span>
+                <br>
+                <span><i class="fas fa-calendar-alt"></i> 邀请时间: {{ invitation.invited_at|date:"Y-m-d H:i" }}</span>
+                <br>
+                <span><i class="fas fa-user-tag"></i> 角色: {{ invitation.get_role_display }}</span>
+              </p>
+              <div class="action-buttons mt-3">
+                <a href="{% url 'collaboration:handle_invitation' invitation.id 'accept' %}" class="btn btn-sm btn-success">
+                  <i class="fas fa-check"></i> 接受
+                </a>
+                <a href="{% url 'collaboration:handle_invitation' invitation.id 'reject' %}" class="btn btn-sm btn-danger">
+                  <i class="fas fa-times"></i> 拒绝
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="fas fa-folder"></i> 我创建的项目</h5>
+        </div>
+        <div class="card-body">
+          {% if owned_projects %}
+          <div class="row">
+            {% for project in owned_projects %}
+            <div class="col-md-6 col-lg-4 mb-3">
+              <div class="card project-card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ project.name }}</h5>
+                  <p class="card-text project-description">{{ project.description|truncatechars:100 }}</p>
+                  <p class="project-meta">
+                    <span><i class="fas fa-calendar-alt"></i> 创建时间: {{ project.created_at|date:"Y-m-d" }}</span>
+                    <br>
+                    <span><i class="fas fa-users"></i> 成员数: {{ project.members_count }}</span>
+                    <br>
+                    <span><i class="fas fa-book"></i> 笔记数: {{ project.notebooks.count }}</span>
+                  </p>
+                  <div class="action-buttons mt-3">
+                    <a href="{% url 'collaboration:project_detail' project.id %}" class="btn btn-sm btn-primary">
+                      <i class="fas fa-eye"></i> 查看
+                    </a>
+                    <a href="{% url 'collaboration:edit_project' project.id %}" class="btn btn-sm btn-warning">
+                      <i class="fas fa-edit"></i> 编辑
+                    </a>
+                    <a href="{% url 'collaboration:delete_project' project.id %}" class="btn btn-sm btn-danger">
+                      <i class="fas fa-trash"></i> 删除
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <div class="col-md-6 col-lg-4 mb-3">
+              <a href="{% url 'collaboration:create_project' %}" class="add-project-card text-decoration-none">
+                <div class="text-center">
+                  <div class="add-project-icon mb-2">
+                    <i class="fas fa-plus-circle"></i>
+                  </div>
+                  <h5 class="text-muted">创建新项目</h5>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% else %}
+          <div class="text-center py-5">
+            <div class="mb-3">
+              <i class="fas fa-folder-plus fa-4x text-muted"></i>
+            </div>
+            <h5 class="text-muted">您还没有创建过协作项目</h5>
+            <a href="{% url 'collaboration:create_project' %}" class="btn btn-primary mt-3">
+              <i class="fas fa-plus"></i> 创建第一个项目
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="fas fa-users"></i> 我参与的项目</h5>
+        </div>
+        <div class="card-body">
+          {% if member_projects %}
+          <div class="row">
+            {% for project in member_projects %}
+            <div class="col-md-6 col-lg-4 mb-3">
+              <div class="card project-card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title mb-0">{{ project.name }}</h5>
+                    <span class="badge badge-info role-badge">
+                      {% with membership=project.members.get %}
+                      {{ membership.get_role_display }}
+                      {% endwith %}
+                    </span>
+                  </div>
+                  <p class="card-text project-description">{{ project.description|truncatechars:100 }}</p>
+                  <p class="project-meta">
+                    <span><i class="fas fa-user"></i> 创建者: {{ project.owner.username }}</span>
+                    <br>
+                    <span><i class="fas fa-users"></i> 成员数: {{ project.members_count }}</span>
+                    <br>
+                    <span><i class="fas fa-book"></i> 笔记数: {{ project.notebooks.count }}</span>
+                  </p>
+                  <div class="action-buttons mt-3">
+                    <a href="{% url 'collaboration:project_detail' project.id %}" class="btn btn-sm btn-primary">
+                      <i class="fas fa-eye"></i> 查看
+                    </a>
+                    <a href="{% url 'collaboration:remove_member' project.id user.id %}" class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-sign-out-alt"></i> 退出
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-center py-5">
+            <div class="mb-3">
+              <i class="fas fa-users fa-4x text-muted"></i>
+            </div>
+            <h5 class="text-muted">您还没有参与任何协作项目</h5>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  $(document).ready(function() {
+    // 提示框自动关闭
+    setTimeout(function() {
+      $('.alert').alert('close');
+    }, 5000);
+  });
+</script>
+{% endblock %} 
