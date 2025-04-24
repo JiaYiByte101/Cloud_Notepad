@@ -51,9 +51,6 @@
                             <a href="{% url 'friends:chat_list' %}" class="btn btn-light btn-sm rounded-pill">
                                 <i class="bi bi-chat-dots me-1"></i>我的聊天
                             </a>
-                            <a href="{% url 'collaboration:project_list' %}" class="btn btn-light btn-sm rounded-pill">
-                                <i class="bi bi-people-fill me-1"></i>协作项目
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -76,32 +73,6 @@
                                                 <a href="{% url 'friends:chat_detail' friend.id %}" class="btn btn-outline-primary btn-sm rounded-pill friend-action-btn">
                                                     <i class="bi bi-chat-text me-1"></i>发送消息
                                                 </a>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-outline-purple btn-sm rounded-pill friend-action-btn dropdown-toggle" 
-                                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bi bi-people me-1"></i>邀请协作
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><h6 class="dropdown-header">选择协作项目</h6></li>
-                                                        {% for project in user.owned_projects.all %}
-                                                        <li>
-                                                            <a class="dropdown-item" href="{% url 'collaboration:invite_member' project.id %}">
-                                                                <i class="bi bi-folder me-2"></i>{{ project.name }}
-                                                            </a>
-                                                        </li>
-                                                        {% empty %}
-                                                        <li><a class="dropdown-item text-muted" href="{% url 'collaboration:create_project' %}">
-                                                            <i class="bi bi-plus-circle me-2"></i>创建新项目
-                                                        </a></li>
-                                                        {% endfor %}
-                                                        {% if user.owned_projects.exists %}
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li><a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
-                                                            <i class="bi bi-plus-circle me-2"></i>创建新项目
-                                                        </a></li>
-                                                        {% endif %}
-                                                    </ul>
-                                                </div>
                                                 <button type="button" class="btn btn-outline-danger btn-sm rounded-pill friend-action-btn" 
                                                         data-bs-toggle="modal" data-bs-target="#removeFriend{{ friend.id }}">
                                                     <i class="bi bi-person-dash me-1"></i>删除好友

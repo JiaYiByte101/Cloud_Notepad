@@ -25,6 +25,7 @@
     }
     .badge.bg-secondary {
         background-color: #6c757d !important;
+        color: white !important;
     }
     .badge.bg-info {
         background-color: #0dcaf0 !important;
@@ -32,6 +33,14 @@
     }
     .badge.bg-purple {
         background-color: #6f42c1 !important;
+        color: white !important;
+    }
+    .badge.bg-success {
+        background-color: #28a745 !important;
+        color: white !important;
+    }
+    .badge.bg-danger {
+        background-color: #dc3545 !important;
         color: white !important;
     }
     
@@ -48,6 +57,10 @@
     .btn-outline-secondary:hover {
         background-color: #6c757d;
         color: white;
+    }
+    .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
     }
     .btn-outline-danger:hover {
         background-color: #dc3545;
@@ -136,6 +149,13 @@
                 <h5 class="mb-0 fw-bold">筛选</h5>
             </div>
             <div class="card-body">
+                <!-- 协作项目链接 - 移至顶部 -->
+                <div class="mb-4">
+                    <a href="{% url 'collaboration:project_list' %}" class="btn btn-outline-purple w-100">
+                        <i class="fas fa-users"></i> 我的协作项目
+                    </a>
+                </div>
+
                 <!-- 搜索框 -->
                 <form method="get" action="{% url 'notebooks:list' %}" class="mb-3">
                     <div class="input-group">
@@ -177,13 +197,6 @@
                         {{ tag.name }}
                     </a>
                     {% endfor %}
-                </div>
-                
-                <!-- 协作项目链接 -->
-                <div class="mt-4 text-center">
-                    <a href="{% url 'collaboration:project_list' %}" class="btn btn-outline-purple w-100">
-                        <i class="fas fa-users"></i> 我的协作项目
-                    </a>
                 </div>
             </div>
         </div>

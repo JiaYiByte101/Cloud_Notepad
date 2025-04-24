@@ -5,6 +5,13 @@ from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.db.models import Q
 from datetime import timedelta
+import logging
+from django.template.loader import render_to_string
+from django.utils.text import slugify
+from io import BytesIO
+import os
+from xhtml2pdf import pisa
+from django.urls import reverse
 
 from .models import CollaborationProject, CollaborationMember, CollaborationLock
 from notebooks.models import Notebook
@@ -37,6 +44,23 @@ def project_list(request):
         'pending_invitations': pending_invitations
     }
     return render(request, 'collaboration/project_list.html', context)
+
+# 协作邀请通知
+@login_required
+def get_invitations_count(request):
+    """获取当前用户待处理的协作邀请数量"""
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        # 查询待处理的协作邀请数量
+        pending_invitations_count = CollaborationMember.objects.filter(
+            user=request.user,
+            status='pending'
+        ).count()
+        
+        return JsonResponse({
+            'pending_invitations_count': pending_invitations_count
+        })
+    
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
 def project_detail(request, project_id):
@@ -229,14 +253,7 @@ def invite_member(request, project_id):
                 existing_member.invited_at = timezone.now()
                 existing_member.save()
                 
-                # 发送消息通知
-                message_content = f"{request.user.username} 邀请您加入协作项目 '{project.name}'"
-                Message.objects.create(
-                    sender=request.user,
-                    receiver=friend,
-                    content=message_content
-                )
-                
+                # 不再通过消息系统发送邀请通知
                 messages.success(request, f"已重新向 {friend.username} 发送邀请")
         else:
             # 创建新邀请
@@ -247,14 +264,7 @@ def invite_member(request, project_id):
                 invited_by=request.user
             )
             
-            # 发送消息通知
-            message_content = f"{request.user.username} 邀请您加入协作项目 '{project.name}'"
-            Message.objects.create(
-                sender=request.user,
-                receiver=friend,
-                content=message_content
-            )
-            
+            # 不再通过消息系统发送邀请通知
             messages.success(request, f"已向 {friend.username} 发送邀请")
         
         return redirect('collaboration:project_detail', project_id=project.id)
@@ -276,26 +286,46 @@ def invite_member(request, project_id):
 @login_required
 def handle_invitation(request, member_id, action):
     """处理协作项目邀请（接受或拒绝）"""
-    membership = get_object_or_404(CollaborationMember, id=member_id, user=request.user, status='pending')
-    project = membership.project
-    
-    if action == 'accept':
-        membership.accept_invitation()
-        messages.success(request, f"您已接受加入协作项目 '{project.name}'")
-    elif action == 'reject':
-        membership.reject_invitation()
-        messages.success(request, f"您已拒绝加入协作项目 '{project.name}'")
-    
-    # 发送回复消息通知邀请人
-    if membership.invited_by:
-        message_content = f"{request.user.username} {'接受' if action == 'accept' else '拒绝'}了您的协作项目 '{project.name}' 邀请"
-        Message.objects.create(
-            sender=request.user,
-            receiver=membership.invited_by,
-            content=message_content
-        )
-    
-    return redirect('collaboration:project_list')
+    try:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"处理邀请: 用户={request.user.username}, 成员ID={member_id}, 操作={action}, 方法={request.method}")
+        
+        # 确保请求方法是POST
+        if request.method != 'POST':
+            logger.warning(f"非POST请求: 用户={request.user.username}, 方法={request.method}")
+            messages.error(request, "无效的请求方法")
+            return redirect('collaboration:project_list')
+            
+        membership = get_object_or_404(CollaborationMember, id=member_id, user=request.user, status='pending')
+        project = membership.project
+        logger.info(f"找到待处理邀请: 项目={project.name}, 邀请人={membership.invited_by}")
+        
+        if action == 'accept':
+            logger.info(f"用户接受邀请: 用户={request.user.username}, 项目={project.name}")
+            membership.accept_invitation()
+            messages.success(request, f"您已接受加入协作项目 '{project.name}'")
+        elif action == 'reject':
+            logger.info(f"用户拒绝邀请: 用户={request.user.username}, 项目={project.name}")
+            membership.reject_invitation()
+            messages.success(request, f"您已拒绝加入协作项目 '{project.name}'")
+        else:
+            logger.warning(f"无效操作: 用户={request.user.username}, 操作={action}")
+            messages.error(request, f"无效的操作: {action}")
+        
+        # 不再通过消息系统发送回复通知
+        return redirect('collaboration:project_list')
+    except CollaborationMember.DoesNotExist:
+        logger.error(f"邀请不存在: 用户={request.user.username}, 成员ID={member_id}")
+        messages.error(request, "找不到相关邀请")
+        return redirect('collaboration:project_list')
+    except Exception as e:
+        # 记录详细错误信息
+        logger.error(f"处理邀请时发生错误: {str(e)}", exc_info=True)
+        
+        # 处理可能出现的错误
+        messages.error(request, f"处理邀请时发生错误，请稍后再试")
+        return redirect('collaboration:project_list')
 
 @login_required
 def remove_member(request, project_id, member_id):
@@ -441,3 +471,45 @@ def check_lock_status(request, notebook_id):
             'locked': False,
             'message': '笔记未被锁定'
         })
+
+@login_required
+def download_project_pdf(request, project_id):
+    """下载协作项目为PDF格式 - 适配notebooks应用的下载逻辑"""
+    # 获取项目并验证权限
+    project = get_object_or_404(CollaborationProject, id=project_id)
+    if project.owner != request.user and not project.members.filter(user=request.user, status='accepted').exists():
+        messages.error(request, "您没有权限下载该协作项目")
+        return redirect('collaboration:project_list')
+    
+    # 确保项目有关联的笔记本
+    if not project.notebooks.exists():
+        messages.error(request, "该项目没有关联的笔记本，无法下载")
+        return redirect('collaboration:project_detail', project_id=project.id)
+    
+    # 获取项目的第一个笔记本用于下载
+    notebook_id = project.notebooks.first().id
+    
+    # 重定向到notebooks的下载功能
+    redirect_url = reverse('notebooks:download_pdf', args=[notebook_id])
+    return redirect(redirect_url)
+
+@login_required
+def download_project_html(request, project_id):
+    """下载协作项目为HTML格式 - 适配notebooks应用的下载逻辑"""
+    # 获取项目并验证权限
+    project = get_object_or_404(CollaborationProject, id=project_id)
+    if project.owner != request.user and not project.members.filter(user=request.user, status='accepted').exists():
+        messages.error(request, "您没有权限下载该协作项目")
+        return redirect('collaboration:project_list')
+    
+    # 确保项目有关联的笔记本
+    if not project.notebooks.exists():
+        messages.error(request, "该项目没有关联的笔记本，无法下载")
+        return redirect('collaboration:project_detail', project_id=project.id)
+    
+    # 获取项目的第一个笔记本用于下载
+    notebook_id = project.notebooks.first().id
+    
+    # 重定向到notebooks的下载功能
+    redirect_url = reverse('notebooks:download_html', args=[notebook_id])
+    return redirect(redirect_url)

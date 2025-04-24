@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from notebooks.views import notebook_download_pdf, notebook_download_html
 
 app_name = 'collaboration'
 
@@ -21,4 +22,11 @@ urlpatterns = [
     path('notebooks/<int:notebook_id>/lock/', views.lock_notebook, name='lock_notebook'),
     path('notebooks/<int:notebook_id>/release-lock/', views.release_lock, name='release_lock'),
     path('notebooks/<int:notebook_id>/check-lock/', views.check_lock_status, name='check_lock_status'),
+    
+    # 通知
+    path('invitations/count/', views.get_invitations_count, name='get_invitations_count'),
+    
+    # 项目下载 - 使用notebooks应用中的下载函数
+    path('projects/<int:project_id>/download/pdf/', views.download_project_pdf, name='download_project_pdf'),
+    path('projects/<int:project_id>/download/html/', views.download_project_html, name='download_project_html'),
 ] 

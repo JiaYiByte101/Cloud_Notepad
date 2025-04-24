@@ -35,6 +35,10 @@
         text-align: center;
         margin-right: 5px;
     }
+    .disabled-btn {
+        pointer-events: none;
+        opacity: 0.65;
+    }
 </style>
 {% endblock %}
 
@@ -48,9 +52,15 @@
         </div>
         <div class="col-auto">
             <div class="btn-group">
-                <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-outline-primary">
+                {% if user == notebook.user or has_edit_permission %}
+                <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-outline-primary" id="editButton">
                     <i class="fas fa-edit"></i> 编辑
                 </a>
+                {% else %}
+                <button class="btn btn-outline-primary disabled-btn" id="editDisabledButton" title="您没有编辑权限">
+                    <i class="fas fa-edit"></i> 编辑
+                </button>
+                {% endif %}
                 <div class="btn-group">
                     <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-download"></i> 下载
@@ -73,11 +83,13 @@
                         <i class="fas fa-users"></i> 协作
                     </button>
                     <ul class="dropdown-menu">
+                        {% if user == notebook.user %}
                         <li>
                             <a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
                                 <i class="fas fa-folder-plus collab-icon"></i> 添加到新项目
                             </a>
                         </li>
+                        {% endif %}
                         {% if notebook.collaboration_projects.exists %}
                         <li><hr class="dropdown-divider"></li>
                         <li><h6 class="dropdown-header">已在项目中</h6></li>
@@ -91,9 +103,11 @@
                         {% endif %}
                     </ul>
                 </div>
+                {% if user == notebook.user %}
                 <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-outline-danger">
                     <i class="fas fa-trash"></i> 删除
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -187,4 +201,42 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // 处理编辑按钮点击
+    {% if not user == notebook.user and not has_edit_permission %}
+    $('#editDisabledButton').on('click', function() {
+        alert('您是查看者角色，没有编辑权限');
+    });
+    {% else %}
+    // 如果是协作项目中的笔记，需要先获取锁
+    {% if notebook.collaboration_projects.exists %}
+    $('#editButton').on('click', function(e) {
+        e.preventDefault();
+        // 发送请求获取锁
+        $.ajax({
+            url: '{% url "collaboration:lock_notebook" notebook.id %}',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // 成功获取锁，重定向到编辑页面
+                    window.location.href = '{% url "notebooks:edit" notebook.id %}';
+                } else {
+                    // 未能获取锁，显示错误消息
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('请求失败，请稍后再试');
+            }
+        });
+    });
+    {% endif %}
+    {% endif %}
+});
+</script>
 {% endblock %}
