@@ -52,6 +52,32 @@
     border-bottom-color: #fff;
     font-weight: 500;
   }
+  /* 修复标签样式问题 */
+  .badge-primary {
+    background-color: #007bff !important;
+    color: white !important;
+  }
+  .badge-success {
+    background-color: #28a745 !important;
+    color: white !important;
+  }
+  .badge-info {
+    background-color: #17a2b8 !important;
+    color: white !important;
+  }
+  .badge-secondary {
+    background-color: #6c757d !important;
+    color: white !important;
+  }
+  .badge-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+  }
+  .badge-pill {
+    border-radius: 10rem;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+  }
 </style>
 {% endblock %}
 
@@ -77,14 +103,42 @@
           <a href="{% url 'collaboration:invite_member' project.id %}" class="btn btn-outline-success">
             <i class="fas fa-user-plus"></i> 邀请成员
           </a>
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-download"></i> 下载项目
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_pdf' project.id %}">
+                <i class="fas fa-file-pdf"></i> PDF格式
+              </a></li>
+              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_html' project.id %}">
+                <i class="fas fa-file-code"></i> HTML格式
+              </a></li>
+            </ul>
+          </div>
           <a href="{% url 'collaboration:delete_project' project.id %}" class="btn btn-outline-danger">
             <i class="fas fa-trash"></i> 删除项目
           </a>
         </div>
         {% else %}
-        <a href="{% url 'collaboration:remove_member' project.id user.id %}" class="btn btn-outline-danger">
-          <i class="fas fa-sign-out-alt"></i> 退出项目
-        </a>
+        <div class="btn-group">
+          <a href="#" class="btn btn-outline-danger" onclick="confirmLeaveProject(event, {{ project.id }}, {{ user.id }})">
+            <i class="fas fa-sign-out-alt"></i> 退出项目
+          </a>
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-download"></i> 下载项目
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_pdf' project.id %}">
+                <i class="fas fa-file-pdf"></i> PDF格式
+              </a></li>
+              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_html' project.id %}">
+                <i class="fas fa-file-code"></i> HTML格式
+              </a></li>
+            </ul>
+          </div>
+        </div>
         {% endif %}
       </div>
     </div>
@@ -92,13 +146,13 @@
 
   <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
-      <a class="nav-link active" id="notebooks-tab" data-toggle="tab" href="#notebooks" role="tab">
+      <a class="nav-link active" id="notebooks-tab" data-bs-toggle="tab" href="#notebooks" role="tab" aria-controls="notebooks" aria-selected="true">
         <i class="fas fa-book"></i> 协作笔记
         <span class="badge badge-pill badge-primary">{{ notebooks|length }}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="members-tab" data-toggle="tab" href="#members" role="tab">
+      <a class="nav-link" id="members-tab" data-bs-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">
         <i class="fas fa-users"></i> 项目成员
         <span class="badge badge-pill badge-primary">{{ members|length }}</span>
       </a>
@@ -106,7 +160,7 @@
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane fade show active" id="notebooks" role="tabpanel">
+    <div class="tab-pane fade show active" id="notebooks" role="tabpanel" aria-labelledby="notebooks-tab">
       <div class="row">
         {% if notebooks %}
         {% for notebook in notebooks %}
@@ -129,12 +183,22 @@
               </p>
               <div class="d-flex justify-content-between">
                 <div class="btn-group">
-                  <a href="{% url 'notebooks:detail' notebook.id %}" class="btn btn-sm btn-outline-primary">
-                    <i class="fas fa-eye"></i> 查看
+                  <a href="/notebooks/{{ notebook.id }}/" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i> 详情
                   </a>
-                  <button class="btn btn-sm btn-outline-warning edit-notebook" data-id="{{ notebook.id }}">
-                    <i class="fas fa-edit"></i> 编辑
-                  </button>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-download"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'notebooks:download_pdf' notebook.id %}">
+                        <i class="fas fa-file-pdf"></i> PDF格式
+                      </a></li>
+                      <li><a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}">
+                        <i class="fas fa-file-code"></i> HTML格式
+                      </a></li>
+                    </ul>
+                  </div>
                 </div>
                 <div>
                   {% if notebook.user == user %}
@@ -162,7 +226,7 @@
       </div>
     </div>
 
-    <div class="tab-pane fade" id="members" role="tabpanel">
+    <div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="members-tab">
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
@@ -227,8 +291,8 @@
                     {% if is_owner %}
                     <div class="btn-group btn-group-sm">
                       <button class="btn btn-outline-primary change-role-btn" 
-                              data-toggle="modal" 
-                              data-target="#changeRoleModal" 
+                              data-bs-toggle="modal" 
+                              data-bs-target="#changeRoleModal" 
                               data-id="{{ member.id }}"
                               data-username="{{ member.user.username }}"
                               data-role="{{ member.role }}">
@@ -239,7 +303,7 @@
                       </a>
                     </div>
                     {% elif member.user == user %}
-                    <a href="{% url 'collaboration:remove_member' project.id member.id %}" class="btn btn-sm btn-outline-danger">
+                    <a href="#" class="btn btn-sm btn-outline-danger" onclick="confirmLeaveProject(event, {{ project.id }}, {{ member.id }})">
                       <i class="fas fa-sign-out-alt"></i> 退出项目
                     </a>
                     {% else %}
@@ -293,28 +357,26 @@
 </div>
 
 <!-- 修改角色模态框 -->
-<div class="modal fade" id="changeRoleModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="changeRoleModal" tabindex="-1" aria-labelledby="changeRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">更改成员角色</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="changeRoleModalLabel">更改成员角色</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="changeRoleForm" method="post" action="">
         {% csrf_token %}
         <div class="modal-body">
           <p>为 <strong id="memberUsername"></strong> 选择新角色:</p>
-          <div class="form-group">
-            <select name="role" class="form-control" id="roleSelect">
+          <div class="form-group mb-3">
+            <select name="role" class="form-select" id="roleSelect">
               <option value="viewer">查看者</option>
               <option value="editor">编辑者</option>
             </select>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
           <button type="submit" class="btn btn-primary">保存</button>
         </div>
       </form>
@@ -325,41 +387,68 @@
 
 {% block extra_js %}
 <script>
+  // 确保jQuery可用
+  if (typeof jQuery === 'undefined') {
+    console.error('jQuery is not loaded!');
+  }
+
+  // 确认退出项目函数
+  function confirmLeaveProject(event, projectId, memberId) {
+    event.preventDefault();
+    if (confirm('确定要退出该项目吗？退出后需要重新接受邀请才能再次加入。')) {
+      window.location.href = '{% url "collaboration:remove_member" 0 0 %}'.replace('/0/0/', '/' + projectId + '/' + memberId + '/');
+    }
+  }
+
   $(document).ready(function() {
-    // 点击编辑笔记按钮
-    $('.edit-notebook').click(function() {
-      var notebookId = $(this).data('id');
-      
-      // 发送请求获取锁
-      $.ajax({
-        url: '{% url "collaboration:lock_notebook" 0 %}'.replace('0', notebookId),
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-          if (response.success) {
-            // 成功获取锁，重定向到编辑页面
-            window.location.href = '/notebooks/' + notebookId + '/edit/';
-          } else {
-            // 未能获取锁，显示错误消息
-            alert(response.message);
-          }
-        },
-        error: function() {
-          alert('请求失败，请稍后再试');
-        }
-      });
-    });
+    console.log('Document ready, initializing project detail functionality');
+    
+    // 获取用户角色信息（用于调试）
+    var isEditor = false;
+    {% if user == project.owner %}
+      isEditor = true;
+    {% else %}
+      {% for member in members %}
+        {% if member.user == user and member.role == 'editor' %}
+          isEditor = true;
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    console.log('User is editor:', isEditor);
     
     // 修改角色模态框
-    $('.change-role-btn').click(function() {
+    $('.change-role-btn').on('click', function() {
+      console.log('Change role button clicked');
       var memberId = $(this).data('id');
       var username = $(this).data('username');
       var role = $(this).data('role');
+      
+      console.log('Member ID:', memberId, 'Username:', username, 'Current role:', role);
       
       $('#memberUsername').text(username);
       $('#roleSelect').val(role);
       $('#changeRoleForm').attr('action', '{% url "collaboration:change_member_role" 0 %}'.replace('0', memberId));
     });
+    
+    // 初始化Bootstrap 5标签页
+    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(function(tabEl) {
+      tabEl.addEventListener('click', function(event) {
+        event.preventDefault();
+        var tab = new bootstrap.Tab(tabEl);
+        tab.show();
+      });
+    });
+    
+    // 初始化模态框
+    var roleModal = document.getElementById('changeRoleModal');
+    if (roleModal) {
+      var changeRoleModal = new bootstrap.Modal(roleModal);
+      
+      // 模态框显示时的事件
+      roleModal.addEventListener('shown.bs.modal', function() {
+        console.log('Modal shown');
+      });
+    }
   });
 </script>
 {% endblock %} 
