@@ -16,6 +16,7 @@ urlpatterns = [
     path('sharing/', include('sharing.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('friends/', include('friends.urls')),
+    path('collaboration/', include('collaboration.urls')),
 ]
 
 # 添加媒体文件URL配置（仅在开发环境中）

@@ -62,8 +62,44 @@ def notebook_list(request):
 @login_required
 def notebook_detail(request, notebook_id):
     """查看单个笔记详情"""
-    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
-    return render(request, 'notebooks/notebook_detail.html', {'notebook': notebook})
+    # 同时检查是否是笔记所有者或是协作项目成员
+    notebook = get_object_or_404(Notebook, id=notebook_id)
+    
+    # 检查权限 - 所有者可以直接查看
+    if notebook.user == request.user:
+        has_edit_permission = True
+    else:
+        # 检查是否是协作项目的成员
+        has_view_permission = False
+        has_edit_permission = False
+        
+        # 检查用户是否是协作项目的成员
+        for project in notebook.collaboration_projects.all():
+            # 项目创建者有编辑权限
+            if project.owner == request.user:
+                has_view_permission = True
+                has_edit_permission = True
+                break
+            
+            # 检查成员权限
+            membership = project.members.filter(user=request.user, status='accepted').first()
+            if membership:
+                has_view_permission = True
+                # 编辑者有编辑权限
+                if membership.role == 'editor':
+                    has_edit_permission = True
+                break
+        
+        # 没有任何权限则不允许查看
+        if not has_view_permission:
+            messages.error(request, '您没有权限查看此笔记')
+            return redirect('notebooks:list')
+    
+    context = {
+        'notebook': notebook,
+        'has_edit_permission': has_edit_permission
+    }
+    return render(request, 'notebooks/notebook_detail.html', context)
 
 
 @login_required
@@ -91,16 +127,42 @@ def notebook_create(request):
 @login_required
 def notebook_edit(request, notebook_id):
     """编辑笔记"""
-    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
-
+    notebook = get_object_or_404(Notebook, id=notebook_id)
+    
+    # 检查编辑权限
+    has_edit_permission = False
+    
+    # 笔记所有者有编辑权限
+    if notebook.user == request.user:
+        has_edit_permission = True
+    else:
+        # 检查协作项目中的权限
+        for project in notebook.collaboration_projects.all():
+            # 项目创建者有编辑权限
+            if project.owner == request.user:
+                has_edit_permission = True
+                break
+            
+            # 编辑者角色有编辑权限
+            membership = project.members.filter(user=request.user, status='accepted', role='editor').first()
+            if membership:
+                has_edit_permission = True
+                break
+    
+    # 没有编辑权限则重定向
+    if not has_edit_permission:
+        messages.error(request, '您没有权限编辑此笔记')
+        return redirect('notebooks:detail', notebook_id=notebook.id)
+    
+    # 处理表单提交
     if request.method == 'POST':
-        form = NotebookForm(request.POST, instance=notebook, user=request.user)
+        form = NotebookForm(request.POST, instance=notebook, user=notebook.user)
         if form.is_valid():
             form.save()
             messages.success(request, '笔记更新成功！')
             return redirect('notebooks:detail', notebook_id=notebook.id)
     else:
-        form = NotebookForm(instance=notebook, user=request.user)
+        form = NotebookForm(instance=notebook, user=notebook.user)
 
     return render(request, 'notebooks/notebook_form.html', {
         'form': form,
@@ -279,7 +341,21 @@ def upload_file(request):
 @login_required
 def notebook_download_pdf(request, notebook_id):
     """下载笔记为PDF格式"""
-    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    notebook = get_object_or_404(Notebook, id=notebook_id)
+    
+    # 验证权限：用户是笔记的拥有者或是关联项目的成员
+    is_authorized = notebook.user == request.user
+    
+    # 如果不是拥有者，检查是否是项目成员
+    if not is_authorized and notebook.collaboration_projects.exists():
+        for project in notebook.collaboration_projects.all():
+            if project.owner == request.user or project.members.filter(user=request.user, status='accepted').exists():
+                is_authorized = True
+                break
+    
+    if not is_authorized:
+        messages.error(request, "您没有权限下载该笔记")
+        return redirect('notebooks:list')
     
     # 生成HTML内容
     html_string = render_to_string('notebooks/notebook_pdf_template.html', {
@@ -318,7 +394,21 @@ def notebook_download_pdf(request, notebook_id):
 @login_required
 def notebook_download_html(request, notebook_id):
     """下载笔记为HTML格式"""
-    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    notebook = get_object_or_404(Notebook, id=notebook_id)
+    
+    # 验证权限：用户是笔记的拥有者或是关联项目的成员
+    is_authorized = notebook.user == request.user
+    
+    # 如果不是拥有者，检查是否是项目成员
+    if not is_authorized and notebook.collaboration_projects.exists():
+        for project in notebook.collaboration_projects.all():
+            if project.owner == request.user or project.members.filter(user=request.user, status='accepted').exists():
+                is_authorized = True
+                break
+    
+    if not is_authorized:
+        messages.error(request, "您没有权限下载该笔记")
+        return redirect('notebooks:list')
     
     # 生成HTML内容
     html_string = render_to_string('notebooks/notebook_html_template.html', {
