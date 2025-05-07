@@ -7,6 +7,9 @@ from django.db.models import Count
 from notebooks.models import Notebook, Category, Tag
 from django.contrib.auth.models import User
 from sharing.models import Like, Comment
+from django.db import models
+from functools import wraps
+from django.core.exceptions import PermissionDenied
 
 
 def is_admin(user):
@@ -14,8 +17,18 @@ def is_admin(user):
     return user.is_staff or user.is_superuser
 
 
+def admin_required(view_func):
+    """装饰器：确保用户是管理员，并且只能访问仪表板页面"""
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not is_admin(request.user):
+            raise PermissionDenied("您没有权限访问此页面")
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
+
+
 @login_required
-@user_passes_test(is_admin)
+@admin_required
 def dashboard_home(request):
     """管理员仪表板首页"""
     # 获取系统统计数据
@@ -56,7 +69,7 @@ def dashboard_home(request):
 
 
 @login_required
-@user_passes_test(is_admin)
+@admin_required
 def manage_public_notes(request):
     """管理公开笔记"""
     notebooks = Notebook.objects.filter(is_public=True).order_by('-created_at')
@@ -67,7 +80,7 @@ def manage_public_notes(request):
 
 
 @login_required
-@user_passes_test(is_admin)
+@admin_required
 def toggle_featured(request, notebook_id):
     """设置/取消精选笔记"""
     notebook = get_object_or_404(Notebook, id=notebook_id, is_public=True)
@@ -84,7 +97,7 @@ def toggle_featured(request, notebook_id):
 
 
 @login_required
-@user_passes_test(is_admin)
+@admin_required
 def unpublish_note(request, notebook_id):
     """取消发布笔记（设为私有）"""
     notebook = get_object_or_404(Notebook, id=notebook_id)
@@ -98,12 +111,33 @@ def unpublish_note(request, notebook_id):
 
 
 @login_required
-@user_passes_test(is_admin)
+@admin_required
 def manage_users(request):
     """管理用户"""
-    users = User.objects.all().order_by('-date_joined')
+    # 获取所有用户，并按笔记数量排序
+    users = User.objects.annotate(
+        notebook_count=Count('notebooks'),
+        public_notebook_count=Count('notebooks', filter=models.Q(notebooks__is_public=True))
+    ).order_by('-public_notebook_count', '-date_joined')
 
     context = {
         'users': users
     }
     return render(request, 'dashboard/manage_users.html', context)
+
+
+@login_required
+@admin_required
+def delete_user(request, user_id):
+    """删除用户"""
+    user = get_object_or_404(User, id=user_id)
+    
+    # 不允许删除超级用户
+    if user.is_superuser:
+        messages.error(request, '不能删除超级用户！')
+        return redirect('dashboard:manage_users')
+    
+    username = user.username
+    user.delete()
+    messages.success(request, f'用户 {username} 已成功删除！')
+    return redirect('dashboard:manage_users')
