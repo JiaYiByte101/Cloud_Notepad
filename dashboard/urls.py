@@ -11,4 +11,5 @@ urlpatterns = [
     path('public-notes/<int:notebook_id>/toggle-featured/', views.toggle_featured, name='toggle_featured'),
     path('public-notes/<int:notebook_id>/unpublish/', views.unpublish_note, name='unpublish_note'),
     path('users/', views.manage_users, name='manage_users'),
+    path('delete-user/<int:user_id>/', views.delete_user, name='delete_user'),
 ]

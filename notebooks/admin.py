@@ -24,6 +24,6 @@ class NotebookAdmin(admin.ModelAdmin):
 
 @admin.register(Attachment)
 class AttachmentAdmin(admin.ModelAdmin):
-    list_display = ['file_name', 'notebook', 'file_size', 'upload_time']
-    list_filter = ['upload_time']
-    search_fields = ['file_name']
+    list_display = ('notebook', 'file_name', 'file_size', 'upload_time')
+    search_fields = ('file_name', 'notebook__title')
+    list_filter = ('upload_time',)
