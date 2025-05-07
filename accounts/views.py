@@ -28,6 +28,9 @@ def custom_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'欢迎回来，{username}！')
+                # 检查是否是管理员用户
+                if user.is_staff or user.is_superuser:
+                    return redirect('dashboard:home')
                 return redirect('home')
             else:
                 messages.error(request, '用户名或密码错误')
