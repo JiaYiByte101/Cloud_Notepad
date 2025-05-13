@@ -13,7 +13,11 @@
     <meta name="theme-color" content="#4e73df">
 </head>
 <body>
-    {% include 'includes/navbar.html' %}
+    {% if request.resolver_match.app_name == 'dashboard' %}
+        {% include 'includes/admin_navbar.html' %}
+    {% else %}
+        {% include 'includes/navbar.html' %}
+    {% endif %}
 
     <main>
         <div class="container mt-4">
