@@ -1,5 +1,5 @@
 <!-- templates/includes/footer.html -->
-<footer class="footer py-4 bg-gradient-light">
+<footer class="footer py-2 bg-gradient-light">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-5 text-center text-md-start">
@@ -7,23 +7,23 @@
                     <i class="bi bi-journal-text fs-4 me-2 footer-icon-pulse text-primary"></i>
                     <span class="fw-bold text-primary">云记事本</span>
                 </div>
-                <p class="text-muted mt-2 mb-0">随时随地记录想法，支持云端同步和笔记分享</p>
+                <p class="text-muted mt-1 mb-0 small">随时随地记录想法，支持云端同步和笔记分享</p>
             </div>
             <div class="col-md-3 d-none d-md-block">
                 <div class="d-flex flex-column">
-                    <h6 class="fw-bold mb-3">快速链接</h6>
-                    <a href="{% url 'home' %}" class="mb-2 text-decoration-none text-secondary">首页</a>
-                    <a href="{% url 'sharing:public' %}" class="mb-2 text-decoration-none text-secondary">公共广场</a>
-                    <a href="{% url 'notebooks:list' %}" class="text-decoration-none text-secondary">我的笔记</a>
+                    <h6 class="fw-bold mb-2 small">快速链接</h6>
+                    <a href="{% url 'home' %}" class="mb-1 text-decoration-none text-secondary small">首页</a>
+                    <a href="{% url 'sharing:public' %}" class="mb-1 text-decoration-none text-secondary small">公共广场</a>
+                    <a href="{% url 'notebooks:list' %}" class="text-decoration-none text-secondary small">我的笔记</a>
                 </div>
             </div>
-            <div class="col-md-4 text-center text-md-end mt-4 mt-md-0">
-                <div class="mb-3">
+            <div class="col-md-4 text-center text-md-end mt-2 mt-md-0">
+                <div class="mb-2">
                     <a href="https://github.com/223qyc" class="social-icon-link me-3 fs-5" target="_blank" title="GitHub主页"><i class="bi bi-github"></i></a>
                     <a href="https://www.cug.edu.cn/" class="social-icon-link me-3 fs-5" target="_blank" title="中国地质大学"><i class="bi bi-building"></i></a>
                     <a href="https://mail.qq.com" class="social-icon-link fs-5" target="_blank" title="QQ邮箱"><i class="bi bi-envelope"></i></a>
                 </div>
-                <span class="text-muted">© 2025 云记事本-来自H.Z.Q团队</span>
+                <span class="text-muted small">© 2025 云记事本-来自H.Z.Q团队</span>
             </div>
         </div>
     </div>
