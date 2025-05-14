@@ -1,9 +1,6 @@
 # 使用 Python 3.12 的官方基础镜像
 FROM python:3.12-slim
 
-# 作者信息（可选）
-LABEL authors="asuka"
-
 # 设置工作目录
 WORKDIR /app
 
