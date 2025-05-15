@@ -18,7 +18,7 @@ SECRET_KEY = 'your-secret-key'  # 在生产环境中应该保密
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
