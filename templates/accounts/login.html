@@ -18,7 +18,16 @@
                         {% for field in form %}
                             <div class="form-group mb-3">
                                 <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field|addclass:'form-control' }}
+                                {% if field.name == 'password' %}
+                                    <div class="input-group">
+                                        {{ field|addclass:'form-control' }}
+                                        <button class="btn btn-primary" type="button" id="togglePassword" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                {% else %}
+                                    {{ field|addclass:'form-control' }}
+                                {% endif %}
                                 {% if field.help_text %}
                                     <small class="form-text text-muted">{{ field.help_text }}</small>
                                 {% endif %}
@@ -55,4 +64,21 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.querySelector('input[type="password"]');
+    
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // 切换图标
+        const icon = this.querySelector('i');
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+});
+</script>
 {% endblock %}

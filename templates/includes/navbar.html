@@ -37,8 +37,9 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle rounded-pill px-3 mx-1 nav-btn-hover" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle rounded-pill px-3 mx-1 nav-btn-hover" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="position: relative;">
                             <i class="bi bi-gear me-1"></i>分类标签管理
+                            <span class="dropdown-toggle-custom"></span>
                         </a>
                         <ul class="dropdown-menu shadow-lg border-0 rounded-4 mt-2" aria-labelledby="managementDropdown">
                             <li><a class="dropdown-item py-2" href="{% url 'notebooks:categories' %}"><i class="bi bi-folder me-2"></i>分类管理</a></li>
@@ -77,9 +78,10 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle user-dropdown rounded-pill px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle user-dropdown rounded-pill px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="position: relative;">
                             <i class="bi bi-person-circle me-1"></i>
                             <span>{{ user.username }}</span>
+                            <span class="dropdown-toggle-custom"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item py-2" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2"></i>个人资料</a></li>
@@ -104,9 +106,66 @@
     </div>
 </nav>
 
+<style>
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.dropdown-toggle-custom {
+    display: inline-block;
+    margin-left: 0.5em;
+    vertical-align: middle;
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+
+.dropdown.show .dropdown-toggle-custom {
+    transform: rotate(180deg);
+}
+
+/* 确保箭头颜色与文字一致 */
+.dropdown-toggle-custom {
+    border-top-color: currentColor;
+}
+</style>
+
 {% if user.is_authenticated %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // 添加下拉菜单的点击事件监听
+        document.querySelectorAll('.dropdown-toggle').forEach(function(dropdownToggle) {
+            dropdownToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = this.closest('.dropdown');
+                dropdown.classList.toggle('show');
+                
+                // 手动触发箭头旋转
+                const arrow = this.querySelector('.dropdown-toggle-custom');
+                if (dropdown.classList.contains('show')) {
+                    arrow.style.transform = 'rotate(90deg)';
+                } else {
+                    arrow.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // 点击其他地方时关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown.show').forEach(function(dropdown) {
+                    dropdown.classList.remove('show');
+                    const arrow = dropdown.querySelector('.dropdown-toggle-custom');
+                    if (arrow) {
+                        arrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            }
+        });
+
         // 获取通知数量的元素
         const notificationBadge = document.getElementById('notificationBadge');
         const notificationCount = document.getElementById('notificationCount');

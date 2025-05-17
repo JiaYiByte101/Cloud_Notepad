@@ -17,14 +17,21 @@
                     <div class="row g-4">
                         <div class="col-12 text-center mb-4">
                             <div class="position-relative d-inline-block">
-                                <img id="avatar-preview" class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="Profile Picture" style="width: 120px; height: 120px; object-fit: cover;">
+                                <img id="avatar-preview" class="rounded-circle account-img"
+                                     src="{{ user.profile.avatar.url }}"
+                                     alt="Profile Picture"
+                                     style="width: 120px; height: 120px; object-fit: cover; cursor: pointer;"
+                                     onclick="document.getElementById('avatar-input').click();">
+                                <input id="avatar-input" name="avatar" type="file" accept="image/*"
+                                       style="display: none;"
+                                       onchange="previewAvatar(this)">
                                 <div class="position-absolute bottom-0 end-0">
-                                    <label for="{{ p_form.avatar.id_for_label }}" class="btn btn-sm btn-primary rounded-circle" title="更换头像">
+                                    <span class="btn btn-sm btn-primary rounded-circle" title="更换头像"
+                                          onclick="document.getElementById('avatar-input').click();">
                                         <i class="bi bi-camera-fill"></i>
-                                    </label>
+                                    </span>
                                 </div>
                             </div>
-                            {{ p_form.avatar|addclass:'d-none' }}
                         </div>
                         
                         <div class="col-12">
@@ -63,14 +70,14 @@
 </div>
 
 <script>
-    document.getElementById('{{ p_form.avatar.id_for_label }}').addEventListener('change', function(e) {
-        if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('avatar-preview').src = e.target.result;
-            };
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    });
+function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('avatar-preview').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 </script>
 {% endblock %}
