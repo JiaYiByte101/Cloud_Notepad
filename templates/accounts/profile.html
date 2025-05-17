@@ -7,7 +7,7 @@
         <div class="card shadow-lg border-0 mb-5">
             <div class="card-header text-center py-4">
                 <div class="position-relative d-inline-block mb-3">
-                    <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="Profile Picture">
+                    <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="{{ user.username }}的头像" style="width: 120px; height: 120px; object-fit: cover;">
                     <div class="position-absolute bottom-0 end-0">
                         <a href="{% url 'accounts:edit_profile' %}" class="btn btn-sm btn-primary rounded-circle" title="更换头像">
                             <i class="bi bi-camera-fill"></i>
