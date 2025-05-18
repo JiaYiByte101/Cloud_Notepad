@@ -12,4 +12,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),  # 暂时注释掉
     path('refresh-captcha/', views.refresh_captcha, name='refresh_captcha'),
+    path('get-nickname/', views.get_nickname, name='get_nickname'),
 ]

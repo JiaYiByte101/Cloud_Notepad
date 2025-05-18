@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse, HttpResponse
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
-from .utils import verify_captcha, generate_captcha, generate_captcha_image
+from .utils import verify_captcha, generate_captcha, generate_captcha_image, get_name
 import base64
 
 
@@ -48,6 +48,7 @@ def custom_login(request):
         'captcha_image': captcha_image
     })
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -68,7 +69,7 @@ def profile(request):
     # 确保用户有一个profile对象
     if not hasattr(request.user, 'profile'):
         Profile.objects.create(user=request.user)
-    
+
     # 传递上下文信息给模板
     context = {
         'user': request.user,
@@ -108,6 +109,7 @@ def logout_confirm(request):
         return redirect('home')
     return render(request, 'accounts/logout.html')
 
+
 def refresh_captcha(request):
     captcha = generate_captcha()
     request.session['captcha'] = captcha
@@ -115,3 +117,16 @@ def refresh_captcha(request):
     # 从base64字符串中提取实际的图片数据
     image_data = base64.b64decode(captcha_image.split(',')[1])
     return HttpResponse(image_data, content_type='image/png')
+
+
+@login_required
+def get_nickname(request):
+    if request.method == 'POST':
+        description = request.POST.get('description', '')
+        if description:
+            try:
+                nickname = get_name(description)
+                return JsonResponse({'status': 'success', 'nickname': nickname})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'error', 'message': '无效的请求'})

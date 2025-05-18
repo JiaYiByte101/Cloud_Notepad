@@ -93,4 +93,56 @@ def generate_captcha_image(captcha):
     image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
     
-    return f"data:image/png;base64,{img_str}" 
+    return f"data:image/png;base64,{img_str}"
+
+
+import requests
+import json
+
+
+def get_access_token():
+    """
+    使用应用API Key，应用Secret Key 获取access_token，替换下列示例中的应用API Key、应用Secret Key
+    """
+
+    url = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=BoJ2OkBmLJxxFTwsOW56GUpf&client_secret=oJB9brStNnvEdSQxoljotrPgM0spl3YD"
+
+    payload = json.dumps("")
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    return response.json().get("access_token")
+
+
+def get_name(description):
+    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token=" + get_access_token()
+
+    payload = json.dumps({
+        "messages": [
+            {
+                "role": "user",
+                "content": "你是一个中文昵称生成器。我会告诉你用户的描述，你只需要返回两个中文昵称，用空格隔开，绝对不要说多余的话，不需要标点，不需要解释。"
+            },
+            {
+                "role": "assistant",
+                "content": "风云 傲剑"
+            },
+            {
+                "role": "user",
+                "content": description+"必须给出两个呢称，不要说多余的话，不要标点，不要解释"
+            },
+        ]
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    # 提取 result 字段
+    result_json = response.json()
+    print(result_json.get("result"))
+    return result_json.get("result", "未生成昵称")

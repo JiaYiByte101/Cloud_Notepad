@@ -51,6 +51,31 @@
                                 </div>
                             {% endfor %}
                         </div>
+
+                        <!-- 昵称生成器部分 -->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">昵称生成器</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">描述你的兴趣或特点</label>
+                                        <textarea class="form-control" id="description" rows="3" placeholder="例如：喜欢玩火影忍者"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div id="nicknameButtons" class="d-flex gap-2" style="display: none;">
+                                            <button type="button" class="btn btn-success" id="nicknameBtn1" onclick="useNickname(0)"></button>
+                                            <button type="button" class="btn btn-success" id="nicknameBtn2" onclick="useNickname(1)"></button>
+                                        </div>
+                                        <div id="actionButtons">
+                                            <button type="button" class="btn btn-primary" id="generateBtn" onclick="generateNickname()">生成昵称</button>
+                                            <button type="button" class="btn btn-danger" id="regenerateBtn" onclick="generateNickname()" style="display: none;">重新生成</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="col-12">
                             <div class="d-grid gap-2">
@@ -77,6 +102,47 @@ function previewAvatar(input) {
             document.getElementById('avatar-preview').src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function generateNickname() {
+    const description = document.getElementById('description').value;
+    if (!description) {
+        alert('请输入描述信息');
+        return;
+    }
+
+    fetch('{% url "accounts:get_nickname" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: `description=${encodeURIComponent(description)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const nicknames = data.nickname.split(' ');
+            document.getElementById('nicknameButtons').style.display = 'flex';
+            document.getElementById('nicknameBtn1').textContent = nicknames[0];
+            document.getElementById('nicknameBtn2').textContent = nicknames[1];
+            document.getElementById('generateBtn').style.display = 'none';
+            document.getElementById('regenerateBtn').style.display = 'inline-block';
+        } else {
+            alert('生成昵称失败：' + data.message);
+        }
+    })
+    .catch(error => {
+        alert('请求失败：' + error);
+    });
+}
+
+function useNickname(index) {
+    const nickname = document.getElementById('nicknameBtn' + (index + 1)).textContent;
+    const usernameField = document.querySelector('input[name="username"]');
+    if (usernameField) {
+        usernameField.value = nickname;
     }
 }
 </script>
