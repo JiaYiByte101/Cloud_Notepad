@@ -30,6 +30,10 @@
                    class="btn btn-outline-primary {% if sort_by == 'popular' %}active{% endif %}">
                    <i class="bi bi-star me-1"></i>热门
                 </a>
+                <a href="{% url 'sharing:public' %}?sort=views{% if search_query %}&search={{ search_query }}{% endif %}"
+                   class="btn btn-outline-primary {% if sort_by == 'views' %}active{% endif %}">
+                   <i class="bi bi-eye me-1"></i>浏览最多
+                </a>
                 <a href="{% url 'sharing:public' %}?sort=featured{% if search_query %}&search={{ search_query }}{% endif %}"
                    class="btn btn-outline-primary {% if sort_by == 'featured' %}active{% endif %}">
                    <i class="bi bi-award me-1"></i>精选
@@ -64,9 +68,12 @@
                                 <div>{{ notebook.user.username }}</div>
                                 <div><i class="bi bi-calendar3 me-1"></i>{{ notebook.created_at|date:"Y-m-d" }}</div>
                             </div>
-                            <div class="ms-auto">
-                                <span class="badge bg-light text-danger rounded-pill">
+                            <div class="ms-auto d-flex align-items-center">
+                                <span class="badge bg-light text-danger rounded-pill me-2">
                                     <i class="bi bi-heart-fill me-1"></i>{{ notebook.likes.count }}
+                                </span>
+                                <span class="badge bg-light text-primary rounded-pill">
+                                    <i class="bi bi-eye me-1"></i>{{ notebook.view_count }}
                                 </span>
                             </div>
                         </div>
@@ -82,17 +89,10 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body text-center py-5">
-                <div class="empty-state-icon bg-light rounded-circle mx-auto mb-4">
-                    <i class="bi bi-journal-text text-primary" style="font-size: 2.5rem;"></i>
-                </div>
-                <h4 class="text-muted mb-3">暂时没有公开的笔记</h4>
-                <p class="text-muted mb-4">您可以将自己的笔记设为公开，与他人分享！</p>
-                <a href="{% url 'notebooks:list' %}" class="btn btn-primary rounded-pill">
-                    <i class="bi bi-journal-plus me-1"></i>去管理我的笔记
-                </a>
-            </div>
+        <div class="text-center py-5">
+            <i class="bi bi-journal-x display-1 text-muted"></i>
+            <h3 class="mt-3 text-muted">暂无公开笔记</h3>
+            <p class="text-muted">成为第一个分享笔记的人吧！</p>
         </div>
     {% endif %}
 </div>
