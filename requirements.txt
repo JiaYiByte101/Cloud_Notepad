@@ -1,0 +1,17 @@
+Django==5.1.2
+django-bootstrap4==24.1
+django-tinymce==3.7.1
+mysqlclient==2.2.1
+python-dotenv==1.0.0
+Pillow==10.2.0
+xhtml2pdf==0.2.13
+reportlab==4.0.9
+pdfkit==1.0.0
+jieba==0.42.1
+django-cleanup==8.1.0
+django-cors-headers==4.3.1
+requests==2.31.0
+beautifulsoup4==4.12.3
+django-debug-toolbar==4.3.0
+whitenoise==6.6.0
+gunicorn==22.0.0

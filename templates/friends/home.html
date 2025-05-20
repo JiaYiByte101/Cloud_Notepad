@@ -73,30 +73,10 @@
                                                 <a href="{% url 'friends:chat_detail' friend.id %}" class="btn btn-outline-primary btn-sm rounded-pill friend-action-btn">
                                                     <i class="bi bi-chat-text me-1"></i>发送消息
                                                 </a>
-                                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill friend-action-btn" 
-                                                        data-bs-toggle="modal" data-bs-target="#removeFriend{{ friend.id }}">
+                                                <button type="button" class="btn btn-outline-danger btn-sm rounded-pill friend-action-btn remove-friend-btn" 
+                                                        data-friend-id="{{ friend.id }}" data-friend-username="{{ friend.username }}">
                                                     <i class="bi bi-person-dash me-1"></i>删除好友
                                                 </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- 删除好友确认模态框 -->
-                                <div class="modal fade" id="removeFriend{{ friend.id }}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content rounded-4 border-0 shadow">
-                                            <div class="modal-header bg-danger text-white">
-                                                <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>删除好友</h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body p-4">
-                                                <p>确定要将 <strong>{{ friend.username }}</strong> 从好友列表中删除吗？</p>
-                                                <p class="text-muted small">删除后，您将无法与该用户聊天，并且会丢失所有聊天记录。</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">取消</button>
-                                                <a href="{% url 'friends:remove_friend' friend.id %}" class="btn btn-danger rounded-pill">确认删除</a>
                                             </div>
                                         </div>
                                     </div>
@@ -118,4 +98,47 @@
         </div>
     </div>
 </div>
+
+<!-- 删除好友确认模态框 (定义一次在循环外部) -->
+<div class="modal fade" id="removeFriendModal" tabindex="-1" aria-labelledby="removeFriendModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="removeFriendModalLabel"><i class="bi bi-exclamation-triangle me-2"></i>删除好友</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p>确定要将 <strong id="friendUsername"></strong> 从好友列表中删除吗？</p>
+                <p class="text-muted small">删除后，您将无法与该用户聊天，并且会丢失所有聊天记录。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">取消</button>
+                <a href="#" id="confirmRemoveFriend" class="btn btn-danger rounded-pill">确认删除</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const removeFriendModal = new bootstrap.Modal(document.getElementById('removeFriendModal'));
+        const friendUsernameElement = document.getElementById('friendUsername');
+        const confirmRemoveFriendLink = document.getElementById('confirmRemoveFriend');
+        
+        document.querySelectorAll('.remove-friend-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const friendId = this.dataset.friendId;
+                const friendUsername = this.dataset.friendUsername;
+                
+                friendUsernameElement.textContent = friendUsername;
+                confirmRemoveFriendLink.href = '{% url "friends:remove_friend" 0 %}'.replace('/0/', `/${friendId}/`);
+                
+                removeFriendModal.show();
+            });
+        });
+    });
+</script>
 {% endblock %} 

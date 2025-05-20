@@ -24,7 +24,9 @@
                                     </label>
                                 </div>
                             </div>
-                            {{ p_form.avatar|addclass:'d-none' }}
+                            {# Manually render the hidden file input for the avatar field #}
+                            <input type="file" name="{{ p_form.avatar.name }}" id="{{ p_form.avatar.id_for_label }}" accept="image/*" class="d-none">
+                            {{ p_form.avatar.errors }}
                         </div>
                         
                         <div class="col-12">
