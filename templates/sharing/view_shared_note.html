@@ -58,7 +58,7 @@
                 </span>
                 <!-- templates/sharing/view_shared_note.html 的剩余部分 -->
                 <span class="ms-3">
-                    <i class="bi bi-eye"></i> 阅读量（待实现）
+                    <i class="bi bi-eye"></i> 阅读量: {{ notebook.view_count }}
                 </span>
             </div>
 
@@ -112,7 +112,6 @@
                 {% for comment in comments %}
                 <div class="d-flex mb-3 comment-item {% if comment.status == 'INAPPROPRIATE' %}comment-inappropriate{% elif comment.status == 'PENDING' %}comment-pending{% endif %}" id="comment-{{ comment.id }}">
                     <div class="flex-shrink-0">
-                        <!-- Assuming user profile and avatar exist, placeholder if not -->
                         {% if comment.user.profile.avatar.url %}
                         <img src="{{ comment.user.profile.avatar.url }}" alt="{{ comment.user.username }}"
                              class="rounded-circle" width="50" height="50">
@@ -137,10 +136,76 @@
                         </div>
                         <p class="mb-1 comment-content">{{ comment.content|linebreaksbr }}</p>
                         
+                        <div class="d-flex align-items-center mt-2">
+                            <button class="btn btn-sm btn-outline-primary me-2 toggle-comment-like" 
+                                    data-comment-id="{{ comment.id }}"
+                                    data-liked="{% if comment.is_liked_by_user %}true{% else %}false{% endif %}">
+                                <i class="bi bi-heart{% if comment.is_liked_by_user %}-fill{% endif %}"></i>
+                                <span class="like-count">{{ comment.like_count }}</span>
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary me-2 reply-comment-btn" 
+                                    data-comment-id="{{ comment.id }}"
+                                    data-username="{{ comment.user.username }}">
+                                <i class="bi bi-reply"></i> 回复
+                            </button>
+                            {% if comment.user == request.user %}
+                            <button class="btn btn-sm btn-outline-danger delete-comment-btn" 
+                                    data-comment-id="{{ comment.id }}">
+                                <i class="bi bi-trash"></i> 删除
+                            </button>
+                            {% endif %}
+                        </div>
+
                         {% if comment.status == 'INAPPROPRIATE' and comment.user == request.user %}
                         <div class="mt-2 comment-actions">
-                            <button class="btn btn-sm btn-outline-primary rewrite-comment-btn" data-comment-id="{{ comment.id }}" data-comment-content="{{ comment.content }}">重写</button>
-                            <button class="btn btn-sm btn-outline-danger cancel-comment-btn" data-comment-id="{{ comment.id }}" data-url="{% url 'sharing:cancel_comment' comment.id %}">取消</button>
+                            <button class="btn btn-sm btn-outline-primary rewrite-comment-btn" 
+                                    data-comment-id="{{ comment.id }}" 
+                                    data-comment-content="{{ comment.content }}">重写</button>
+                        </div>
+                        {% endif %}
+
+                        <!-- 回复列表 -->
+                        {% if comment.replies.exists %}
+                        <div class="replies mt-3 ms-4">
+                            {% for reply in comment.replies.all %}
+                            <div class="d-flex mb-2 reply-item" id="comment-{{ reply.id }}">
+                                <div class="flex-shrink-0">
+                                    {% if reply.user.profile.avatar.url %}
+                                    <img src="{{ reply.user.profile.avatar.url }}" alt="{{ reply.user.username }}"
+                                         class="rounded-circle" width="40" height="40">
+                                    {% else %}
+                                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" 
+                                         style="width: 40px; height: 40px; font-size: 1.2rem;">
+                                         {{ reply.user.username|first|upper }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow-1 ms-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 d-inline">{{ reply.user.username }}</h6>
+                                            <small class="text-muted">回复 {{ comment.user.username }}</small>
+                                        </div>
+                                        <small class="text-muted">{{ reply.created_at|date:"Y-m-d H:i" }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ reply.content|linebreaksbr }}</p>
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-sm btn-outline-primary me-2 toggle-comment-like" 
+                                                data-comment-id="{{ reply.id }}"
+                                                data-liked="{% if reply.is_liked_by_user %}true{% else %}false{% endif %}">
+                                            <i class="bi bi-heart{% if reply.is_liked_by_user %}-fill{% endif %}"></i>
+                                            <span class="like-count">{{ reply.like_count }}</span>
+                                        </button>
+                                        {% if reply.user == request.user %}
+                                        <button class="btn btn-sm btn-outline-danger delete-comment-btn" 
+                                                data-comment-id="{{ reply.id }}">
+                                            <i class="bi bi-trash"></i> 删除
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
                         {% endif %}
                     </div>
@@ -225,69 +290,82 @@ document.addEventListener('DOMContentLoaded', function () {
         currentRewritingCommentId = null;
     });
 
-    // 不合规评论处理 - 使用基于 base.html 风格的提示但有特殊样式
-    document.querySelectorAll('.comment-inappropriate .badge.bg-danger, .comment-inappropriate .comment-content').forEach(element => {
-        element.addEventListener('click', function() {
-            const commentItem = this.closest('.comment-item');
-            currentRewritingCommentId = commentItem.id.split('-')[1];
-            
-            // 显示提示信息，添加特殊样式类
-            showAlert(`
-                <div class="d-flex align-items-start">
-                    <div class="flex-shrink-0 text-danger">
-                        <i class="bi bi-exclamation-triangle-fill fs-4"></i>
-                    </div>
-                    <div class="ms-2 w-100">
-                        <h5 class="alert-heading">评论内容不合规</h5>
-                        <p class="mb-0">您的这条评论因为包含不恰当的内容，已被系统标记为不合规。请您修改评论内容后重新提交，或者选择取消发布。</p>
-                        <div class="mt-2">
-                            <button type="button" id="rewrite-from-alert-btn" class="btn btn-sm btn-danger" data-comment-id="${currentRewritingCommentId}">去重写</button>
-                        </div>
-                    </div>
-                </div>
-            `, 'danger', 'alert-inappropriate');
-            
-            // 添加重写按钮监听器
-            document.getElementById('rewrite-from-alert-btn').addEventListener('click', function() {
-                const rewriteButton = document.querySelector(`.rewrite-comment-btn[data-comment-id='${this.dataset.commentId}']`);
-                if (rewriteButton) {
-                    rewriteButton.click();
+    // 评论点赞功能
+    document.querySelectorAll('.toggle-comment-like').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.dataset.commentId;
+            fetch(`/sharing/comment/${commentId}/like/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
                 }
-                // 关闭提示
-                const alertElement = this.closest('.alert');
-                if (alertElement) {
-                    const bsAlert = bootstrap.Alert.getInstance(alertElement);
-                    if (bsAlert) bsAlert.close();
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const icon = this.querySelector('i');
+                    const countSpan = this.querySelector('.like-count');
+                    
+                    if (data.liked) {
+                        icon.classList.remove('bi-heart');
+                        icon.classList.add('bi-heart-fill');
+                    } else {
+                        icon.classList.remove('bi-heart-fill');
+                        icon.classList.add('bi-heart');
+                    }
+                    
+                    countSpan.textContent = data.like_count;
                 }
             });
         });
     });
 
-    document.querySelectorAll('.cancel-comment-btn').forEach(button => {
-        button.addEventListener('click', function () {
+    // 回复评论功能
+    document.querySelectorAll('.reply-comment-btn').forEach(button => {
+        button.addEventListener('click', function() {
             const commentId = this.dataset.commentId;
-            const url = this.dataset.url; // Get URL from data attribute
-            if (confirm('确定要取消并删除这条评论吗？此操作无法撤销。')) {
-                fetch(url, {
+            const username = this.dataset.username;
+            const commentForm = document.getElementById('comment-form');
+            const commentContentTextarea = commentForm.querySelector('textarea[name="content"]');
+            const parentCommentInput = document.createElement('input');
+            parentCommentInput.type = 'hidden';
+            parentCommentInput.name = 'parent_comment_id';
+            parentCommentInput.value = commentId;
+            
+            // 移除可能存在的旧父评论ID输入
+            const oldParentInput = commentForm.querySelector('input[name="parent_comment_id"]');
+            if (oldParentInput) {
+                oldParentInput.remove();
+            }
+            
+            commentForm.appendChild(parentCommentInput);
+            commentContentTextarea.value = `@${username} `;
+            commentContentTextarea.focus();
+            commentForm.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // 删除评论功能
+    document.querySelectorAll('.delete-comment-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.dataset.commentId;
+            if (confirm('确定要删除这条评论吗？此操作无法撤销。')) {
+                fetch(`/sharing/comment/${commentId}/delete/`, {
                     method: 'POST',
                     headers: {
                         'X-CSRFToken': '{{ csrf_token }}',
                         'Content-Type': 'application/json'
-                    },
+                    }
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        document.getElementById(`comment-${commentId}`).remove();
-                        // 使用一致风格的提示
-                        showAlert('评论已删除成功！', 'success');
-                    } else {
-                        showAlert('删除失败: ' + (data.error || '未知错误'), 'danger');
+                        const commentElement = document.getElementById(`comment-${commentId}`);
+                        if (commentElement) {
+                            commentElement.remove();
+                        }
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showAlert('操作失败，请稍后重试。', 'danger');
                 });
             }
         });

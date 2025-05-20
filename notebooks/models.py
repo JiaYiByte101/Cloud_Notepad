@@ -52,6 +52,7 @@ class Notebook(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     is_public = models.BooleanField(default=False, verbose_name="是否公开")
     is_featured = models.BooleanField(default=False, verbose_name="是否精选")
+    view_count = models.PositiveIntegerField(default=0, verbose_name="浏览量")
 
     class Meta:
         verbose_name = "笔记"
@@ -60,6 +61,11 @@ class Notebook(models.Model):
 
     def __str__(self):
         return self.title
+
+    def increment_view_count(self):
+        """增加浏览量"""
+        self.view_count += 1
+        self.save(update_fields=['view_count'])
 
 
 class Attachment(models.Model):
