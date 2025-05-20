@@ -161,7 +161,7 @@
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="搜索笔记..."
                                value="{{ search_query|default:'' }}">
-                        <button class="btn btn-outline-primary" type="submit">
+                        <button class="btn btn-primary" type="submit" title="搜索笔记">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
@@ -293,9 +293,9 @@
                         </div>
                         <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                             <small>更新于 {{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
-                            <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-sm btn-outline-danger">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                            <button type="button" class="btn btn-sm btn-danger delete-notebook-btn" data-id="{{ notebook.id }}" data-title="{{ notebook.title }}">
+                                <i class="fas fa-trash me-1"></i>删除
+                            </button>
                         </div>
                     </div>
                 </div>
