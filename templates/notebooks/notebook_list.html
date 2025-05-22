@@ -245,6 +245,9 @@
                                     <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-edit me-1"></i> 编辑
                                     </a>
+                                    <a href="{% url 'storage:save_to_cloud' notebook.id %}" class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-cloud-arrow-up me-1"></i> 云存储
+                                    </a>
                                     <div class="btn-group">
                                         <button type="button" 
                                                 class="btn btn-sm btn-outline-success dropdown-toggle" 
