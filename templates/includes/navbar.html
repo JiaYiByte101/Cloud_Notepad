@@ -1,0 +1,192 @@
+<!-- templates/includes/navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            <i class="bi bi-journal-text me-2 fs-4 nav-icon-pulse"></i>
+            <span class="fw-bold">云记事本</span>
+        </a>
+        <button class="navbar-toggler border-0 shadow-sm" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'home' %}">
+                        <i class="bi bi-house-door me-1"></i>首页
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'notebooks:list' %}">
+                            <i class="bi bi-journal-richtext me-1"></i>我的笔记
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'storage:cloud_storage' %}">
+                            <i class="bi bi-cloud-arrow-up me-1"></i>云存储
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'sharing:public' %}">
+                            <i class="bi bi-people me-1"></i>公共广场
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'friends:home' %}">
+                            <i class="bi bi-person-lines-fill me-1"></i>好友
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'collaboration:project_list' %}">
+                            <i class="bi bi-people-fill me-1"></i>协作项目
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle rounded-pill px-2 mx-1 nav-btn-hover" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-gear me-1"></i>分类标签管理
+                        </a>
+                        <ul class="dropdown-menu shadow-lg border-0 rounded-4 mt-2" aria-labelledby="managementDropdown">
+                            <li><a class="dropdown-item py-2" href="{% url 'notebooks:categories' %}"><i class="bi bi-folder me-2"></i>分类管理</a></li>
+                            <li><a class="dropdown-item py-2" href="{% url 'notebooks:tags' %}"><i class="bi bi-tags me-2"></i>标签管理</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-3 position-relative" href="{% url 'friends:friend_requests' %}" id="notificationBell">
+                            <i class="bi bi-bell me-1"></i>
+                            <span id="notificationBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                <span id="notificationCount">0</span>
+                                <span class="visually-hidden">个未处理通知</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-3 position-relative" href="{% url 'collaboration:project_list' %}" id="collaborationBell">
+                            <i class="bi bi-people-fill me-1"></i>
+                            <span id="collaborationBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                <span id="collaborationCount">0</span>
+                                <span class="visually-hidden">个协作邀请</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-3 position-relative" href="{% url 'friends:chat_list' %}" id="messageLink">
+                            <i class="bi bi-chat-dots me-1"></i>
+                            <span id="messageBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                <span id="messageCount">0</span>
+                                <span class="visually-hidden">个未读消息</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle user-dropdown rounded-pill px-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span>{{ user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item py-2" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2"></i>个人资料</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2 text-danger" href="{% url 'accounts:logout' %}"><i class="bi bi-box-arrow-right me-2"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link btn-glow rounded-pill px-3 mx-1" href="{% url 'accounts:login' %}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>登录
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-primary-outline rounded-pill px-3 mx-1" href="{% url 'accounts:register' %}">
+                            <i class="bi bi-person-plus me-1"></i>注册
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if user.is_authenticated %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取通知数量的元素
+        const notificationBadge = document.getElementById('notificationBadge');
+        const notificationCount = document.getElementById('notificationCount');
+        const messageBadge = document.getElementById('messageBadge');
+        const messageCount = document.getElementById('messageCount');
+        const collaborationBadge = document.getElementById('collaborationBadge');
+        const collaborationCount = document.getElementById('collaborationCount');
+        
+        // 更新通知数量的函数
+        function updateNotifications() {
+            // 获取好友请求和消息通知
+            fetch('{% url "friends:get_notifications_count" %}', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 更新好友请求的通知数量
+                if (data.pending_requests_count > 0) {
+                    notificationCount.textContent = data.pending_requests_count;
+                    notificationBadge.classList.remove('d-none');
+                } else {
+                    notificationBadge.classList.add('d-none');
+                }
+                
+                // 更新聊天消息的通知数量
+                if (data.unread_messages_count > 0) {
+                    messageCount.textContent = data.unread_messages_count;
+                    messageBadge.classList.remove('d-none');
+                } else {
+                    messageBadge.classList.add('d-none');
+                }
+            })
+            .catch(error => console.error('获取通知数量时出错:', error));
+            
+            // 获取协作邀请的通知数量 - 单独请求避免一个错误影响另一个
+            fetch('{% url "collaboration:get_invitations_count" %}', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.pending_invitations_count > 0) {
+                    collaborationCount.textContent = data.pending_invitations_count;
+                    collaborationBadge.classList.remove('d-none');
+                } else {
+                    collaborationBadge.classList.add('d-none');
+                }
+            })
+            .catch(error => {
+                console.error('获取协作邀请数量时出错:', error);
+                // 即使出错也不要影响用户体验
+                collaborationBadge.classList.add('d-none');
+            });
+        }
+        
+        // 初始获取通知数量
+        updateNotifications();
+        
+        // 每30秒更新一次通知数量
+        setInterval(updateNotifications, 30000);
+        
+        // 标记页面变为活动状态时更新通知
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                updateNotifications();
+            }
+        });
+    });
+</script>
+{% endif %}

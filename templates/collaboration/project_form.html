@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if project %}编辑项目{% else %}创建协作项目{% endif %} - 云笔记{% endblock %}
+
+{% block extra_css %}
+<style>
+  .notebook-item {
+    margin-bottom: 5px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+  }
+  .notebook-item:hover {
+    background-color: #e9ecef;
+  }
+  .notebook-item label {
+    margin-bottom: 0;
+    cursor: pointer;
+    width: 100%;
+  }
+  .form-section {
+    margin-bottom: 30px;
+  }
+  .form-section-title {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .form-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .notebook-search {
+    margin-bottom: 15px;
+  }
+  .notebook-list {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card form-card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">{% if project %}编辑协作项目{% else %}创建新的协作项目{% endif %}</h4>
+        </div>
+        <div class="card-body">
+          <form method="post" action="{% if project %}{% url 'collaboration:edit_project' project.id %}{% else %}{% url 'collaboration:create_project' %}{% endif %}">
+            {% csrf_token %}
+            
+            <div class="form-section">
+              <h5 class="form-section-title">基本信息</h5>
+              <div class="form-group">
+                <label for="name">项目名称 <span class="text-danger">*</span></label>
+                <input type="text" name="name" id="name" class="form-control" value="{% if project %}{{ project.name }}{% endif %}" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="description">项目描述</label>
+                <textarea name="description" id="description" class="form-control" rows="3">{% if project %}{{ project.description }}{% endif %}</textarea>
+                <small class="form-text text-muted">简要描述项目的目的和内容</small>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <h5 class="form-section-title">关联笔记</h5>
+              <p class="text-muted mb-3">选择要包含在此协作项目中的笔记。这些笔记将可以被项目成员查看和编辑（根据他们的角色）。</p>
+              
+              <div class="form-group notebook-search">
+                <input type="text" class="form-control" id="notebookSearch" placeholder="搜索笔记...">
+              </div>
+              
+              <div class="notebook-list">
+                {% if notebooks %}
+                  {% for notebook in notebooks %}
+                  <div class="notebook-item">
+                    <label>
+                      <input type="checkbox" name="notebooks" value="{{ notebook.id }}" 
+                      {% if project and notebook in selected_notebooks %}checked{% endif %}>
+                      <span class="ml-2">{{ notebook.title }}</span>
+                      <small class="text-muted ml-2">{{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
+                    </label>
+                  </div>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-center text-muted">您还没有创建任何笔记</p>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+              <a href="{% url 'collaboration:project_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> 返回
+              </a>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> {% if project %}保存更改{% else %}创建项目{% endif %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  $(document).ready(function() {
+    // 笔记搜索功能
+    $('#notebookSearch').on('keyup', function() {
+      var value = $(this).val().toLowerCase();
+      $('.notebook-item').filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+{% endblock %} 
