@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}云存储 - 云记事本{% endblock %}
+
+{% block extra_css %}
+<style>
+    .storage-card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .storage-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .progress {
+        height: 0.8rem;
+        border-radius: 1rem;
+    }
+    
+    .file-item {
+        border: none;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s;
+    }
+    
+    .file-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .btn-action {
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .storage-icon {
+        font-size: 2rem;
+        color: #0d6efd;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="fw-bold mb-4">云存储</h1>
+        </div>
+    </div>
+
+    <!-- 存储空间信息 -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card storage-card h-100">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-cloud storage-icon mb-3"></i>
+                    <h5 class="card-title fw-bold">存储空间</h5>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-primary" role="progressbar" 
+                             style="width: {{ cloud_data.used_percentage }}%"
+                             aria-valuenow="{{ cloud_data.used_percentage }}" 
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="card-text">
+                        已使用 {{ cloud_data.used_space }}MB / {{ cloud_data.total_space }}MB
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card storage-card h-100">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-arrow-repeat storage-icon mb-3"></i>
+                    <h5 class="card-title fw-bold">同步状态</h5>
+                    <p class="card-text mb-3">上次同步时间：2024-03-20 10:30</p>
+                    <button class="btn btn-primary btn-action" onclick="syncCloud()">
+                        <i class="bi bi-arrow-repeat me-2"></i>立即同步
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文件列表 -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card storage-card">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold">已存储文件</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% if cloud_data.files %}
+                            {% for file in cloud_data.files %}
+                            <div class="list-group-item file-item d-flex justify-content-between align-items-center p-3">
+                                <div>
+                                    <h6 class="mb-1">{{ file.name }}</h6>
+                                    <small class="text-muted">
+                                        {{ file.size }}MB · {{ file.type }} · {{ file.last_modified }}
+                                    </small>
+                                </div>
+                                <div class="btn-group">
+                                    <a href="{% url 'notebooks:download_html' file.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-download me-1"></i>下载
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteCloudFile({{ file.id }}, this)">
+                                        <i class="bi bi-trash me-1"></i>删除
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="list-group-item text-center text-muted">
+                                云存储中暂无文件。
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function syncCloud() {
+    // 显示加载状态
+    const button = event.target;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i>同步中...';
+    button.disabled = true;
+    
+    // 发送同步请求
+    fetch('{% url "storage:sync_cloud" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // 显示成功消息
+            showToast('同步成功！', 'success');
+        } else {
+            showToast('同步失败，请重试', 'error');
+        }
+    })
+    .catch(error => {
+        showToast('同步失败，请重试', 'error');
+    })
+    .finally(() => {
+        // 恢复按钮状态
+        button.innerHTML = originalText;
+        button.disabled = false;
+    });
+}
+
+function deleteCloudFile(fileId, buttonElement) {
+    // 添加确认提示
+    if (confirm('确定要从云存储中移除这篇笔记吗？')) {
+        // 显示加载状态 (可选，这里只禁用按钮)
+        buttonElement.disabled = true;
+        
+        fetch('{% url "storage:delete_cloud_file" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ file_id: fileId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // 成功后从页面上移除该文件项
+                const fileItem = buttonElement.closest('.list-group-item');
+                if (fileItem) {
+                    fileItem.remove();
+                    showToast('文件已移除', 'success');
+                    // 模拟更新已用空间显示（可选，如果需要更精确的模拟）
+                    // window.location.reload(); // 简单粗暴的方式是刷新页面，但用户体验不好
+                }
+            } else {
+                showToast(data.message || '删除失败，请重试', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('删除文件时出错:', error);
+            showToast('删除失败，请重试', 'error');
+        })
+        .finally(() => {
+            // 恢复按钮状态 (如果移除成功，按钮所在的元素已被移除，无需恢复；如果失败，才需要恢复)
+            if (!buttonElement.closest('.list-group-item')) {
+                 // 元素已被移除，无需操作
+            } else {
+                buttonElement.disabled = false;
+            }
+        });
+    }
+}
+
+function showToast(message, type) {
+    // 创建toast元素
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0 position-fixed bottom-0 end-0 m-3`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    // 设置toast内容
+    toast.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    `;
+    
+    // 添加到页面
+    document.body.appendChild(toast);
+    
+    // 初始化并显示toast
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    // 自动移除
+    toast.addEventListener('hidden.bs.toast', () => {
+        toast.remove();
+    });
+}
+
+// 获取CSRF Token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %} 

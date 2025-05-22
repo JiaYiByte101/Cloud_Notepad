@@ -11,33 +11,38 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link rounded-pill px-3 mx-1 nav-btn-hover" href="{% url 'home' %}">
+                    <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'home' %}">
                         <i class="bi bi-house-door me-1"></i>首页
                     </a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link rounded-pill px-3 mx-1 nav-btn-hover" href="{% url 'notebooks:list' %}">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'notebooks:list' %}">
                             <i class="bi bi-journal-richtext me-1"></i>我的笔记
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-pill px-3 mx-1 nav-btn-hover" href="{% url 'sharing:public' %}">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'storage:cloud_storage' %}">
+                            <i class="bi bi-cloud-arrow-up me-1"></i>云存储
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'sharing:public' %}">
                             <i class="bi bi-people me-1"></i>公共广场
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-pill px-3 mx-1 nav-btn-hover" href="{% url 'friends:home' %}">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'friends:home' %}">
                             <i class="bi bi-person-lines-fill me-1"></i>好友
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-pill px-3 mx-1 nav-btn-hover" href="{% url 'collaboration:project_list' %}">
+                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'collaboration:project_list' %}">
                             <i class="bi bi-people-fill me-1"></i>协作项目
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle rounded-pill px-3 mx-1 nav-btn-hover" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle rounded-pill px-2 mx-1 nav-btn-hover" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-gear me-1"></i>分类标签管理
                         </a>
                         <ul class="dropdown-menu shadow-lg border-0 rounded-4 mt-2" aria-labelledby="managementDropdown">

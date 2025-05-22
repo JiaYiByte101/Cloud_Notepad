@@ -5,7 +5,7 @@ import json
 import datetime
 import zipfile
 import tempfile
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
@@ -13,6 +13,7 @@ from django.conf import settings
 from django.utils import timezone
 from .models import BackupRecord, SyncStatus
 from notebooks.models import Notebook, Category, Tag
+import time
 
 
 @login_required
@@ -189,7 +190,6 @@ def sync_now(request):
             sync_status.save()
 
             # 这里是模拟代码，实际项目中需要实现真正的云同步
-            import time
             time.sleep(2)  # 模拟同步延迟
 
             # 更新同步状态
@@ -301,3 +301,91 @@ def restore_backup(request, backup_id):
             messages.error(request, f'恢复备份失败：{str(e)}')
 
     return redirect('storage:home')
+
+
+@login_required
+def cloud_storage(request):
+    """云存储页面视图"""
+    # 从session获取模拟的云存储文件列表
+    cloud_files = request.session.get('cloud_files', [])
+    
+    # 模拟存储空间数据
+    total_space = 1024  # 总空间（MB）
+    # 简单模拟已用空间：每篇模拟笔记占用5MB
+    used_space = len(cloud_files) * 5
+    # 确保已用空间不超过总空间
+    used_space = min(used_space, total_space)
+    
+    # 计算已用空间的百分比
+    used_percentage = (used_space / total_space) * 100 if total_space > 0 else 0
+
+    cloud_data = {
+        'total_space': total_space,
+        'used_space': used_space,
+        'used_percentage': used_percentage,
+        'files': cloud_files
+    }
+    return render(request, 'storage/cloud_storage.html', {'cloud_data': cloud_data})
+
+
+@login_required
+def save_to_cloud(request, notebook_id):
+    """保存笔记到云存储"""
+    notebook = get_object_or_404(Notebook, id=notebook_id, user=request.user)
+    
+    # 模拟云存储过程
+    time.sleep(1)  # 模拟网络延迟
+    
+    # 获取或初始化session中的云存储文件列表
+    cloud_files = request.session.get('cloud_files', [])
+    
+    # 检查是否已存在，避免重复添加（这里简单通过id判断，实际应有更复杂的唯一标识）
+    if not any(f['id'] == notebook.id for f in cloud_files):
+        # 模拟文件信息
+        file_info = {
+            'id': notebook.id,
+            'name': notebook.title,
+            'size': 5, # 模拟大小，单位MB
+            'last_modified': time.strftime('%Y-%m-%d %H:%M'),
+            'type': '笔记'
+        }
+        cloud_files.append(file_info)
+        request.session['cloud_files'] = cloud_files
+        messages.success(request, f'笔记 "{notebook.title}" 已成功保存到云存储！')
+    else:
+        messages.info(request, f'笔记 "{notebook.title}" 已存在于云存储中。')
+
+    return redirect('notebooks:list')
+
+
+@login_required
+def sync_cloud(request):
+    """同步云存储数据"""
+    # 模拟同步过程
+    time.sleep(2)  # 模拟网络延迟
+    
+    # 模拟成功同步
+    messages.success(request, '云存储数据同步成功！')
+    return JsonResponse({'status': 'success'})
+
+
+@login_required
+def delete_cloud_file(request):
+    """模拟删除云存储中的文件"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            file_id_to_delete = data.get('file_id')
+            
+            if file_id_to_delete is not None:
+                cloud_files = request.session.get('cloud_files', [])
+                # 查找并移除对应的文件
+                request.session['cloud_files'] = [f for f in cloud_files if f.get('id') != file_id_to_delete]
+                # 标记session需要保存
+                request.session.modified = True
+                return JsonResponse({'status': 'success', 'message': '文件已移除'})
+            else:
+                return JsonResponse({'status': 'error', 'message': '无效的文件ID'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': '无效的JSON数据'}, status=400)
+    return JsonResponse({'status': 'error', 'message': '只允许POST请求'}, status=405)
