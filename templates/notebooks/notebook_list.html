@@ -1,0 +1,320 @@
+<!-- templates/notebooks/notebook_list.html -->
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    /* 卡片样式美化 */
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 标签和分类样式 */
+    .badge {
+        padding: 0.4rem 0.6rem;
+        border-radius: 2rem;
+        font-weight: 500;
+        font-size: 0.75rem;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+    .badge.bg-secondary {
+        background-color: #6c757d !important;
+        color: white !important;
+    }
+    .badge.bg-info {
+        background-color: #0dcaf0 !important;
+        color: #212529 !important;
+    }
+    .badge.bg-purple {
+        background-color: #6f42c1 !important;
+        color: white !important;
+    }
+    .badge.bg-success {
+        background-color: #28a745 !important;
+        color: white !important;
+    }
+    .badge.bg-danger {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+    
+    /* 按钮样式 */
+    .btn-sm {
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.3rem;
+        transition: all 0.2s;
+    }
+    .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        color: white;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+    .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+    
+    /* 列表项美化 */
+    .list-group-item {
+        border: none;
+        border-radius: 0.5rem;
+        margin-bottom: 0.25rem;
+        transition: background-color 0.2s;
+    }
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+    .list-group-item.active {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+    
+    /* 卡片标题 */
+    .card-title {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* 笔记内容预览 */
+    .card-text {
+        color: #495057;
+        margin-bottom: 1rem;
+    }
+    
+    /* 标签容器 */
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* 动画效果 */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .col {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    /* 下载下拉菜单样式 */
+    .dropdown-menu.download-menu {
+        min-width: 120px;
+    }
+    .dropdown-menu.download-menu a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    .dropdown-menu.download-menu a i {
+        width: 20px;
+    }
+    
+    /* 协作标记 */
+    .collaboration-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 0.7rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- 侧边栏 -->
+    <div class="col-md-3">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0 fw-bold">筛选</h5>
+            </div>
+            <div class="card-body">
+                <!-- 协作项目链接 - 移至顶部 -->
+                <div class="mb-4">
+                    <a href="{% url 'collaboration:project_list' %}" class="btn btn-outline-purple w-100">
+                        <i class="fas fa-users"></i> 我的协作项目
+                    </a>
+                </div>
+
+                <!-- 搜索框 -->
+                <form method="get" action="{% url 'notebooks:list' %}" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="搜索笔记..."
+                               value="{{ search_query|default:'' }}">
+                        <button class="btn btn-primary" type="submit" title="搜索笔记">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- 分类列表 -->
+                <h6 class="mt-3 mb-2 fw-bold">分类</h6>
+                <div class="list-group mb-3">
+                    <a href="{% url 'notebooks:list' %}" class="list-group-item list-group-item-action
+                              {% if not selected_category %}active{% endif %}">
+                        全部
+                    </a>
+                    {% for category in categories %}
+                    <a href="{% url 'notebooks:list' %}?category={{ category.id }}"
+                       class="list-group-item list-group-item-action
+                              {% if selected_category == category.id|stringformat:'i' %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+
+                <!-- 标签列表 -->
+                <h6 class="mt-3 mb-2 fw-bold">标签</h6>
+                <div class="list-group">
+                    <a href="{% url 'notebooks:list' %}" class="list-group-item list-group-item-action
+                              {% if not selected_tag %}active{% endif %}">
+                        全部
+                    </a>
+                    {% for tag in tags %}
+                    <a href="{% url 'notebooks:list' %}?tag={{ tag.id }}"
+                       class="list-group-item list-group-item-action
+                              {% if selected_tag == tag.id|stringformat:'i' %}active{% endif %}">
+                        {{ tag.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 笔记列表 -->
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="fw-bold">我的笔记</h1>
+            <div class="btn-group">
+                <a href="{% url 'notebooks:create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> 新建笔记
+                </a>
+                <a href="{% url 'collaboration:create_project' %}" class="btn btn-purple" style="background-color: #6f42c1; color: white;">
+                    <i class="fas fa-users me-1"></i> 创建协作项目
+                </a>
+            </div>
+        </div>
+
+        {% if notebooks %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for notebook in notebooks %}
+                <div class="col">
+                    <div class="card h-100 position-relative">
+                        {% if notebook.collaboration_projects.exists %}
+                        <span class="badge bg-purple collaboration-badge">
+                            <i class="fas fa-users"></i> 协作中
+                        </span>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ notebook.title }}</h5>
+                            <div class="tags-container">
+                                {% if notebook.category %}
+                                <span class="badge bg-secondary">{{ notebook.category.name }}</span>
+                                {% endif %}
+                                {% for tag in notebook.tags.all %}
+                                <span class="badge bg-info">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <p class="card-text">{{ notebook.content|striptags|truncatewords:20 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{% url 'notebooks:detail' notebook.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye me-1"></i> 查看
+                                    </a>
+                                    <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-edit me-1"></i> 编辑
+                                    </a>
+                                    <a href="{% url 'storage:save_to_cloud' notebook.id %}" class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-cloud-arrow-up me-1"></i> 云存储
+                                    </a>
+                                    <div class="btn-group">
+                                        <button type="button" 
+                                                class="btn btn-sm btn-outline-success dropdown-toggle" 
+                                                data-bs-toggle="dropdown" 
+                                                aria-expanded="false">
+                                            <i class="fas fa-download me-1"></i> 导出
+                                        </button>
+                                        <ul class="dropdown-menu download-menu">
+                                            <li>
+                                                <a class="dropdown-item" href="{% url 'notebooks:download_pdf' notebook.id %}">
+                                                    <i class="far fa-file-pdf"></i> PDF格式
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}">
+                                                    <i class="far fa-file-code"></i> HTML格式
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-purple dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-users"></i> 协作
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {% if notebook.collaboration_projects.exists %}
+                                        <li><h6 class="dropdown-header">已在项目中</h6></li>
+                                        {% for project in notebook.collaboration_projects.all %}
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'collaboration:project_detail' project.id %}">
+                                                <i class="fas fa-folder-open"></i> {{ project.name }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                        <li><hr class="dropdown-divider"></li>
+                                        {% endif %}
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
+                                                <i class="fas fa-plus-circle"></i> 添加到新项目
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                            <small>更新于 {{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
+                            <button type="button" class="btn btn-sm btn-danger delete-notebook-btn" data-id="{{ notebook.id }}" data-title="{{ notebook.title }}">
+                                <i class="fas fa-trash me-1"></i>删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h5 class="mb-3">您还没有创建任何笔记</h5>
+                    <p class="text-muted mb-4">点击上方的"新建笔记"按钮开始记录您的想法吧!</p>
+                    <a href="{% url 'notebooks:create' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> 创建第一篇笔记
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
