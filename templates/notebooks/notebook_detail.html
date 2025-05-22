@@ -1,0 +1,242 @@
+<!-- templates/notebooks/notebook_detail.html -->
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    .collaboration-section {
+        margin-top: 20px;
+    }
+    .project-card {
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+    }
+    .project-card:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .project-title {
+        font-weight: 600;
+        color: #6f42c1;
+    }
+    .badge.bg-purple {
+        background-color: #6f42c1 !important;
+        color: white;
+    }
+    .btn-outline-purple {
+        color: #6f42c1;
+        border-color: #6f42c1;
+    }
+    .btn-outline-purple:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+    .collab-icon {
+        width: 20px;
+        text-align: center;
+        margin-right: 5px;
+    }
+    .disabled-btn {
+        pointer-events: none;
+        opacity: 0.65;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{% url 'notebooks:list' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> 返回列表
+            </a>
+        </div>
+        <div class="col-auto">
+            <div class="btn-group">
+                {% if user == notebook.user or has_edit_permission %}
+                <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-outline-primary" id="editButton">
+                    <i class="fas fa-edit"></i> 编辑
+                </a>
+                {% else %}
+                <button class="btn btn-outline-primary disabled-btn" id="editDisabledButton" title="您没有编辑权限">
+                    <i class="fas fa-edit"></i> 编辑
+                </button>
+                {% endif %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-download"></i> 下载
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'notebooks:download_pdf' notebook.id %}">
+                                <i class="far fa-file-pdf me-2"></i> PDF格式
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}">
+                                <i class="far fa-file-code me-2"></i> HTML格式
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-purple dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-users"></i> 协作
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% if user == notebook.user %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'collaboration:create_project' %}">
+                                <i class="fas fa-folder-plus collab-icon"></i> 添加到新项目
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if notebook.collaboration_projects.exists %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><h6 class="dropdown-header">已在项目中</h6></li>
+                        {% for project in notebook.collaboration_projects.all %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'collaboration:project_detail' project.id %}">
+                                <i class="fas fa-folder-open collab-icon"></i> {{ project.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if user == notebook.user %}
+                <a href="{% url 'notebooks:delete' notebook.id %}" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> 删除
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{ notebook.title }}</h1>
+            <div class="text-muted">
+                <small>
+                    创建于 {{ notebook.created_at|date:"Y-m-d H:i" }} |
+                    最后更新 {{ notebook.updated_at|date:"Y-m-d H:i" }}
+                </small>
+            </div>
+            <div class="mt-2">
+                {% if notebook.category %}
+                <span class="badge bg-secondary">{{ notebook.category.name }}</span>
+                {% endif %}
+                {% for tag in notebook.tags.all %}
+                <span class="badge bg-info text-dark">{{ tag.name }}</span>
+                {% endfor %}
+                {% if notebook.is_public %}
+                <span class="badge bg-success">公开</span>
+                {% else %}
+                <span class="badge bg-secondary">私有</span>
+                {% endif %}
+                {% if notebook.collaboration_projects.exists %}
+                <span class="badge bg-purple">
+                    <i class="fas fa-users"></i> 多人协作
+                </span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="content">
+                {{ notebook.content|safe }}
+            </div>
+        </div>
+    </div>
+
+    {% if notebook.attachments.all %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">附件</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for attachment in notebook.attachments.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-file"></i>
+                        <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file_name }}</a>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ attachment.file_size|filesizeformat }}
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if notebook.collaboration_projects.exists %}
+    <div class="card mt-4 collaboration-section">
+        <div class="card-header bg-light">
+            <h5 class="mb-0"><i class="fas fa-users"></i> 协作项目</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for project in notebook.collaboration_projects.all %}
+                <div class="col-md-6">
+                    <div class="card project-card">
+                        <div class="card-body">
+                            <h5 class="project-title">{{ project.name }}</h5>
+                            <p class="text-muted small mb-2">
+                                <i class="fas fa-user"></i> 创建者: {{ project.owner.username }}
+                                <br>
+                                <i class="fas fa-users"></i> 协作成员: {{ project.members_count }} 人
+                            </p>
+                            <div class="mt-2">
+                                <a href="{% url 'collaboration:project_detail' project.id %}" class="btn btn-sm btn-outline-purple">
+                                    <i class="fas fa-external-link-alt"></i> 查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // 处理编辑按钮点击
+    {% if not user == notebook.user and not has_edit_permission %}
+    $('#editDisabledButton').on('click', function() {
+        alert('您是查看者角色，没有编辑权限');
+    });
+    {% else %}
+    // 如果是协作项目中的笔记，需要先获取锁
+    {% if notebook.collaboration_projects.exists %}
+    $('#editButton').on('click', function(e) {
+        e.preventDefault();
+        // 发送请求获取锁
+        $.ajax({
+            url: '{% url "collaboration:lock_notebook" notebook.id %}',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // 成功获取锁，重定向到编辑页面
+                    window.location.href = '{% url "notebooks:edit" notebook.id %}';
+                } else {
+                    // 未能获取锁，显示错误消息
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('请求失败，请稍后再试');
+            }
+        });
+    });
+    {% endif %}
+    {% endif %}
+});
+</script>
+{% endblock %}

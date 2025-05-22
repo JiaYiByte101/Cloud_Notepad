@@ -1,0 +1,115 @@
+<!-- templates/dashboard/manage_users.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}用户管理 - 管理员仪表板{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-3">
+            {% include 'dashboard/sidebar.html' %}
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">用户管理</h5>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if users %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>邮箱</th>
+                                        <th>注册时间</th>
+                                        <th>总笔记数</th>
+                                        <th>公开笔记数</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.date_joined|date:"Y-m-d" }}</td>
+                                        <td>{{ user.notebook_count }}</td>
+                                        <td>{{ user.public_notebook_count }}</td>
+                                        <td>
+                                            {% if user.is_active %}
+                                            <span class="badge bg-success">活跃</span>
+                                            {% else %}
+                                            <span class="badge bg-danger">禁用</span>
+                                            {% endif %}
+
+                                            {% if user.is_staff %}
+                                            <span class="badge bg-primary">管理员</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="{% url 'admin:auth_user_change' user.id %}" class="btn btn-outline-primary" target="_blank">
+                                                    <i class="bi bi-pencil me-1"></i>编辑
+                                                </a>
+                                                {% if not user.is_superuser %}
+                                                <button type="button" class="btn btn-outline-danger" 
+                                                        onclick="showDeleteModal('{{ user.id }}', '{{ user.username }}')">
+                                                    <i class="bi bi-trash me-1"></i>删除
+                                                </button>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">暂无用户数据</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">确认删除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                确定要删除用户 <strong id="deleteUserName"></strong> 吗？此操作不可恢复！
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <a href="#" id="confirmDeleteBtn" class="btn btn-danger">确认删除</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+function showDeleteModal(userId, username) {
+    document.getElementById('deleteUserName').textContent = username;
+    document.getElementById('confirmDeleteBtn').href = "{% url 'dashboard:delete_user' 0 %}".replace('0', userId);
+    new bootstrap.Modal(document.getElementById('deleteUserModal')).show();
+}
+</script>
+{% endblock %}
+{% endblock %}

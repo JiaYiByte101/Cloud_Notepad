@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ notebook.title }}</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            margin: 2cm;
+            @frame header {
+                -pdf-frame-content: headerContent;
+                top: 0.5cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                height: 1cm;
+            }
+            @frame footer {
+                -pdf-frame-content: footerContent;
+                bottom: 0.5cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                height: 1cm;
+            }
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            font-size: 24px;
+        }
+        .meta {
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .meta p {
+            margin: 5px 0;
+        }
+        .tags {
+            margin: 15px 0;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0f7fa;
+            color: #0097a7;
+            padding: 3px 8px;
+            margin-right: 5px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .content img {
+            max-width: 100%;
+            height: auto;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        #headerContent {
+            text-align: right;
+            color: #999;
+            font-size: 9px;
+        }
+        
+        #footerContent {
+            text-align: center;
+            color: #999;
+            font-size: 9px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页眉 -->
+    <div id="headerContent">
+        创建于: {{ notebook.created_at|date:"Y-m-d H:i" }}
+    </div>
+    
+    <h1>{{ notebook.title }}</h1>
+    
+    <div class="meta">
+        <p>创建于: {{ notebook.created_at|date:"Y-m-d H:i" }}</p>
+        <p>最后更新: {{ notebook.updated_at|date:"Y-m-d H:i" }}</p>
+        {% if notebook.category %}
+        <p>分类: {{ notebook.category.name }}</p>
+        {% endif %}
+    </div>
+    
+    {% if notebook.tags.all %}
+    <div class="tags">
+        标签:
+        {% for tag in notebook.tags.all %}
+        <span class="tag">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="content">
+        {{ notebook.content|safe }}
+    </div>
+    
+    <!-- 页脚 -->
+    <div id="footerContent">
+        第 <pdf:pagenumber /> 页，共 <pdf:pagecount /> 页
+    </div>
+</body>
+</html> 
