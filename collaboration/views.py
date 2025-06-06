@@ -30,7 +30,16 @@ def project_list(request):
     member_projects = CollaborationProject.objects.filter(
         members__user=request.user,
         members__status='accepted'
-    ).exclude(owner=request.user)  # 排除自己创建的项目
+    ).exclude(owner=request.user).distinct()  # 排除自己创建的项目，并去重
+    
+    # 为每个项目添加用户的成员信息
+    for project in member_projects:
+        # 获取用户在该项目中的最新成员记录
+        user_membership = project.members.filter(
+            user=request.user, 
+            status='accepted'
+        ).first()
+        project.user_membership = user_membership
     
     # 获取待处理的邀请
     pending_invitations = CollaborationMember.objects.filter(
@@ -95,12 +104,21 @@ def project_detail(request, project_id):
         except CollaborationLock.DoesNotExist:
             pass
     
+    # 计算成员数量信息
+    MAX_MEMBERS = 10
+    current_member_count = project.members.filter(
+        status__in=['accepted', 'pending']
+    ).count() + 1  # +1 是项目创建者
+    
     context = {
         'project': project,
         'members': members,
         'notebooks': notebooks,
         'locked_notebooks': locked_notebooks,
-        'is_owner': project.owner == request.user
+        'is_owner': project.owner == request.user,
+        'current_member_count': current_member_count,
+        'max_members': MAX_MEMBERS,
+        'can_invite': current_member_count < MAX_MEMBERS
     }
     return render(request, 'collaboration/project_detail.html', context)
 
@@ -221,6 +239,25 @@ def invite_member(request, project_id):
             messages.error(request, "请选择要邀请的好友")
             return redirect('collaboration:invite_member', project_id=project.id)
         
+        # 检查项目成员人数限制（包括创建者和所有状态的成员）
+        MAX_MEMBERS = 10  # 最大成员数量（包括创建者）
+        current_member_count = project.members.filter(
+            status__in=['accepted', 'pending']
+        ).count() + 1  # +1 是项目创建者
+        
+        if current_member_count >= MAX_MEMBERS:
+            # 返回JSON响应用于前端弹窗显示
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': f'项目成员已达上限（{MAX_MEMBERS}人），无法继续邀请新成员',
+                    'current_count': current_member_count,
+                    'max_count': MAX_MEMBERS
+                })
+            else:
+                messages.error(request, f"项目成员已达上限（{MAX_MEMBERS}人），无法继续邀请新成员")
+                return redirect('collaboration:invite_member', project_id=project.id)
+        
         # 验证是否是好友关系
         is_friend = Friendship.objects.filter(
             (Q(user=request.user) & Q(friend_id=friend_id)) |
@@ -228,46 +265,65 @@ def invite_member(request, project_id):
         ).exists()
         
         if not is_friend:
-            messages.error(request, "只能邀请您的好友加入协作项目")
-            return redirect('collaboration:invite_member', project_id=project.id)
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': '只能邀请您的好友加入协作项目'
+                })
+            else:
+                messages.error(request, "只能邀请您的好友加入协作项目")
+                return redirect('collaboration:invite_member', project_id=project.id)
         
         from django.contrib.auth.models import User
         friend = get_object_or_404(User, id=friend_id)
         
         # 检查是否已经是成员或已邀请
-        existing_member = CollaborationMember.objects.filter(
+        existing_members = CollaborationMember.objects.filter(
             project=project,
             user=friend
-        ).first()
+        )
         
-        if existing_member:
-            if existing_member.status == 'accepted':
-                messages.warning(request, f"{friend.username} 已是项目成员")
-            elif existing_member.status == 'pending':
-                messages.warning(request, f"已向 {friend.username} 发送过邀请，等待回复中")
-            else:  # rejected
-                # 重新发送邀请
-                existing_member.status = 'pending'
-                existing_member.role = role
-                existing_member.invited_by = request.user
-                existing_member.invited_at = timezone.now()
-                existing_member.save()
-                
-                # 不再通过消息系统发送邀请通知
-                messages.success(request, f"已重新向 {friend.username} 发送邀请")
+        # 检查是否有已接受的成员记录
+        accepted_member = existing_members.filter(status='accepted').first()
+        if accepted_member:
+            message = f"{friend.username} 已是项目成员"
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': message})
+            else:
+                messages.warning(request, message)
+                return redirect('collaboration:project_detail', project_id=project.id)
+        
+        # 检查是否有待处理的邀请
+        pending_member = existing_members.filter(status='pending').first()
+        if pending_member:
+            message = f"已向 {friend.username} 发送过邀请，等待回复中"
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': message})
+            else:
+                messages.warning(request, message)
+                return redirect('collaboration:project_detail', project_id=project.id)
+        
+        # 清理所有旧的记录（包括已拒绝的）
+        existing_members.delete()
+        
+        # 创建新邀请
+        CollaborationMember.objects.create(
+            project=project,
+            user=friend,
+            role=role,
+            invited_by=request.user
+        )
+        
+        message = f"已向 {friend.username} 发送邀请"
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'message': message})
         else:
-            # 创建新邀请
-            CollaborationMember.objects.create(
-                project=project,
-                user=friend,
-                role=role,
-                invited_by=request.user
-            )
-            
-            # 不再通过消息系统发送邀请通知
-            messages.success(request, f"已向 {friend.username} 发送邀请")
+            messages.success(request, message)
         
-        return redirect('collaboration:project_detail', project_id=project.id)
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'redirect': True})
+        else:
+            return redirect('collaboration:project_detail', project_id=project.id)
     
     # 获取用户的好友列表
     friendships = Friendship.objects.filter(user=request.user)
@@ -277,9 +333,18 @@ def invite_member(request, project_id):
     existing_member_ids = project.members.filter(status='accepted').values_list('user_id', flat=True)
     available_friends = [friend for friend in friends if friend.id not in existing_member_ids]
     
+    # 计算当前成员数量和限制
+    MAX_MEMBERS = 10
+    current_member_count = project.members.filter(
+        status__in=['accepted', 'pending']
+    ).count() + 1  # +1 是项目创建者
+    
     context = {
         'project': project,
-        'available_friends': available_friends
+        'available_friends': available_friends,
+        'current_member_count': current_member_count,
+        'max_members': MAX_MEMBERS,
+        'can_invite': current_member_count < MAX_MEMBERS
     }
     return render(request, 'collaboration/invite_member.html', context)
 
@@ -353,22 +418,47 @@ def remove_member(request, project_id, member_id):
 @login_required
 def change_member_role(request, member_id):
     """更改协作成员角色"""
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"change_member_role called: member_id={member_id}, method={request.method}, user={request.user.username}")
+    
     membership = get_object_or_404(CollaborationMember, id=member_id)
     project = membership.project
     
+    logger.info(f"Found membership: user={membership.user.username}, project={project.name}, current_role={membership.role}")
+    
     # 检查权限
     if project.owner != request.user:
+        logger.warning(f"Permission denied: user={request.user.username} is not owner of project={project.name}")
         messages.error(request, "只有项目创建者可以更改成员角色")
         return redirect('collaboration:project_detail', project_id=project.id)
     
     if request.method == 'POST':
         new_role = request.POST.get('role')
+        logger.info(f"POST data received: new_role={new_role}")
+        logger.info(f"Available role choices: {dict(CollaborationMember.ROLE_CHOICES)}")
+        
         if new_role in dict(CollaborationMember.ROLE_CHOICES):
+            old_role = membership.role
             membership.role = new_role
             membership.save()
-            messages.success(request, f"{membership.user.username} 的角色已更新为 {membership.get_role_display()}")
+            
+            # 验证保存是否成功
+            membership.refresh_from_db()
+            logger.info(f"Role change attempt: {old_role} -> {new_role}, actual result: {membership.role}")
+            
+            if membership.role == new_role:
+                logger.info(f"Role change successful for user={membership.user.username}")
+                messages.success(request, f"{membership.user.username} 的角色已更新为 {membership.get_role_display()}")
+            else:
+                logger.error(f"Role change failed: expected={new_role}, actual={membership.role}")
+                messages.error(request, "角色更新失败，请重试")
         else:
+            logger.warning(f"Invalid role choice: {new_role}")
             messages.error(request, "无效的角色选择")
+    else:
+        logger.info("Non-POST request received")
     
     return redirect('collaboration:project_detail', project_id=project.id)
 
@@ -402,27 +492,35 @@ def lock_notebook(request, notebook_id):
             'message': '您没有权限编辑此笔记'
         })
     
-    # 检查笔记是否已被锁定
-    try:
-        current_lock = CollaborationLock.objects.filter(notebook=notebook).latest('locked_at')
-        if not current_lock.is_expired() and current_lock.user != request.user:
-            return JsonResponse({
-                'success': False,
-                'message': f'此笔记当前被 {current_lock.user.username} 锁定，请稍后再试',
-                'locked_by': current_lock.user.username,
-                'expires_at': current_lock.expires_at.isoformat()
-            })
-    except CollaborationLock.DoesNotExist:
-        pass
+    # 清理所有过期的锁
+    expired_locks = CollaborationLock.objects.filter(
+        notebook=notebook,
+        expires_at__lt=timezone.now()
+    )
+    expired_locks.delete()
     
-    # 创建或更新锁
+    # 检查是否有其他用户的有效锁
+    other_locks = CollaborationLock.objects.filter(notebook=notebook).exclude(user=request.user)
+    if other_locks.exists():
+        current_lock = other_locks.first()
+        return JsonResponse({
+            'success': False,
+            'message': f'此笔记当前被 {current_lock.user.username} 锁定，请稍后再试',
+            'locked_by': current_lock.user.username,
+            'expires_at': current_lock.expires_at.isoformat()
+        })
+    
+    # 删除当前用户的旧锁（如果存在）
+    CollaborationLock.objects.filter(notebook=notebook, user=request.user).delete()
+    
+    # 创建新锁
     lock_duration = timedelta(minutes=30)  # 锁定30分钟
     expires_at = timezone.now() + lock_duration
     
-    lock, created = CollaborationLock.objects.update_or_create(
+    lock = CollaborationLock.objects.create(
         notebook=notebook,
         user=request.user,
-        defaults={'expires_at': expires_at}
+        expires_at=expires_at
     )
     
     return JsonResponse({
@@ -513,3 +611,45 @@ def download_project_html(request, project_id):
     # 重定向到notebooks的下载功能
     redirect_url = reverse('notebooks:download_html', args=[notebook_id])
     return redirect(redirect_url)
+
+@login_required
+def lock_monitor(request):
+    """锁状态监控页面 - 用于调试和验证"""
+    from django.utils import timezone
+    
+    # 获取所有锁的状态
+    all_locks = CollaborationLock.objects.select_related('notebook', 'user').all()
+    
+    # 分类锁状态
+    active_locks = []
+    expired_locks = []
+    
+    for lock in all_locks:
+        lock_info = {
+            'lock': lock,
+            'notebook_title': lock.notebook.title,
+            'user': lock.user.username,
+            'locked_at': lock.locked_at,
+            'expires_at': lock.expires_at,
+            'is_expired': lock.is_expired(),
+            'time_remaining': (lock.expires_at - timezone.now()).total_seconds() if not lock.is_expired() else 0
+        }
+        
+        if lock.is_expired():
+            expired_locks.append(lock_info)
+        else:
+            active_locks.append(lock_info)
+    
+    # 获取协作项目中的笔记
+    collaboration_notebooks = Notebook.objects.filter(
+        collaboration_projects__isnull=False
+    ).distinct().select_related('user')
+    
+    context = {
+        'active_locks': active_locks,
+        'expired_locks': expired_locks,
+        'collaboration_notebooks': collaboration_notebooks,
+        'current_time': timezone.now()
+    }
+    
+    return render(request, 'collaboration/lock_monitor.html', context)

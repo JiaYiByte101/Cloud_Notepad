@@ -60,3 +60,29 @@ class TagForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'})
         }
+
+
+class CollaborationNotebookForm(NotebookForm):
+    """协作笔记编辑表单，包含修改大纲字段"""
+    
+    edit_summary = forms.CharField(
+        label='修改大纲',
+        required=True,
+        max_length=500,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 3,
+            'placeholder': '请简要描述本次修改的内容（必填）'
+            # 移除 required 属性，避免浏览器HTML5验证冲突
+        }),
+        help_text='简要说明您做了哪些修改，以便团队成员了解'
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # 确保修改大纲字段显示在表单中，并且不被TinyMCE处理
+        self.fields['edit_summary'].widget.attrs.update({
+            'required': True,
+            'class': 'form-control',
+            'data-no-tinymce': 'true'  # 防止被TinyMCE处理
+        })

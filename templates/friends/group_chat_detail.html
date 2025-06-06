@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}群聊 - {{ group.name }} - 云记事本{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        height: 500px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .message-bubble {
+        max-width: 70%;
+        padding: 10px 15px;
+        border-radius: 18px;
+        margin-bottom: 15px;
+        position: relative;
+        word-wrap: break-word;
+    }
+    
+    .message-self {
+        background-color: #0d6efd;
+        color: white;
+        margin-left: auto;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .message-other {
+        background-color: #e9ecef;
+        color: #212529;
+        margin-right: auto;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .message-system {
+        background-color: #fff3cd;
+        color: #856404;
+        margin: 0 auto;
+        text-align: center;
+        max-width: 80%;
+        font-size: 0.875rem;
+    }
+    
+    .message-notification {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        margin: 0 auto;
+        text-align: center;
+        max-width: 80%;
+        font-size: 0.875rem;
+    }
+    
+    .message-sender {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 0.875rem;
+    }
+    
+    .message-time {
+        font-size: 0.7rem;
+        margin-top: 5px;
+        opacity: 0.7;
+    }
+    
+    .members-sidebar {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+    
+    .member-item {
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+    }
+    
+    .member-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .member-role {
+        font-size: 0.75rem;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">{{ group.name }}</h5>
+                            {% if group.collaboration_project %}
+                                <small><i class="fas fa-project-diagram"></i> 协作项目群聊</small>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'friends:group_list' %}" class="btn btn-light btn-sm rounded-pill">
+                            <i class="bi bi-arrow-left me-1"></i>返回群聊列表
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="chat-container" id="chat-container">
+                        {% if messages_list %}
+                            {% for message in messages_list %}
+                                <div class="message-bubble 
+                                    {% if message.message_type == 'system' %}message-system
+                                    {% elif message.message_type == 'notification' %}message-notification
+                                    {% elif message.sender == request.user %}message-self
+                                    {% else %}message-other{% endif %}" 
+                                     id="message-{{ message.id }}">
+                                    {% if message.sender and message.sender != request.user and message.message_type == 'text' %}
+                                        <div class="message-sender">{{ message.sender.username }}</div>
+                                    {% endif %}
+                                    {{ message.content|linebreaksbr }}
+                                    <div class="message-time text-end">
+                                        {{ message.created_at|date:"Y-m-d H:i" }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <i class="bi bi-chat-dots text-muted" style="font-size: 3rem;"></i>
+                                <h5 class="mt-3 text-muted">暂无聊天记录</h5>
+                                <p class="text-muted">发送第一条消息开始群聊吧！</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <form method="post" id="message-form">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="message-input" 
+                                   placeholder="输入消息..." required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-send me-1"></i>发送
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">群成员 ({{ members.count }})</h6>
+                </div>
+                <div class="card-body members-sidebar">
+                    {% for member in members %}
+                        <div class="member-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <div>{{ member.user.username }}</div>
+                                <div class="member-role">
+                                    {% if member.role == 'owner' %}
+                                        <i class="fas fa-crown text-warning"></i> 群主
+                                    {% elif member.role == 'admin' %}
+                                        <i class="fas fa-shield-alt text-info"></i> 管理员
+                                    {% else %}
+                                        成员
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if member.user == request.user %}
+                                <span class="badge bg-primary">我</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatContainer = document.getElementById('chat-container');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        
+        // 滚动到底部
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // 初始滚动到底部
+        scrollToBottom();
+        
+        // 获取CSRF令牌
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+        
+        // 发送消息
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const content = messageInput.value.trim();
+            if (!content) return;
+            
+            fetch('{% url "friends:send_group_message_ajax" group.id %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'content': content
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 创建消息气泡
+                    const messageBubble = document.createElement('div');
+                    messageBubble.className = 'message-bubble message-self';
+                    messageBubble.id = `message-${data.message.id}`;
+                    
+                    const messageContent = document.createElement('div');
+                    messageContent.innerHTML = data.message.content.replace(/\n/g, '<br>');
+                    messageBubble.appendChild(messageContent);
+                    
+                    const messageTime = document.createElement('div');
+                    messageTime.className = 'message-time text-end';
+                    messageTime.textContent = data.message.created_at;
+                    messageBubble.appendChild(messageTime);
+                    
+                    // 插入消息气泡
+                    chatContainer.appendChild(messageBubble);
+                    
+                    // 清空输入框
+                    messageInput.value = '';
+                    
+                    // 滚动到底部
+                    scrollToBottom();
+                }
+            });
+        });
+        
+        // 轮询新消息
+        let lastMessageId = '{{ messages_list.last.id|default:0 }}';
+        
+        function fetchNewMessages() {
+            fetch(`{% url "friends:get_new_group_messages" group.id %}?last_message_id=${lastMessageId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.messages && data.messages.length > 0) {
+                    data.messages.forEach(message => {
+                        // 跳过已存在的消息
+                        if (document.getElementById(`message-${message.id}`)) {
+                            return;
+                        }
+                        
+                        // 创建消息气泡
+                        const messageBubble = document.createElement('div');
+                        let bubbleClass = 'message-bubble ';
+                        
+                        if (message.message_type === 'system') {
+                            bubbleClass += 'message-system';
+                        } else if (message.message_type === 'notification') {
+                            bubbleClass += 'message-notification';
+                        } else if (message.is_mine) {
+                            bubbleClass += 'message-self';
+                        } else {
+                            bubbleClass += 'message-other';
+                        }
+                        
+                        messageBubble.className = bubbleClass;
+                        messageBubble.id = `message-${message.id}`;
+                        
+                        // 如果是其他人的文本消息，添加发送者名称
+                        if (!message.is_mine && message.sender !== '系统' && message.message_type === 'text') {
+                            const senderDiv = document.createElement('div');
+                            senderDiv.className = 'message-sender';
+                            senderDiv.textContent = message.sender;
+                            messageBubble.appendChild(senderDiv);
+                        }
+                        
+                        const messageContent = document.createElement('div');
+                        messageContent.innerHTML = message.content.replace(/\n/g, '<br>');
+                        messageBubble.appendChild(messageContent);
+                        
+                        const messageTime = document.createElement('div');
+                        messageTime.className = 'message-time text-end';
+                        messageTime.textContent = message.created_at;
+                        messageBubble.appendChild(messageTime);
+                        
+                        // 插入消息气泡
+                        chatContainer.appendChild(messageBubble);
+                        
+                        // 更新最后消息ID
+                        lastMessageId = message.id;
+                    });
+                    
+                    // 滚动到底部
+                    scrollToBottom();
+                }
+            });
+        }
+        
+        // 每3秒轮询一次新消息
+        setInterval(fetchNewMessages, 3000);
+    });
+</script>
+{% endblock %} 

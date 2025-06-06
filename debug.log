@@ -1,0 +1,30 @@
+ INFO 2025-06-06 17:14:13,647 views 17288 29388 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-06 17:14:13,647 views 17288 29388 POST数据: {'csrfmiddlewaretoken': ['DLCSwsMMKvhnmSDSJTJcc2DvcUPtDYWFcsbWBkNGo0tQ3G443R5g8jWChxgZuuv9'], 'title': ['测试协作笔记2'], 'category': [''], 'content': ['<p>这是另一个协作笔记。</p>\r\n<p>修改大纲与发送群聊消息测试</p>'], 'edit_summary': ['<p>修改大纲与发送群聊消息测试</p>']}
+INFO 2025-06-06 17:14:13,652 views 17288 29388 使用CollaborationNotebookForm
+INFO 2025-06-06 17:14:13,653 views 17288 29388 表单验证通过
+INFO 2025-06-06 17:14:13,664 views 17288 29388 修改大纲: <p>修改大纲与发送群聊消息测试</p>
+INFO 2025-06-06 17:14:13,671 views 17288 29388 已发送群聊通知: 我已修改项目内容：2025-06-06 09:14:13-测试协作项目-测试协作笔记2：<p>修改大纲与发送群聊消息测试</p>
+INFO 2025-06-06 17:17:55,507 views 17288 11012 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-06 17:17:55,508 views 17288 11012 POST数据: {'csrfmiddlewaretoken': ['jEbGoHf9cs86NkpXOgaG1HyxTUtxHZKOSlKKtzg3QXkzu8Q98ewKXYREYxU3yvji'], 'title': ['测试协作笔记2'], 'category': [''], 'content': ['<p>这是另一个协作笔记。</p>\r\n<p>修改大纲与发送群聊消息测试</p>\r\n<div>修改大纲与发送群聊消息测试_2</div>'], 'edit_summary': ['<p>修改大纲与发送群聊消息测试_2</p>']}
+INFO 2025-06-06 17:17:55,515 views 17288 11012 使用CollaborationNotebookForm
+INFO 2025-06-06 17:17:55,515 views 17288 11012 表单验证通过
+INFO 2025-06-06 17:17:55,525 views 17288 11012 修改大纲: <p>修改大纲与发送群聊消息测试_2</p>
+INFO 2025-06-06 17:17:55,532 views 17288 11012 已发送群聊通知: 我已修改项目内容：2025-06-06 09:17:55-测试协作项目-测试协作笔记2：<p>修改大纲与发送群聊消息测试_2</p>
+INFO 2025-06-06 17:25:07,907 views 6748 20352 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-06 17:25:07,909 views 6748 20352 POST数据: {'csrfmiddlewaretoken': ['NQaYrVE4vuNZf9013by3iQ39xBTHypCqmxJ2wNFY9ZZsWXrdn9U7e7mgCekdpVbU'], 'title': ['测试协作笔记2'], 'category': [''], 'content': ['<p>这是另一个协作笔记。</p>\r\n<p>修改大纲与发送群聊消息测试</p>\r\n<div>修改大纲与发送群聊消息测试_2</div>'], 'edit_summary': ['<p>修改大纲与发送群聊消息测试_2</p>']}
+INFO 2025-06-06 17:25:07,914 views 6748 20352 使用CollaborationNotebookForm
+INFO 2025-06-06 17:25:07,914 views 6748 20352 表单验证通过
+INFO 2025-06-06 17:25:07,925 views 6748 20352 修改大纲: <p>修改大纲与发送群聊消息测试_2</p>
+INFO 2025-06-06 17:25:07,935 views 6748 20352 已发送群聊通知: test_owner 修改了项目内容：2025-06-06 09:25:07-测试协作项目-测试协作笔记2：<p>修改大纲与发送群聊消息测试_2</p>
+INFO 2025-06-06 17:29:22,737 views 26944 28588 编辑笔记 6, 是否为协作笔记: True
+INFO 2025-06-06 17:29:22,737 views 26944 28588 POST数据: {'csrfmiddlewaretoken': ['8kTvn3YOIK1iRlMMegm5FWu7RFJLe3mOH1szsVZImfdLy9dYyeI9BdNeWiah5zVi'], 'title': ['测试协作笔记1'], 'category': [''], 'content': ['<p>这是一个用于测试协作功能的笔记。<br><br>测试测试测试</p>'], 'edit_summary': ['修改大纲功能测试']}
+INFO 2025-06-06 17:29:22,744 views 26944 28588 使用CollaborationNotebookForm
+INFO 2025-06-06 17:29:22,745 views 26944 28588 表单验证通过
+INFO 2025-06-06 17:29:22,755 views 26944 28588 修改大纲: 修改大纲功能测试
+INFO 2025-06-06 17:29:22,763 views 26944 28588 已发送群聊通知: test_owner 修改了项目内容：2025-06-06 09:29:22-测试协作项目-测试协作笔记1：修改大纲功能测试
+INFO 2025-06-06 17:49:34,549 views 26556 8036 编辑笔记 6, 是否为协作笔记: True
+INFO 2025-06-06 17:49:34,550 views 26556 8036 POST数据: {'csrfmiddlewaretoken': ['vQV56vNnx30iOHFbcr1Rv4WsSbwWtNt24xu9bnOhbycLvv6nwpnVrlfzXOXskj2w'], 'title': ['测试协作笔记1'], 'category': [''], 'content': ['<p>这是一个用于测试协作功能的笔记。<br><br>测试测试测试</p>\r\n<p>编辑锁测试</p>'], 'edit_summary': ['编辑锁测试']}
+INFO 2025-06-06 17:49:34,555 views 26556 8036 使用CollaborationNotebookForm
+INFO 2025-06-06 17:49:34,556 views 26556 8036 表单验证通过
+INFO 2025-06-06 17:49:34,568 views 26556 8036 修改大纲: 编辑锁测试
+INFO 2025-06-06 17:49:34,575 views 26556 8036 已发送群聊通知: test_owner 修改了项目内容：2025-06-06 09:49:34-测试协作项目-测试协作笔记1：编辑锁测试

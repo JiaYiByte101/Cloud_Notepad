@@ -10,6 +10,7 @@ urlpatterns = [
     path('create/', views.notebook_create, name='create'),
     path('<int:notebook_id>/', views.notebook_detail, name='detail'),
     path('<int:notebook_id>/edit/', views.notebook_edit, name='edit'),
+    path('<int:notebook_id>/edit/cancel/', views.notebook_cancel_edit, name='cancel_edit'),
     path('<int:notebook_id>/delete/', views.notebook_delete, name='delete'),
     path('<int:notebook_id>/download/pdf/', views.notebook_download_pdf, name='download_pdf'),
     path('<int:notebook_id>/download/html/', views.notebook_download_html, name='download_html'),
@@ -28,4 +29,7 @@ urlpatterns = [
     
     # 文件上传
     path('upload/', views.upload_file, name='upload_file'),
+    
+    # 媒体文件预览
+    path('media-preview/<path:file_path>/', views.media_preview, name='media_preview'),
 ]

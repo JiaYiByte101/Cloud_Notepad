@@ -230,10 +230,24 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="card-title mb-0">项目成员</h5>
+            <div>
+              <h5 class="card-title mb-0">项目成员</h5>
+              <small class="text-muted">
+                <i class="fas fa-users"></i> 
+                当前成员: <strong>{{ current_member_count }}</strong> / {{ max_members }}
+                {% if current_member_count >= max_members %}
+                  <span class="badge badge-danger ml-1">已满</span>
+                {% elif current_member_count >= 8 %}
+                  <span class="badge badge-warning ml-1">接近满员</span>
+                {% endif %}
+              </small>
+            </div>
             {% if is_owner %}
-            <a href="{% url 'collaboration:invite_member' project.id %}" class="btn btn-sm btn-success">
-              <i class="fas fa-user-plus"></i> 邀请好友
+            <a href="{% url 'collaboration:invite_member' project.id %}" 
+               class="btn btn-sm {% if can_invite %}btn-success{% else %}btn-secondary{% endif %}"
+               {% if not can_invite %}title="项目成员已满"{% endif %}>
+              <i class="fas fa-user-plus"></i> 
+              {% if can_invite %}邀请好友{% else %}已满{% endif %}
             </a>
             {% endif %}
           </div>
@@ -387,11 +401,6 @@
 
 {% block extra_js %}
 <script>
-  // 确保jQuery可用
-  if (typeof jQuery === 'undefined') {
-    console.error('jQuery is not loaded!');
-  }
-
   // 确认退出项目函数
   function confirmLeaveProject(event, projectId, memberId) {
     event.preventDefault();
@@ -400,7 +409,7 @@
     }
   }
 
-  $(document).ready(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     console.log('Document ready, initializing project detail functionality');
     
     // 获取用户角色信息（用于调试）
@@ -416,19 +425,42 @@
     {% endif %}
     console.log('User is editor:', isEditor);
     
-    // 修改角色模态框
-    $('.change-role-btn').on('click', function() {
-      console.log('Change role button clicked');
-      var memberId = $(this).data('id');
-      var username = $(this).data('username');
-      var role = $(this).data('role');
-      
-      console.log('Member ID:', memberId, 'Username:', username, 'Current role:', role);
-      
-      $('#memberUsername').text(username);
-      $('#roleSelect').val(role);
-      $('#changeRoleForm').attr('action', '{% url "collaboration:change_member_role" 0 %}'.replace('0', memberId));
+    // 修改角色模态框事件处理
+    const changeRoleButtons = document.querySelectorAll('.change-role-btn');
+    changeRoleButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        console.log('Change role button clicked');
+        const memberId = this.getAttribute('data-id');
+        const username = this.getAttribute('data-username');
+        const role = this.getAttribute('data-role');
+        
+        console.log('Member ID:', memberId, 'Username:', username, 'Current role:', role);
+        
+        // 设置模态框内容
+        document.getElementById('memberUsername').textContent = username;
+        document.getElementById('roleSelect').value = role;
+        
+        // 设置表单action
+        const form = document.getElementById('changeRoleForm');
+        const actionUrl = '{% url "collaboration:change_member_role" 0 %}'.replace('0', memberId);
+        form.setAttribute('action', actionUrl);
+        
+        console.log('Form action set to:', actionUrl);
+      });
     });
+    
+    // 表单提交事件处理
+    const changeRoleForm = document.getElementById('changeRoleForm');
+    if (changeRoleForm) {
+      changeRoleForm.addEventListener('submit', function(e) {
+        console.log('Form submitted');
+        console.log('Form action:', this.action);
+        console.log('Selected role:', document.getElementById('roleSelect').value);
+        
+        // 让表单正常提交，不阻止默认行为
+        // 这里可以添加额外的验证逻辑
+      });
+    }
     
     // 初始化Bootstrap 5标签页
     document.querySelectorAll('[data-bs-toggle="tab"]').forEach(function(tabEl) {
@@ -442,11 +474,10 @@
     // 初始化模态框
     var roleModal = document.getElementById('changeRoleModal');
     if (roleModal) {
-      var changeRoleModal = new bootstrap.Modal(roleModal);
-      
       // 模态框显示时的事件
       roleModal.addEventListener('shown.bs.modal', function() {
         console.log('Modal shown');
+        console.log('Current form action:', document.getElementById('changeRoleForm').action);
       });
     }
   });

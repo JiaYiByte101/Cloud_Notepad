@@ -29,4 +29,7 @@ urlpatterns = [
     # 项目下载 - 使用notebooks应用中的下载函数
     path('projects/<int:project_id>/download/pdf/', views.download_project_pdf, name='download_project_pdf'),
     path('projects/<int:project_id>/download/html/', views.download_project_html, name='download_project_html'),
+    
+    # 锁机制监控和测试
+    path('lock-monitor/', views.lock_monitor, name='lock_monitor'),
 ] 

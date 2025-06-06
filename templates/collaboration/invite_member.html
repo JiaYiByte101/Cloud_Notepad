@@ -63,6 +63,27 @@
           <div class="project-info mb-4">
             <h5 class="text-primary">{{ project.name }}</h5>
             <p class="text-muted">{{ project.description }}</p>
+            
+            <!-- 成员数量显示 -->
+            <div class="member-count-info mt-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted">
+                  <i class="fas fa-users"></i> 当前成员数量: 
+                  <strong class="{% if current_member_count >= max_members %}text-danger{% elif current_member_count >= 8 %}text-warning{% else %}text-primary{% endif %}">
+                    {{ current_member_count }}
+                  </strong> / {{ max_members }}
+                </span>
+                <span class="badge {% if current_member_count >= max_members %}badge-danger{% elif current_member_count >= 8 %}badge-warning{% else %}badge-success{% endif %}">
+                  {% if current_member_count >= max_members %}已满{% elif current_member_count >= 8 %}接近满员{% else %}正常{% endif %}
+                </span>
+              </div>
+              {% if not can_invite %}
+              <div class="alert alert-warning mt-2 mb-0">
+                <i class="fas fa-exclamation-triangle"></i> 
+                项目成员已达上限（{{ max_members }}人），无法继续邀请新成员
+              </div>
+              {% endif %}
+            </div>
           </div>
 
           <div class="friend-search">
@@ -85,17 +106,19 @@
                     </div>
                   </div>
                   <div>
-                    <form method="post" action="{% url 'collaboration:invite_member' project.id %}">
+                    <form method="post" action="{% url 'collaboration:invite_member' project.id %}" class="invite-form">
                       {% csrf_token %}
                       <input type="hidden" name="friend_id" value="{{ friend.id }}">
                       
                       <div class="role-selector">
-                        <select name="role" class="form-control form-control-sm mb-2">
+                        <select name="role" class="form-control form-control-sm mb-2" {% if not can_invite %}disabled{% endif %}>
                           <option value="viewer">查看者</option>
                           <option value="editor">编辑者</option>
                         </select>
-                        <button type="submit" class="btn btn-sm btn-success">
-                          <i class="fas fa-user-plus"></i> 邀请
+                        <button type="submit" class="btn btn-sm {% if can_invite %}btn-success{% else %}btn-secondary{% endif %}" 
+                                {% if not can_invite %}disabled title="项目成员已满"{% endif %}>
+                          <i class="fas fa-user-plus"></i> 
+                          {% if can_invite %}邀请{% else %}已满{% endif %}
                         </button>
                       </div>
                     </form>
@@ -132,6 +155,133 @@
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
+    
+    // AJAX邀请处理
+    $('.invite-form').on('submit', function(e) {
+      e.preventDefault();
+      
+      var form = $(this);
+      var button = form.find('button[type="submit"]');
+      var originalText = button.html();
+      
+      // 禁用按钮并显示加载状态
+      button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> 邀请中...');
+      
+      $.ajax({
+        url: form.attr('action'),
+        type: 'POST',
+        data: form.serialize(),
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function(response) {
+          if (response.success) {
+            // 成功邀请
+            showNotification('success', response.message);
+            
+            // 如果需要重定向，则重定向
+            if (response.redirect) {
+              setTimeout(function() {
+                window.location.href = '{% url "collaboration:project_detail" project.id %}';
+              }, 1500);
+            } else {
+              // 更新按钮状态
+              button.removeClass('btn-success').addClass('btn-secondary')
+                    .html('<i class="fas fa-check"></i> 已邀请')
+                    .prop('disabled', true);
+            }
+          } else {
+            // 邀请失败
+            showNotification('error', response.message);
+            
+            // 如果是人数限制问题，显示特殊弹窗
+            if (response.message.includes('已达上限')) {
+              showMemberLimitModal(response.current_count, response.max_count);
+            }
+            
+            // 恢复按钮
+            button.prop('disabled', false).html(originalText);
+          }
+        },
+        error: function(xhr, status, error) {
+          showNotification('error', '邀请失败，请稍后再试');
+          button.prop('disabled', false).html(originalText);
+        }
+      });
+    });
   });
+  
+  // 显示通知
+  function showNotification(type, message) {
+    var alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    var icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+    
+    var notification = $(`
+      <div class="alert ${alertClass} alert-dismissible fade show notification-alert" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
+        <i class="fas ${icon}"></i> ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    `);
+    
+    $('body').append(notification);
+    
+    // 3秒后自动关闭
+    setTimeout(function() {
+      notification.alert('close');
+    }, 3000);
+  }
+  
+  // 显示成员限制弹窗
+  function showMemberLimitModal(currentCount, maxCount) {
+    var modal = $(`
+      <div class="modal fade" id="memberLimitModal" tabindex="-1" role="dialog" aria-labelledby="memberLimitModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title" id="memberLimitModalLabel">
+                <i class="fas fa-exclamation-triangle"></i> 成员数量已达上限
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <div class="mb-3">
+                <i class="fas fa-users fa-3x text-warning"></i>
+              </div>
+              <h5>项目成员已满</h5>
+              <p class="text-muted">
+                当前项目已有 <strong class="text-warning">${currentCount}</strong> 名成员，
+                已达到最大限制 <strong>${maxCount}</strong> 人。
+              </p>
+              <p class="text-muted">
+                如需邀请新成员，请先移除部分现有成员。
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">知道了</button>
+              <a href="{% url 'collaboration:project_detail' project.id %}" class="btn btn-primary">
+                <i class="fas fa-users"></i> 管理成员
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+    
+    // 移除已存在的模态框
+    $('#memberLimitModal').remove();
+    
+    // 添加并显示新模态框
+    $('body').append(modal);
+    $('#memberLimitModal').modal('show');
+    
+    // 模态框关闭后移除
+    $('#memberLimitModal').on('hidden.bs.modal', function() {
+      $(this).remove();
+    });
+  }
 </script>
 {% endblock %} 

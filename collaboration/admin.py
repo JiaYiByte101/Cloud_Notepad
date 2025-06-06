@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CollaborationProject, CollaborationMember, CollaborationLock
+from .models import CollaborationProject, CollaborationMember, CollaborationLock, CollaborationEdit
 
 @admin.register(CollaborationProject)
 class CollaborationProjectAdmin(admin.ModelAdmin):
@@ -22,3 +22,14 @@ class CollaborationLockAdmin(admin.ModelAdmin):
     list_filter = ('locked_at', 'expires_at')
     search_fields = ('notebook__title', 'user__username')
     date_hierarchy = 'locked_at'
+
+@admin.register(CollaborationEdit)
+class CollaborationEditAdmin(admin.ModelAdmin):
+    list_display = ('project', 'notebook', 'editor', 'summary', 'edited_at')
+    list_filter = ('edited_at', 'project')
+    search_fields = ('summary', 'editor__username', 'project__name', 'notebook__title')
+    date_hierarchy = 'edited_at'
+    readonly_fields = ('edited_at',)
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('project', 'notebook', 'editor')

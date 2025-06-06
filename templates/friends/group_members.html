@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}群成员 - {{ group.name }} - 云记事本{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">{{ group.name }} - 群成员</h5>
+                            <small>共 {{ members.count }} 位成员</small>
+                        </div>
+                        <a href="{% url 'friends:group_chat_detail' group.id %}" class="btn btn-light btn-sm rounded-pill">
+                            <i class="bi bi-arrow-left me-1"></i>返回群聊
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="list-group">
+                        {% for member in members %}
+                            <div class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            {{ member.user.username }}
+                                            {% if member.user == request.user %}
+                                                <span class="badge bg-primary ms-1">我</span>
+                                            {% endif %}
+                                        </h6>
+                                        <p class="mb-0">
+                                            {% if member.role == 'owner' %}
+                                                <span class="badge bg-warning text-dark">
+                                                    <i class="fas fa-crown"></i> 群主
+                                                </span>
+                                            {% elif member.role == 'admin' %}
+                                                <span class="badge bg-info">
+                                                    <i class="fas fa-shield-alt"></i> 管理员
+                                                </span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">成员</span>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="text-end">
+                                        <small class="text-muted">
+                                            加入时间：{{ member.joined_at|date:"Y-m-d H:i" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    {% if group.collaboration_project %}
+                        <div class="alert alert-info mt-4" role="alert">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-info-circle"></i> 协作项目群聊
+                            </h6>
+                            <p class="mb-0">
+                                这是 <strong>{{ group.collaboration_project.name }}</strong> 项目的协作群聊。
+                                群成员会随着项目成员的变化而自动更新。
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

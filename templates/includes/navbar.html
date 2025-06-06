@@ -31,10 +31,15 @@
                             <i class="bi bi-people me-1"></i>公共广场
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'friends:home' %}">
-                            <i class="bi bi-person-lines-fill me-1"></i>好友
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle rounded-pill px-2 mx-1 nav-btn-hover" href="#" id="friendsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-lines-fill me-1"></i>好友社交
                         </a>
+                        <ul class="dropdown-menu shadow-lg border-0 rounded-4 mt-2" aria-labelledby="friendsDropdown">
+                            <li><a class="dropdown-item py-2" href="{% url 'friends:home' %}"><i class="bi bi-person-lines-fill me-2"></i>好友列表</a></li>
+                            <li><a class="dropdown-item py-2" href="{% url 'friends:chat_list' %}"><i class="bi bi-chat-dots me-2"></i>私聊消息</a></li>
+                            <li><a class="dropdown-item py-2" href="{% url 'friends:group_list' %}"><i class="bi bi-people-fill me-2"></i>群聊列表</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'collaboration:project_list' %}">
