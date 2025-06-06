@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from .models import Notebook, Category, Tag
-from .forms import NotebookForm, CategoryForm, TagForm
+from .forms import NotebookForm, CategoryForm, TagForm, CollaborationNotebookForm
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 import json
 import os
@@ -154,21 +154,209 @@ def notebook_edit(request, notebook_id):
         messages.error(request, '您没有权限编辑此笔记')
         return redirect('notebooks:detail', notebook_id=notebook.id)
     
+    # 如果是协作项目中的笔记，检查是否有编辑锁
+    if notebook.collaboration_projects.exists():
+        from collaboration.models import CollaborationLock
+        from django.utils import timezone
+        
+        # 清理过期锁
+        CollaborationLock.objects.filter(
+            notebook=notebook,
+            expires_at__lt=timezone.now()
+        ).delete()
+        
+        # 检查当前用户是否有锁
+        user_lock = CollaborationLock.objects.filter(
+            notebook=notebook, 
+            user=request.user
+        ).first()
+        
+        if not user_lock:
+            messages.error(request, '您需要先获取编辑锁才能编辑此笔记')
+            return redirect('notebooks:detail', notebook_id=notebook.id)
+        
+        # 检查是否有其他用户的锁
+        other_locks = CollaborationLock.objects.filter(notebook=notebook).exclude(user=request.user)
+        if other_locks.exists():
+            other_lock = other_locks.first()
+            messages.error(request, f'此笔记当前被 {other_lock.user.username} 锁定')
+            return redirect('notebooks:detail', notebook_id=notebook.id)
+    
     # 处理表单提交
     if request.method == 'POST':
-        form = NotebookForm(request.POST, instance=notebook, user=notebook.user)
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"编辑笔记 {notebook_id}, 是否为协作笔记: {notebook.collaboration_projects.exists()}")
+        logger.info(f"POST数据: {dict(request.POST)}")
+        # 如果是协作项目中的笔记，需要验证锁
+        if notebook.collaboration_projects.exists():
+            from collaboration.models import CollaborationLock
+            from django.utils import timezone
+            
+            # 检查当前用户是否持有有效的锁
+            try:
+                lock = CollaborationLock.objects.filter(
+                    notebook=notebook, 
+                    user=request.user
+                ).latest('locked_at')
+                
+                if lock.is_expired():
+                    # 锁已过期
+                    lock.delete()
+                    messages.error(request, '编辑锁已过期，请重新获取编辑权限')
+                    return redirect('notebooks:detail', notebook_id=notebook.id)
+                    
+            except CollaborationLock.DoesNotExist:
+                # 用户没有锁
+                messages.error(request, '您没有编辑锁，无法保存修改')
+                return redirect('notebooks:detail', notebook_id=notebook.id)
+            
+            # 检查是否有其他用户的锁（双重保险）
+            other_locks = CollaborationLock.objects.filter(
+                notebook=notebook
+            ).exclude(user=request.user)
+            
+            for other_lock in other_locks:
+                if not other_lock.is_expired():
+                    messages.error(request, f'此笔记当前被 {other_lock.user.username} 锁定，无法保存')
+                    return redirect('notebooks:detail', notebook_id=notebook.id)
+                else:
+                    # 清理过期的锁
+                    other_lock.delete()
+        
+        # 判断是否是协作笔记，选择相应的表单
+        is_collaboration = notebook.collaboration_projects.exists()
+        
+        if is_collaboration:
+            form = CollaborationNotebookForm(request.POST, instance=notebook, user=notebook.user)
+            logger.info("使用CollaborationNotebookForm")
+        else:
+            form = NotebookForm(request.POST, instance=notebook, user=notebook.user)
+            logger.info("使用NotebookForm")
+            
         if form.is_valid():
+            logger.info("表单验证通过")
             form.save()
+            
+            # 如果是协作笔记，需要创建修改记录并发送群聊消息
+            if is_collaboration:
+                from collaboration.models import CollaborationEdit
+                from friends.models import GroupMessage
+                
+                # 获取修改大纲
+                edit_summary = form.cleaned_data.get('edit_summary')
+                logger.info(f"修改大纲: {edit_summary}")
+                
+                # 为每个关联的协作项目创建修改记录和发送群聊消息
+                for project in notebook.collaboration_projects.all():
+                    # 创建修改记录
+                    edit_record = CollaborationEdit.objects.create(
+                        project=project,
+                        notebook=notebook,
+                        editor=request.user,
+                        summary=edit_summary
+                    )
+                    
+                    # 如果项目有群聊，发送通知消息
+                    if hasattr(project, 'chat_group') and project.chat_group:
+                        notification_message = edit_record.get_notification_message()
+                        GroupMessage.objects.create(
+                            group=project.chat_group,
+                            sender=request.user,
+                            content=notification_message,
+                            message_type='notification'
+                        )
+                        logger.info(f"已发送群聊通知: {notification_message}")
+                
+                # 释放编辑锁
+                CollaborationLock.objects.filter(
+                    notebook=notebook, 
+                    user=request.user
+                ).delete()
+            
             messages.success(request, '笔记更新成功！')
             return redirect('notebooks:detail', notebook_id=notebook.id)
+        else:
+            # 表单验证失败
+            logger.error(f"表单验证失败: {form.errors}")
+            logger.error(f"表单数据: {form.data}")
+            logger.error(f"表单cleaned_data: {getattr(form, 'cleaned_data', '无')}")
+            if is_collaboration and 'edit_summary' in form.errors:
+                messages.error(request, '请填写修改大纲！')
+            else:
+                messages.error(request, f'表单验证失败: {form.errors}')
     else:
-        form = NotebookForm(instance=notebook, user=notebook.user)
+        # 判断是否是协作笔记，选择相应的表单
+        is_collaboration = notebook.collaboration_projects.exists()
+        
+        if is_collaboration:
+            form = CollaborationNotebookForm(instance=notebook, user=notebook.user)
+        else:
+            form = NotebookForm(instance=notebook, user=notebook.user)
 
     return render(request, 'notebooks/notebook_form.html', {
         'form': form,
         'notebook': notebook,
-        'title': '编辑笔记'
+        'title': '编辑笔记',
+        'is_collaboration': notebook.collaboration_projects.exists()
     })
+
+
+@login_required
+def notebook_cancel_edit(request, notebook_id):
+    """取消编辑笔记，释放协作锁"""
+    notebook = get_object_or_404(Notebook, id=notebook_id)
+    
+    # 检查用户是否有权限访问此笔记
+    has_access = False
+    
+    # 检查是否是笔记所有者
+    if notebook.user == request.user:
+        has_access = True
+    
+    # 检查是否是协作项目成员
+    if not has_access:
+        for project in notebook.collaboration_projects.all():
+            if project.members.filter(user=request.user, status='accepted').exists():
+                has_access = True
+                break
+    
+    if not has_access:
+        if request.method == 'POST':
+            # 对于sendBeacon请求，返回简单的HTTP响应
+            from django.http import HttpResponse
+            return HttpResponse('Unauthorized', status=403)
+        messages.error(request, '您没有权限访问此笔记')
+        return redirect('notebooks:list')
+    
+    # 如果是协作笔记，释放当前用户的编辑锁
+    if notebook.collaboration_projects.exists():
+        from collaboration.models import CollaborationLock
+        
+        # 删除当前用户的锁
+        deleted_count = CollaborationLock.objects.filter(
+            notebook=notebook, 
+            user=request.user
+        ).delete()[0]
+        
+        if request.method == 'POST':
+            # 对于sendBeacon请求，返回简单的HTTP响应
+            from django.http import HttpResponse
+            return HttpResponse('OK' if deleted_count > 0 else 'No lock found')
+        
+        if deleted_count > 0:
+            messages.success(request, '已取消编辑并释放编辑锁')
+        else:
+            messages.info(request, '已取消编辑')
+    else:
+        if request.method == 'POST':
+            # 对于sendBeacon请求，返回简单的HTTP响应
+            from django.http import HttpResponse
+            return HttpResponse('OK')
+        messages.info(request, '已取消编辑')
+    
+    # 重定向到笔记详情页面
+    return redirect('notebooks:detail', notebook_id=notebook.id)
 
 
 @login_required
@@ -310,32 +498,121 @@ def delete_tag(request):
 @login_required
 @csrf_exempt
 def upload_file(request):
-    """处理TinyMCE编辑器中的文件上传（图片和视频）"""
+    """处理TinyMCE编辑器中的文件上传（图片、视频和音频）"""
     if request.method == 'POST':
         file_obj = request.FILES.get('file')
         if file_obj:
+            # 获取文件扩展名
+            file_extension = os.path.splitext(file_obj.name)[1].lower()
+            
+            # 定义允许的文件类型
+            allowed_image_types = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']
+            allowed_video_types = ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv']
+            allowed_audio_types = ['.mp3', '.wav', '.ogg', '.aac', '.flac', '.m4a']
+            
+            all_allowed_types = allowed_image_types + allowed_video_types + allowed_audio_types
+            
+            # 检查文件类型
+            if file_extension not in all_allowed_types:
+                return JsonResponse({
+                    'error': f'不支持的文件类型。支持的格式：{", ".join(all_allowed_types)}'
+                }, status=400)
+            
+            # 检查文件大小（图片最大10MB，视频最大100MB，音频最大50MB）
+            max_size = 10 * 1024 * 1024  # 默认10MB
+            if file_extension in allowed_video_types:
+                max_size = 100 * 1024 * 1024  # 视频100MB
+            elif file_extension in allowed_audio_types:
+                max_size = 50 * 1024 * 1024   # 音频50MB
+                
+            if file_obj.size > max_size:
+                size_mb = max_size / (1024 * 1024)
+                return JsonResponse({
+                    'error': f'文件大小超过限制（最大 {size_mb}MB）'
+                }, status=400)
+            
             # 创建存储目录
             today = datetime.datetime.now().strftime('%Y%m%d')
-            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', request.user.username, today)
+            
+            # 根据文件类型创建不同的子目录
+            if file_extension in allowed_image_types:
+                sub_dir = 'images'
+            elif file_extension in allowed_video_types:
+                sub_dir = 'videos'
+            else:
+                sub_dir = 'audios'
+                
+            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', request.user.username, today, sub_dir)
             os.makedirs(upload_dir, exist_ok=True)
             
+            # 生成唯一文件名避免冲突
+            import uuid
+            file_name, file_ext = os.path.splitext(file_obj.name)
+            unique_filename = f"{file_name}_{uuid.uuid4().hex[:8]}{file_ext}"
+            
             # 保存文件
-            file_path = os.path.join(upload_dir, file_obj.name)
+            file_path = os.path.join(upload_dir, unique_filename)
             with open(file_path, 'wb+') as destination:
                 for chunk in file_obj.chunks():
                     destination.write(chunk)
                     
             # 生成URL
-            relative_path = os.path.join('uploads', request.user.username, today, file_obj.name)
-            file_url = settings.MEDIA_URL + relative_path
+            relative_path = os.path.join('uploads', request.user.username, today, sub_dir, unique_filename)
+            file_url = settings.MEDIA_URL + relative_path.replace('\\', '/')  # 确保URL使用正斜杠
             
-            # 返回上传成功的响应
-            return JsonResponse({
-                'location': file_url
-            })
+            # 根据文件类型返回不同的响应
+            response_data = {'location': file_url}
+            
+            # 为视频和音频添加额外信息
+            if file_extension in allowed_video_types:
+                response_data['file_type'] = 'video'
+                response_data['mime_type'] = f'video/{file_extension[1:]}'
+            elif file_extension in allowed_audio_types:
+                response_data['file_type'] = 'audio'
+                response_data['mime_type'] = f'audio/{file_extension[1:]}'
+            else:
+                response_data['file_type'] = 'image'
+            
+            return JsonResponse(response_data)
             
     # 上传失败
     return JsonResponse({'error': '文件上传失败'}, status=400)
+
+
+@login_required
+def media_preview(request, file_path):
+    """媒体文件预览视图"""
+    import mimetypes
+    from django.http import FileResponse, Http404
+    
+    # 构建完整的文件路径
+    full_path = os.path.join(settings.MEDIA_ROOT, file_path)
+    
+    # 检查文件是否存在
+    if not os.path.exists(full_path):
+        raise Http404("文件不存在")
+    
+    # 检查文件是否属于当前用户（安全检查）
+    if request.user.username not in file_path:
+        raise Http404("无权访问此文件")
+    
+    # 获取文件的 MIME 类型
+    mime_type, _ = mimetypes.guess_type(full_path)
+    
+    try:
+        # 返回文件响应
+        response = FileResponse(
+            open(full_path, 'rb'),
+            content_type=mime_type,
+            as_attachment=False  # 设置为 False 以便在浏览器中预览
+        )
+        
+        # 设置缓存头
+        response['Cache-Control'] = 'public, max-age=3600'
+        
+        return response
+    except Exception as e:
+        raise Http404(f"文件读取错误: {str(e)}")
 
 
 @login_required

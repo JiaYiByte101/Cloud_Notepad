@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}群聊列表{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">社交功能</h5>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'friends:home' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-user-friends"></i> 好友列表
+                        </a>
+                        <a href="{% url 'friends:chat_list' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-comments"></i> 私聊消息
+                        </a>
+                        <a href="{% url 'friends:group_list' %}" class="list-group-item list-group-item-action active">
+                            <i class="fas fa-users"></i> 群聊列表
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <h2 class="mb-4">我的群聊</h2>
+            
+            {% if groups %}
+                <div class="list-group">
+                    {% for group in groups %}
+                        <a href="{% url 'friends:group_chat_detail' group.id %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    {{ group.name }}
+                                    {% if group.unread_count > 0 %}
+                                        <span class="badge bg-danger">{{ group.unread_count }}</span>
+                                    {% endif %}
+                                </h5>
+                                <small>{{ group.updated_at|date:"Y-m-d H:i" }}</small>
+                            </div>
+                            <p class="mb-1 text-muted">
+                                {% if group.description %}
+                                    {{ group.description|truncatechars:100 }}
+                                {% else %}
+                                    暂无描述
+                                {% endif %}
+                            </p>
+                            <small>
+                                <i class="fas fa-users"></i> {{ group.members_count }} 位成员
+                                {% if group.collaboration_project %}
+                                    | <i class="fas fa-project-diagram"></i> 协作项目群聊
+                                {% endif %}
+                            </small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    <h5 class="alert-heading">暂无群聊</h5>
+                    <p class="mb-0">您还没有加入任何群聊。当您参与协作项目时，系统会自动为您创建项目群聊。</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 可以添加实时更新未读消息数的功能
+    setInterval(function() {
+        // 每30秒更新一次群聊列表，检查新消息
+        // 这里可以通过AJAX调用来更新未读消息数
+    }, 30000);
+</script>
+{% endblock %} 

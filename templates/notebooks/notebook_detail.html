@@ -2,7 +2,57 @@
 {% extends 'base.html' %}
 
 {% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/tinymce-content.css' %}">
 <style>
+    .content {
+        line-height: 1.6;
+        font-size: 1.1rem;
+    }
+    
+    .content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin: 10px 0;
+    }
+    
+    /* 视频和音频样式 */
+    .content video {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px 0;
+        display: block;
+    }
+    
+    .content audio {
+        width: 100%;
+        max-width: 500px;
+        margin: 10px 0;
+        border-radius: 25px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: block;
+    }
+    
+    .content .media-container {
+        text-align: center;
+        margin: 15px 0;
+        padding: 10px;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+    
+    .content .file-info {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 5px;
+        text-align: center;
+    }
+    
     .collaboration-section {
         margin-top: 20px;
     }
@@ -38,6 +88,19 @@
     .disabled-btn {
         pointer-events: none;
         opacity: 0.65;
+    }
+    
+    /* 响应式媒体查询 */
+    @media (max-width: 768px) {
+        .content video, 
+        .content audio {
+            width: 100%;
+        }
+        
+        .content .media-container {
+            margin: 10px 0;
+            padding: 8px;
+        }
     }
 </style>
 {% endblock %}
@@ -205,37 +268,91 @@
 
 {% block extra_js %}
 <script>
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     // 处理编辑按钮点击
     {% if not user == notebook.user and not has_edit_permission %}
-    $('#editDisabledButton').on('click', function() {
-        alert('您是查看者角色，没有编辑权限');
-    });
+    const editDisabledButton = document.getElementById('editDisabledButton');
+    if (editDisabledButton) {
+        editDisabledButton.addEventListener('click', function() {
+            alert('您是查看者角色，没有编辑权限');
+        });
+    }
     {% else %}
     // 如果是协作项目中的笔记，需要先获取锁
     {% if notebook.collaboration_projects.exists %}
-    $('#editButton').on('click', function(e) {
-        e.preventDefault();
-        // 发送请求获取锁
-        $.ajax({
-            url: '{% url "collaboration:lock_notebook" notebook.id %}',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
+    const editButton = document.getElementById('editButton');
+    if (editButton) {
+        editButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 获取 CSRF token
+            function getCsrfToken() {
+                return document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+                       document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                       getCookie('csrftoken');
+            }
+            
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            const csrfToken = getCsrfToken();
+            
+            // 发送请求获取锁
+            fetch('{% url "collaboration:lock_notebook" notebook.id %}', {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     // 成功获取锁，重定向到编辑页面
                     window.location.href = '{% url "notebooks:edit" notebook.id %}';
                 } else {
                     // 未能获取锁，显示错误消息
-                    alert(response.message);
+                    alert(data.message || '无法获取编辑锁');
                 }
-            },
-            error: function() {
+            })
+            .catch(error => {
+                console.error('请求失败:', error);
                 alert('请求失败，请稍后再试');
-            }
+            });
         });
-    });
+    }
     {% endif %}
+    {% endif %}
+    
+    // 页面离开时释放锁（如果是协作项目中的笔记）
+    {% if notebook.collaboration_projects.exists %}
+    window.addEventListener('beforeunload', function() {
+        // 发送同步请求释放锁
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '{% url "collaboration:release_lock" notebook.id %}', false);
+        xhr.setRequestHeader('X-CSRFToken', getCsrfToken());
+        xhr.send();
+    });
+    
+    // 页面隐藏时也释放锁（处理移动端和标签页切换）
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            navigator.sendBeacon('{% url "collaboration:release_lock" notebook.id %}', 
+                new FormData().append('csrfmiddlewaretoken', getCsrfToken()));
+        }
+    });
     {% endif %}
 });
 </script>

@@ -201,21 +201,85 @@
                         公开笔记（其他用户可以查看）
                     </label>
                 </div>
+                
+                {% if form.edit_summary %}
+                <div class="mb-3">
+                    <label for="{{ form.edit_summary.id_for_label }}" class="form-label fw-bold">
+                        修改大纲 <span class="text-danger">*</span>
+                    </label>
+                    {{ form.edit_summary }}
+                    {% if form.edit_summary.help_text %}
+                        <div class="form-text">{{ form.edit_summary.help_text }}</div>
+                    {% endif %}
+                    {% if form.edit_summary.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.edit_summary.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if notebook and notebook.collaboration_projects.exists %}
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i> 这是一个协作笔记，保存时需要填写修改大纲
+                </div>
+                {% endif %}
             </div>
         </div>
 
         <div class="text-end">
-            <a href="{% url 'notebooks:list' %}" class="btn btn-outline-secondary me-2">取消</a>
-            <button type="submit" class="btn btn-primary">保存</button>
+            {% if notebook and notebook.collaboration_projects.exists %}
+                <a href="{% url 'notebooks:cancel_edit' notebook.id %}" class="btn btn-outline-secondary me-2">取消</a>
+            {% else %}
+                <a href="{% url 'notebooks:list' %}" class="btn btn-outline-secondary me-2">取消</a>
+            {% endif %}
+            <button type="submit" class="btn btn-primary" id="save-btn">保存</button>
         </div>
     </form>
+    
+    {% if form.errors %}
+    <div class="alert alert-danger mt-3">
+        <h5>表单验证错误：</h5>
+        <ul>
+        {% for field, errors in form.errors.items %}
+            <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_js %}
 {{ form.media.js }}
+{% load static %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // 确保修改大纲字段可见且不被TinyMCE处理
+        const editSummaryField = document.querySelector('textarea[name="edit_summary"]');
+        if (editSummaryField) {
+            editSummaryField.style.display = '';
+            editSummaryField.style.visibility = 'visible';
+            editSummaryField.removeAttribute('aria-hidden');
+            editSummaryField.setAttribute('data-no-tinymce', 'true');
+            
+            // 如果TinyMCE已经初始化了这个字段，移除它
+            if (typeof tinymce !== 'undefined') {
+                const editor = tinymce.get(editSummaryField.id);
+                if (editor) {
+                    editor.remove();
+                    console.log('移除了修改大纲字段的TinyMCE编辑器');
+                }
+            }
+            
+            console.log('页面加载时修改大纲字段状态:', {
+                display: window.getComputedStyle(editSummaryField).display,
+                visibility: window.getComputedStyle(editSummaryField).visibility,
+                value: editSummaryField.value,
+                hasDataNoTinymce: editSummaryField.hasAttribute('data-no-tinymce')
+            });
+        }
+        
         const originalCategorySelect = document.getElementById('{{ form.category.id_for_label }}');
         const selectedCategoryText = document.getElementById('selected_category_text');
         const selectedCategoryContainer = document.getElementById('selected_category');
@@ -382,6 +446,143 @@
                 }
             });
         }
+        
+        // 添加表单提交调试
+        const form = document.querySelector('form');
+        const saveBtn = document.getElementById('save-btn');
+        
+
+        
+        saveBtn.addEventListener('click', function(e) {
+            console.log('保存按钮被点击');
+            
+            // 查找所有可能的修改大纲字段
+            const allEditSummaryFields = document.querySelectorAll('textarea[name="edit_summary"]');
+            console.log('找到的修改大纲字段数量:', allEditSummaryFields.length);
+            
+                         allEditSummaryFields.forEach((field, index) => {
+                 console.log(`字段 ${index + 1}:`, {
+                     id: field.id,
+                     name: field.name,
+                     value: field.value,
+                     display: window.getComputedStyle(field).display,
+                     visibility: window.getComputedStyle(field).visibility,
+                     hidden: field.hidden,
+                     ariaHidden: field.getAttribute('aria-hidden'),
+                     hasDataNoTinymce: field.hasAttribute('data-no-tinymce'),
+                     isTinyMCEEditor: field.style.display === 'none' && field.nextElementSibling && field.nextElementSibling.classList.contains('tox-tinymce')
+                 });
+                 
+                 // 确保所有字段都可见，但不处理TinyMCE编辑器
+                 if (!field.hasAttribute('data-no-tinymce') || field.hasAttribute('data-no-tinymce')) {
+                     field.style.display = '';
+                     field.style.visibility = 'visible';
+                     field.removeAttribute('aria-hidden');
+                     field.hidden = false;
+                     field.setAttribute('data-no-tinymce', 'true');
+                 }
+             });
+            
+            // 使用第一个可见的字段
+            let editSummary = null;
+            for (let field of allEditSummaryFields) {
+                if (window.getComputedStyle(field).display !== 'none') {
+                    editSummary = field;
+                    break;
+                }
+            }
+            
+            if (!editSummary && allEditSummaryFields.length > 0) {
+                editSummary = allEditSummaryFields[0];
+            }
+            
+            console.log('最终选择的字段:', editSummary);
+            
+            if (editSummary) {
+                console.log('修改大纲字段存在，值为:', editSummary.value);
+                console.log('修改大纲字段值长度:', editSummary.value.length);
+                console.log('修改大纲字段去空格后长度:', editSummary.value.trim().length);
+            } else {
+                console.log('未找到修改大纲字段');
+            }
+        });
+        
+        form.addEventListener('submit', function(e) {
+            console.log('表单提交事件触发');
+            // 不要阻止默认提交，只是记录日志
+        });
     });
 </script>
+
+{% if notebook and notebook.collaboration_projects.exists %}
+<script>
+    // 协作笔记的锁管理
+    document.addEventListener('DOMContentLoaded', function() {
+        const cancelEditUrl = '{% url "notebooks:cancel_edit" notebook.id %}';
+        let isFormSubmitting = false;
+        let pageLoaded = false;
+        
+        // 页面完全加载后才启用锁释放功能
+        window.addEventListener('load', function() {
+            pageLoaded = true;
+        });
+        
+        function releaseLockOnUnload() {
+            // 只有在页面完全加载后且不是表单提交时才释放锁
+            if (!pageLoaded || isFormSubmitting) {
+                return;
+            }
+            
+            // 使用sendBeacon API发送异步请求，即使页面正在卸载也能发送
+            if (navigator.sendBeacon) {
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+                navigator.sendBeacon(cancelEditUrl, formData);
+            }
+        }
+        
+        // 监听表单提交，避免在保存时释放锁
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function() {
+                isFormSubmitting = true;
+            });
+        }
+        
+        // 监听页面卸载事件（只在用户真正离开时触发）
+        window.addEventListener('beforeunload', function(e) {
+            if (pageLoaded && !isFormSubmitting) {
+                releaseLockOnUnload();
+            }
+        });
+        
+        window.addEventListener('pagehide', function(e) {
+            if (pageLoaded && !isFormSubmitting) {
+                releaseLockOnUnload();
+            }
+        });
+        
+        // 监听浏览器标签页可见性变化（用户切换标签页）
+        let visibilityTimer = null;
+        document.addEventListener('visibilitychange', function() {
+            if (!pageLoaded) return;
+            
+            if (document.hidden) {
+                // 页面变为不可见时，延迟释放锁（给用户一些时间回来）
+                visibilityTimer = setTimeout(function() {
+                    if (document.hidden && !isFormSubmitting) {
+                        releaseLockOnUnload();
+                    }
+                }, 300000); // 5分钟后释放锁
+            } else {
+                // 页面变为可见时，取消定时器
+                if (visibilityTimer) {
+                    clearTimeout(visibilityTimer);
+                    visibilityTimer = null;
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
 {% endblock %}

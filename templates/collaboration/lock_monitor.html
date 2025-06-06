@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}锁机制监控 - 云笔记{% endblock %}
+
+{% block extra_css %}
+<style>
+    .lock-card {
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    .active-lock {
+        border-left: 4px solid #28a745;
+    }
+    .expired-lock {
+        border-left: 4px solid #dc3545;
+    }
+    .time-remaining {
+        font-weight: bold;
+        color: #28a745;
+    }
+    .expired-time {
+        color: #dc3545;
+    }
+    .monitor-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    .refresh-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="monitor-header text-center">
+        <h1><i class="fas fa-lock"></i> 协作锁机制监控</h1>
+        <p class="mb-0">实时监控协作笔记的锁定状态</p>
+        <small>当前时间: {{ current_time|date:"Y-m-d H:i:s" }}</small>
+    </div>
+
+    <!-- 活跃锁 -->
+    <div class="row">
+        <div class="col-md-6">
+            <h3><i class="fas fa-lock text-success"></i> 活跃锁 ({{ active_locks|length }})</h3>
+            {% if active_locks %}
+                {% for lock_info in active_locks %}
+                <div class="card lock-card active-lock">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ lock_info.notebook_title }}</h5>
+                        <p class="card-text">
+                            <strong>锁定用户:</strong> {{ lock_info.user }}<br>
+                            <strong>锁定时间:</strong> {{ lock_info.locked_at|date:"H:i:s" }}<br>
+                            <strong>过期时间:</strong> {{ lock_info.expires_at|date:"H:i:s" }}<br>
+                            <strong>剩余时间:</strong> 
+                            <span class="time-remaining">{{ lock_info.time_remaining|floatformat:0 }} 秒</span>
+                        </p>
+                        <div class="btn-group btn-group-sm">
+                            <a href="{% url 'notebooks:detail' lock_info.lock.notebook.id %}" class="btn btn-outline-primary">
+                                查看笔记
+                            </a>
+                            <a href="{% url 'collaboration:check_lock_status' lock_info.lock.notebook.id %}" class="btn btn-outline-info">
+                                检查状态
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> 当前没有活跃的锁
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- 过期锁 -->
+        <div class="col-md-6">
+            <h3><i class="fas fa-unlock text-danger"></i> 过期锁 ({{ expired_locks|length }})</h3>
+            {% if expired_locks %}
+                {% for lock_info in expired_locks %}
+                <div class="card lock-card expired-lock">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ lock_info.notebook_title }}</h5>
+                        <p class="card-text">
+                            <strong>锁定用户:</strong> {{ lock_info.user }}<br>
+                            <strong>锁定时间:</strong> {{ lock_info.locked_at|date:"H:i:s" }}<br>
+                            <strong>过期时间:</strong> {{ lock_info.expires_at|date:"H:i:s" }}<br>
+                            <strong>状态:</strong> <span class="expired-time">已过期</span>
+                        </p>
+                        <a href="{% url 'notebooks:detail' lock_info.lock.notebook.id %}" class="btn btn-outline-primary btn-sm">
+                            查看笔记
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> 没有过期的锁
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 协作笔记列表 -->
+    <div class="mt-4">
+        <h3><i class="fas fa-users"></i> 协作笔记列表</h3>
+        <div class="row">
+            {% for notebook in collaboration_notebooks %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ notebook.title }}</h6>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                创建者: {{ notebook.user.username }}<br>
+                                更新时间: {{ notebook.updated_at|date:"m-d H:i" }}
+                            </small>
+                        </p>
+                        <div class="btn-group btn-group-sm">
+                            <a href="{% url 'notebooks:detail' notebook.id %}" class="btn btn-outline-primary">查看</a>
+                            <a href="{% url 'collaboration:lock_notebook' notebook.id %}" class="btn btn-outline-warning">获取锁</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 测试操作 -->
+    <div class="mt-4">
+        <h3><i class="fas fa-tools"></i> 测试操作</h3>
+        <div class="alert alert-warning">
+            <h5>验证步骤：</h5>
+            <ol>
+                <li>打开多个浏览器窗口（Chrome、Firefox、Edge等）</li>
+                <li>在不同浏览器中登录不同的测试用户</li>
+                <li>尝试同时编辑同一个协作笔记</li>
+                <li>观察锁机制是否生效</li>
+                <li>刷新此页面查看锁状态变化</li>
+            </ol>
+        </div>
+        
+        <div class="btn-group">
+            <button onclick="location.reload()" class="btn btn-primary">
+                <i class="fas fa-sync-alt"></i> 刷新状态
+            </button>
+            <a href="{% url 'collaboration:project_list' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> 返回项目列表
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 自动刷新按钮 -->
+<button class="btn btn-success refresh-btn" onclick="location.reload()" title="刷新页面">
+    <i class="fas fa-sync-alt"></i>
+</button>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 每30秒自动刷新页面
+setInterval(function() {
+    location.reload();
+}, 30000);
+
+// 倒计时显示
+document.addEventListener('DOMContentLoaded', function() {
+    const timeElements = document.querySelectorAll('.time-remaining');
+    
+    setInterval(function() {
+        timeElements.forEach(function(element) {
+            let seconds = parseInt(element.textContent);
+            if (seconds > 0) {
+                seconds--;
+                element.textContent = seconds + ' 秒';
+                
+                if (seconds <= 60) {
+                    element.style.color = '#ffc107'; // 黄色警告
+                }
+                if (seconds <= 10) {
+                    element.style.color = '#dc3545'; // 红色紧急
+                }
+            }
+        });
+    }, 1000);
+});
+</script>
+{% endblock %} 

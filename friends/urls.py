@@ -21,4 +21,11 @@ urlpatterns = [
     
     # 通知功能
     path('notifications/count/', views.get_notifications_count_ajax, name='get_notifications_count'),
+    
+    # 群聊功能
+    path('groups/', views.group_list, name='group_list'),
+    path('group/<int:group_id>/', views.group_chat_detail, name='group_chat_detail'),
+    path('group/<int:group_id>/send/', views.send_group_message_ajax, name='send_group_message_ajax'),
+    path('group/<int:group_id>/messages/', views.get_new_group_messages_ajax, name='get_new_group_messages'),
+    path('group/<int:group_id>/members/', views.group_members, name='group_members'),
 ] 

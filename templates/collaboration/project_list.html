@@ -232,9 +232,11 @@
                   <div class="d-flex justify-content-between align-items-start mb-2">
                     <h5 class="card-title mb-0">{{ project.name }}</h5>
                     <span class="badge badge-info role-badge">
-                      {% with membership=project.members.get %}
-                      {{ membership.get_role_display }}
-                      {% endwith %}
+                      {% if project.user_membership %}
+                        {{ project.user_membership.get_role_display }}
+                      {% else %}
+                        查看者
+                      {% endif %}
                     </span>
                   </div>
                   <p class="card-text project-description">{{ project.description|truncatechars:100 }}</p>

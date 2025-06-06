@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.db.models import Q, Sum, Count
 from django.http import JsonResponse
 from django.utils import timezone
+from .models import FriendRequest, Friendship, Message, ChatGroup, ChatGroupMember, GroupMessage, MessageReadStatus
+import json
 
-from .models import FriendRequest, Friendship, Message
 from .forms import FriendSearchForm, MessageForm
 
 # 工具函数：获取未读好友请求总数和未读消息总数
@@ -287,3 +288,161 @@ def get_notifications_count_ajax(request):
         return JsonResponse(counts)
     
     return JsonResponse({'status': 'error', 'message': '无效的请求'})
+
+@login_required
+def group_list(request):
+    """显示用户所在的群聊列表"""
+    # 获取用户参与的所有群聊
+    user_groups = ChatGroup.objects.filter(
+        members__user=request.user,
+        members__is_active=True,
+        is_active=True
+    ).annotate(
+        unread_count=Count(
+            'messages',
+            filter=Q(messages__created_at__gt=timezone.now() - timezone.timedelta(days=30)) & ~Q(messages__read_by=request.user)
+        )
+    ).order_by('-updated_at')
+    
+    context = {
+        'groups': user_groups,
+    }
+    return render(request, 'friends/group_list.html', context)
+
+@login_required
+def group_chat_detail(request, group_id):
+    """群聊详情页面"""
+    group = get_object_or_404(ChatGroup, id=group_id, is_active=True)
+    
+    # 检查用户是否是群成员
+    membership = group.members.filter(user=request.user, is_active=True).first()
+    if not membership:
+        messages.error(request, '您不是该群聊的成员')
+        return redirect('friends:group_list')
+    
+    # 获取群聊消息（最近100条）
+    messages_list = group.messages.select_related('sender').order_by('-created_at')[:100][::-1]
+    
+    # 标记消息为已读
+    unread_messages = group.messages.exclude(read_by=request.user)
+    for msg in unread_messages:
+        MessageReadStatus.objects.get_or_create(message=msg, user=request.user)
+    
+    # 更新最后阅读时间
+    membership.last_read_at = timezone.now()
+    membership.save()
+    
+    # 获取群成员列表
+    members = group.members.filter(is_active=True).select_related('user')
+    
+    context = {
+        'group': group,
+        'messages_list': messages_list,  # 修改变量名避免冲突
+        'members': members,
+        'membership': membership,
+    }
+    return render(request, 'friends/group_chat_detail.html', context)
+
+@login_required
+def send_group_message_ajax(request, group_id):
+    """发送群聊消息（AJAX）"""
+    if request.method == 'POST':
+        group = get_object_or_404(ChatGroup, id=group_id, is_active=True)
+        
+        # 检查用户是否是群成员
+        if not group.members.filter(user=request.user, is_active=True).exists():
+            return JsonResponse({'success': False, 'error': '您不是该群聊的成员'})
+        
+        content = request.POST.get('content', '').strip()
+        if not content:
+            return JsonResponse({'success': False, 'error': '消息内容不能为空'})
+        
+        # 创建消息
+        message = GroupMessage.objects.create(
+            group=group,
+            sender=request.user,
+            content=content,
+            message_type='text'
+        )
+        
+        # 标记自己已读
+        MessageReadStatus.objects.create(message=message, user=request.user)
+        
+        # 更新群聊的最后活动时间
+        group.updated_at = timezone.now()
+        group.save()
+        
+        # 返回消息信息
+        return JsonResponse({
+            'success': True,
+            'message': {
+                'id': message.id,
+                'sender': message.sender.username,
+                'content': message.content,
+                'created_at': message.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'message_type': message.message_type,
+            }
+        })
+    
+    return JsonResponse({'success': False, 'error': '请求方法错误'})
+
+@login_required
+def get_new_group_messages_ajax(request, group_id):
+    """获取新的群聊消息（AJAX）"""
+    group = get_object_or_404(ChatGroup, id=group_id, is_active=True)
+    
+    # 检查用户是否是群成员
+    if not group.members.filter(user=request.user, is_active=True).exists():
+        return JsonResponse({'success': False, 'error': '您不是该群聊的成员'})
+    
+    # 获取最后一条消息的ID
+    last_message_id = request.GET.get('last_message_id', 0)
+    
+    try:
+        last_message_id = int(last_message_id)
+    except:
+        last_message_id = 0
+    
+    # 获取新消息
+    new_messages = group.messages.filter(id__gt=last_message_id).select_related('sender')
+    
+    # 标记新消息为已读
+    for msg in new_messages:
+        MessageReadStatus.objects.get_or_create(message=msg, user=request.user)
+    
+    # 构建响应数据
+    messages_data = []
+    for msg in new_messages:
+        messages_data.append({
+            'id': msg.id,
+            'sender': msg.sender.username if msg.sender else '系统',
+            'content': msg.content,
+            'created_at': msg.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'message_type': msg.message_type,
+            'is_mine': msg.sender == request.user if msg.sender else False,
+        })
+    
+    return JsonResponse({
+        'success': True,
+        'messages': messages_data,
+        'count': len(messages_data)
+    })
+
+@login_required
+def group_members(request, group_id):
+    """查看群成员列表"""
+    group = get_object_or_404(ChatGroup, id=group_id, is_active=True)
+    
+    # 检查用户是否是群成员
+    if not group.members.filter(user=request.user, is_active=True).exists():
+        messages.error(request, '您不是该群聊的成员')
+        return redirect('friends:group_list')
+    
+    # 获取所有活跃成员
+    members = group.members.filter(is_active=True).select_related('user').order_by('role', 'joined_at')
+    
+    context = {
+        'group': group,
+        'members': members,
+    }
+    return render(request, 'friends/group_members.html', context)
