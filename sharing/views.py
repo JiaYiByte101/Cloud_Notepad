@@ -57,17 +57,28 @@ def view_shared_note(request, notebook_id):
     
     user_liked = Like.objects.filter(notebook=notebook, user=request.user).exists()
     
-    # 获取评论 - 只显示已发表的，或者属于当前用户但未发表的 (待审核/不合规)
+    # 获取评论 - 只获取主评论（没有父评论的），回复通过prefetch_related获取
     comments = Comment.objects.filter(
-        Q(notebook=notebook, status='PUBLISHED') |
-        Q(notebook=notebook, user=request.user, status__in=['PENDING', 'INAPPROPRIATE'])
-    ).select_related('user', 'parent_comment').prefetch_related('replies', 'likes')
+        Q(notebook=notebook, status='PUBLISHED', parent_comment__isnull=True) |
+        Q(notebook=notebook, user=request.user, status__in=['PENDING', 'INAPPROPRIATE'], parent_comment__isnull=True)
+    ).select_related('user').prefetch_related(
+        'replies__user',  # 预取回复的用户信息
+        'replies__likes',  # 预取回复的点赞信息
+        'likes'  # 预取主评论的点赞信息
+    )
 
-    # 为每个评论添加当前用户信息
+    # 为每个评论添加当前用户信息，并过滤回复
     for comment in comments:
         comment._request = request
+        # 过滤回复：只显示已发表的，或者属于当前用户但未发表的
+        filtered_replies = []
         for reply in comment.replies.all():
-            reply._request = request
+            if (reply.status == 'PUBLISHED' or 
+                (reply.user == request.user and reply.status in ['PENDING', 'INAPPROPRIATE'])):
+                reply._request = request
+                filtered_replies.append(reply)
+        # 将过滤后的回复重新赋值给评论对象
+        comment.filtered_replies = filtered_replies
 
     if request.method == 'POST':
         comment_id = request.POST.get('comment_id')

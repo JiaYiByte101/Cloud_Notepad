@@ -245,9 +245,6 @@
                                     <a href="{% url 'notebooks:edit' notebook.id %}" class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-edit me-1"></i> 编辑
                                     </a>
-                                    <a href="{% url 'storage:save_to_cloud' notebook.id %}" class="btn btn-sm btn-outline-info">
-                                        <i class="bi bi-cloud-arrow-up me-1"></i> 云存储
-                                    </a>
                                     <div class="btn-group">
                                         <button type="button" 
                                                 class="btn btn-sm btn-outline-success dropdown-toggle" 
@@ -296,7 +293,10 @@
                         </div>
                         <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                             <small>更新于 {{ notebook.updated_at|date:"Y-m-d H:i" }}</small>
-                            <button type="button" class="btn btn-sm btn-danger delete-notebook-btn" data-id="{{ notebook.id }}" data-title="{{ notebook.title }}">
+                            <button type="button" class="btn btn-sm btn-danger delete-notebook-btn" 
+                                data-id="{{ notebook.id }}" 
+                                data-title="{{ notebook.title }}"
+                                data-url="{% url 'notebooks:delete' notebook.id %}">
                                 <i class="fas fa-trash me-1"></i>删除
                             </button>
                         </div>
@@ -317,4 +317,75 @@
         {% endif %}
     </div>
 </div>
+
+<!-- 删除笔记确认模态框 -->
+<div class="modal fade" id="deleteNotebookModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">删除笔记</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>您确定要删除笔记 "<span id="deleteNotebookTitle"></span>" 吗？</p>
+                <p class="text-danger">此操作不可逆，笔记删除后将无法恢复！</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" id="confirmDeleteBtn" class="btn btn-danger">确认删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 删除笔记功能
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-notebook-btn');
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteNotebookModal'));
+        const deleteNotebookTitle = document.getElementById('deleteNotebookTitle');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        let deleteUrl = '';
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const notebookId = this.dataset.id;
+                const notebookTitle = this.dataset.title;
+                deleteUrl = this.dataset.url;
+
+                // 设置模态框内容
+                deleteNotebookTitle.textContent = notebookTitle;
+
+                // 显示模态框
+                deleteModal.show();
+            });
+        });
+
+        // 确认删除按钮点击事件
+        confirmDeleteBtn.addEventListener('click', function() {
+            // 创建表单并提交DELETE请求
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = deleteUrl;
+            
+            // 添加CSRF token - 修正获取方式
+            const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]')?.value || 
+                             document.querySelector('meta[name=csrf-token]')?.getAttribute('content') ||
+                             '{{ csrf_token }}';
+            
+            if (csrfToken) {
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'csrfmiddlewaretoken';
+                csrfInput.value = csrfToken;
+                form.appendChild(csrfInput);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    });
+</script>
 {% endblock %}

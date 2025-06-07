@@ -77,7 +77,9 @@
                                 </span>
                             </div>
                         </div>
-                        <p class="card-text text-muted">{{ notebook.content|striptags|truncatewords:20 }}</p>
+                        <div class="card-text text-muted content-preview">
+                            {{ notebook.content|striptags|truncatewords:25 }}
+                        </div>
                     </div>
                     <div class="card-footer bg-transparent border-0">
                         <a href="{% url 'sharing:view_note' notebook.id %}" class="btn btn-sm btn-outline-primary rounded-pill w-100">
@@ -136,6 +138,30 @@
     left: -10px;
     top: 25px;
     transform: rotate(45deg);
+}
+
+/* 内容预览样式 */
+.content-preview {
+    max-height: 4.5em; /* 限制为大约3行文字的高度 */
+    overflow: hidden;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 限制显示3行 */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+}
+
+/* 卡片内容区域优化 */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content-preview {
+    flex-grow: 1;
+    margin-bottom: 1rem;
 }
 </style>
 {% endblock %}

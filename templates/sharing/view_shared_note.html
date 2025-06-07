@@ -165,9 +165,9 @@
                         {% endif %}
 
                         <!-- 回复列表 -->
-                        {% if comment.replies.exists %}
+                        {% if comment.filtered_replies %}
                         <div class="replies mt-3 ms-4">
-                            {% for reply in comment.replies.all %}
+                            {% for reply in comment.filtered_replies %}
                             <div class="d-flex mb-2 reply-item" id="comment-{{ reply.id }}">
                                 <div class="flex-shrink-0">
                                     {% if reply.user.profile.avatar.url %}

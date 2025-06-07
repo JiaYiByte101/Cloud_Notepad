@@ -6,6 +6,9 @@ from PIL import Image, ImageDraw, ImageFont
 import io
 import base64
 import os
+import requests
+import json
+
 
 def generate_captcha():
     # 生成包含数字和字母的验证码
@@ -95,11 +98,6 @@ def generate_captcha_image(captcha):
     
     return f"data:image/png;base64,{img_str}"
 
-
-import requests
-import json
-
-
 def get_access_token():
     """
     使用应用API Key，应用Secret Key 获取access_token，替换下列示例中的应用API Key、应用Secret Key
@@ -124,7 +122,7 @@ def get_name(description):
         "messages": [
             {
                 "role": "user",
-                "content": "你是一个中文昵称生成器。我会告诉你用户的描述，你只需要返回两个中文昵称，用空格隔开，绝对不要说多余的话，不需要标点，不需要解释。"
+                "content": "你是一个中文昵称生成器。我会告诉你用户的描述，你只需要返回两个中文昵称，用空格隔开，绝对不要说多余的话，不需要标点，不需要解释。例如：潮男小子 小可爱"
             },
             {
                 "role": "assistant",

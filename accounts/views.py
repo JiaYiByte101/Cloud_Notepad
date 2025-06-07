@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse, HttpResponse
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
-from .utils import verify_captcha, generate_captcha, generate_captcha_image
+from .utils import verify_captcha, generate_captcha, generate_captcha_image, get_name
 import base64
 
 
