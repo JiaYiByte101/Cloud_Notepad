@@ -5,6 +5,7 @@ from django.conf import settings
 from PIL import Image, ImageDraw, ImageFont
 import io
 import base64
+import os
 
 def generate_captcha():
     # 生成包含数字和字母的验证码
@@ -18,9 +19,37 @@ def verify_captcha(user_input, captcha):
     # 验证码不区分大小写
     return user_input.lower() == captcha.lower()
 
+def get_system_font():
+    """获取系统字体，优先使用系统默认字体"""
+    # 常见字体列表
+    font_names = [
+        # Windows 字体
+        "C:\\Windows\\Fonts\\arial.ttf",
+        "C:\\Windows\\Fonts\\simhei.ttf",
+        # macOS 字体
+        "/System/Library/Fonts/Helvetica.ttc",
+        "/System/Library/Fonts/PingFang.ttc",
+        # Linux 字体
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        # 通用字体
+        "Arial.ttf",
+        "Helvetica.ttf",
+    ]
+    
+    # 尝试加载字体
+    for font_path in font_names:
+        try:
+            if os.path.exists(font_path):
+                return ImageFont.truetype(font_path, 32)  # 增加字体大小到32
+        except Exception:
+            continue
+    
+    # 如果都失败了，返回默认字体
+    return ImageFont.load_default()
+
 def generate_captcha_image(captcha):
     # 创建图片
-    width, height = 120, 40
+    width, height = 150, 50  # 增加图片尺寸
     image = Image.new('RGB', (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(image)
     
@@ -38,23 +67,20 @@ def generate_captcha_image(captcha):
         y = random.randint(0, height)
         draw.point((x, y), fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
     
-    # 添加文字
-    try:
-        font = ImageFont.truetype("Arial.ttf", 24)
-    except IOError:
-        font = ImageFont.load_default()
+    # 获取字体
+    font = get_system_font()
     
     # 绘制每个字符，添加扭曲效果
     for i, char in enumerate(captcha):
         # 随机颜色
         color = (random.randint(0, 150), random.randint(0, 150), random.randint(0, 150))
         # 随机位置偏移
-        x = 20 + i * 20 + random.randint(-5, 5)
+        x = 25 + i * 25 + random.randint(-5, 5)  # 增加字符间距
         y = 5 + random.randint(-5, 5)
         # 随机旋转角度
         angle = random.randint(-15, 15)
         # 创建字符图片
-        char_image = Image.new('RGBA', (30, 30), (0, 0, 0, 0))
+        char_image = Image.new('RGBA', (40, 40), (0, 0, 0, 0))  # 增加字符图片尺寸
         char_draw = ImageDraw.Draw(char_image)
         char_draw.text((0, 0), char, font=font, fill=color)
         # 旋转字符
@@ -67,4 +93,56 @@ def generate_captcha_image(captcha):
     image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
     
-    return f"data:image/png;base64,{img_str}" 
+    return f"data:image/png;base64,{img_str}"
+
+
+import requests
+import json
+
+
+def get_access_token():
+    """
+    使用应用API Key，应用Secret Key 获取access_token，替换下列示例中的应用API Key、应用Secret Key
+    """
+
+    url = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=BoJ2OkBmLJxxFTwsOW56GUpf&client_secret=oJB9brStNnvEdSQxoljotrPgM0spl3YD"
+
+    payload = json.dumps("")
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    return response.json().get("access_token")
+
+
+def get_name(description):
+    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-speed-128k?access_token=" + get_access_token()
+
+    payload = json.dumps({
+        "messages": [
+            {
+                "role": "user",
+                "content": "你是一个中文昵称生成器。我会告诉你用户的描述，你只需要返回两个中文昵称，用空格隔开，绝对不要说多余的话，不需要标点，不需要解释。"
+            },
+            {
+                "role": "assistant",
+                "content": "风云 傲剑"
+            },
+            {
+                "role": "user",
+                "content": description+"必须给出两个呢称，不要说多余的话，不要标点，不要解释"
+            },
+        ]
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    # 提取 result 字段
+    result_json = response.json()
+    print(result_json.get("result"))
+    return result_json.get("result", "未生成昵称")

@@ -32,4 +32,7 @@ urlpatterns = [
     
     # 媒体文件预览
     path('media-preview/<path:file_path>/', views.media_preview, name='media_preview'),
+    
+    # AI文本润色
+    path('ai-polish/', views.ai_polish_text, name='ai_polish_text'),
 ]

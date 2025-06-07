@@ -28,3 +28,9 @@ INFO 2025-06-06 17:49:34,555 views 26556 8036 使用CollaborationNotebookForm
 INFO 2025-06-06 17:49:34,556 views 26556 8036 表单验证通过
 INFO 2025-06-06 17:49:34,568 views 26556 8036 修改大纲: 编辑锁测试
 INFO 2025-06-06 17:49:34,575 views 26556 8036 已发送群聊通知: test_owner 修改了项目内容：2025-06-06 09:49:34-测试协作项目-测试协作笔记1：编辑锁测试
+INFO 2025-06-06 19:29:56,778 views 14460 1648 编辑笔记 6, 是否为协作笔记: True
+INFO 2025-06-06 19:29:56,779 views 14460 1648 POST数据: {'csrfmiddlewaretoken': ['6IlI2FRiGe9S0Eq51xwBKa2vfIr3cbBMFpUM7xSckJllHsRhlvSFGrlCklSz3Hag'], 'title': ['测试协作笔记1'], 'category': [''], 'content': ['<p>这是一个用于测试协作功能的笔记。<br><br>测试测试测试</p>\r\n<p>编辑锁测试</p>\r\n<div class="media-container"><audio style="width: 100%; max-width: 500px;" controls="controls"><source src="/media/uploads/test_owner/20250606/audios/沙滩wxy_3b03d2f2.mp3" type="audio/mp3" data-mce-fragment="1">您的浏览器不支持音频播放。</audio>\r\n<div class="file-info">音频文件: 沙滩wxy.mp3</div>\r\n</div>'], 'is_public': ['on'], 'edit_summary': ['测试音频文件是否能够上传以及推送到公共广场']}
+INFO 2025-06-06 19:29:56,786 views 14460 1648 使用CollaborationNotebookForm
+INFO 2025-06-06 19:29:56,786 views 14460 1648 表单验证通过
+INFO 2025-06-06 19:29:56,799 views 14460 1648 修改大纲: 测试音频文件是否能够上传以及推送到公共广场
+INFO 2025-06-06 19:29:56,807 views 14460 1648 已发送群聊通知: test_owner 修改了项目内容：2025-06-06 11:29:56-测试协作项目-测试协作笔记1：测试音频文件是否能够上传以及推送到公共广场
