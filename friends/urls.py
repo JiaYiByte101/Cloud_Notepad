@@ -28,4 +28,6 @@ urlpatterns = [
     path('group/<int:group_id>/send/', views.send_group_message_ajax, name='send_group_message_ajax'),
     path('group/<int:group_id>/messages/', views.get_new_group_messages_ajax, name='get_new_group_messages'),
     path('group/<int:group_id>/members/', views.group_members, name='group_members'),
+    path('groups/refresh-read-status/', views.refresh_group_read_status, name='refresh_group_read_status'),
+    path('groups/unread-counts/', views.get_group_unread_counts_ajax, name='get_group_unread_counts'),
 ] 

@@ -22,11 +22,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'storage:cloud_storage' %}">
-                            <i class="bi bi-cloud-arrow-up me-1"></i>云存储
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link rounded-pill px-2 mx-1 nav-btn-hover" href="{% url 'sharing:public' %}">
                             <i class="bi bi-people me-1"></i>公共广场
                         </a>
@@ -78,11 +73,20 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-pill px-3 position-relative" href="{% url 'friends:chat_list' %}" id="messageLink">
+                        <a class="nav-link rounded-pill px-3 position-relative" href="{% url 'friends:chat_list' %}" id="messageLink" title="私聊消息">
                             <i class="bi bi-chat-dots me-1"></i>
                             <span id="messageBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
                                 <span id="messageCount">0</span>
                                 <span class="visually-hidden">个未读消息</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill px-3 position-relative" href="{% url 'friends:group_list' %}" id="groupMessageLink" title="群聊消息">
+                            <i class="bi bi-chat-square-dots me-1"></i>
+                            <span id="groupMessageBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+                                <span id="groupMessageCount">0</span>
+                                <span class="visually-hidden">个群聊未读消息</span>
                             </span>
                         </a>
                     </li>
@@ -122,6 +126,8 @@
         const notificationCount = document.getElementById('notificationCount');
         const messageBadge = document.getElementById('messageBadge');
         const messageCount = document.getElementById('messageCount');
+        const groupMessageBadge = document.getElementById('groupMessageBadge');
+        const groupMessageCount = document.getElementById('groupMessageCount');
         const collaborationBadge = document.getElementById('collaborationBadge');
         const collaborationCount = document.getElementById('collaborationCount');
         
@@ -149,6 +155,14 @@
                     messageBadge.classList.remove('d-none');
                 } else {
                     messageBadge.classList.add('d-none');
+                }
+                
+                // 更新群聊消息的通知数量
+                if (data.unread_group_messages_count > 0) {
+                    groupMessageCount.textContent = data.unread_group_messages_count;
+                    groupMessageBadge.classList.remove('d-none');
+                } else {
+                    groupMessageBadge.classList.add('d-none');
                 }
             })
             .catch(error => console.error('获取通知数量时出错:', error));

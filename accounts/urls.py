@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/', views.custom_login, name='login'),
     path('logout/', views.logout_confirm, name='logout'),
     path('profile/', views.profile, name='profile'),
-    path('profile/edit/', views.edit_profile, name='edit_profile'),  # 暂时注释掉
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('refresh-captcha/', views.refresh_captcha, name='refresh_captcha'),
+    path('get-nickname/', views.get_nickname, name='get_nickname'),
 ]

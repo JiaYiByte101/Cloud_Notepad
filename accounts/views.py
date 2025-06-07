@@ -115,3 +115,15 @@ def refresh_captcha(request):
     # 从base64字符串中提取实际的图片数据
     image_data = base64.b64decode(captcha_image.split(',')[1])
     return HttpResponse(image_data, content_type='image/png')
+
+@login_required
+def get_nickname(request):
+    if request.method == 'POST':
+        description = request.POST.get('description', '')
+        if description:
+            try:
+                nickname = get_name(description)
+                return JsonResponse({'status': 'success', 'nickname': nickname})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'error', 'message': '无效的请求'})

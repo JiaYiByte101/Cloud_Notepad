@@ -10,14 +10,43 @@ import json
 
 from .forms import FriendSearchForm, MessageForm
 
+def get_user_unread_group_messages_count(user):
+    """
+    获取用户的群聊未读消息数量
+    这个函数提供更准确的未读消息统计
+    """
+    # 获取用户参与的所有活跃群聊
+    user_groups = ChatGroup.objects.filter(
+        members__user=user,
+        members__is_active=True,
+        is_active=True
+    )
+    
+    total_unread = 0
+    for group in user_groups:
+        # 获取该群聊中用户未读的消息数量
+        unread_count = GroupMessage.objects.filter(
+            group=group
+        ).exclude(
+            messagereadstatus__user=user
+        ).count()
+        total_unread += unread_count
+    
+    return total_unread
+
 # 工具函数：获取未读好友请求总数和未读消息总数
 def get_notification_counts(user):
     pending_requests_count = FriendRequest.objects.filter(receiver=user, status='pending').count()
     unread_messages_count = Message.objects.filter(receiver=user, is_read=False).count()
+    
+    # 获取群聊未读消息数量
+    unread_group_messages_count = get_user_unread_group_messages_count(user)
+    
     return {
         'pending_requests_count': pending_requests_count,
         'unread_messages_count': unread_messages_count,
-        'total_count': pending_requests_count + unread_messages_count
+        'unread_group_messages_count': unread_group_messages_count,
+        'total_count': pending_requests_count + unread_messages_count + unread_group_messages_count
     }
 
 @login_required
@@ -297,15 +326,24 @@ def group_list(request):
         members__user=request.user,
         members__is_active=True,
         is_active=True
-    ).annotate(
-        unread_count=Count(
-            'messages',
-            filter=Q(messages__created_at__gt=timezone.now() - timezone.timedelta(days=30)) & ~Q(messages__read_by=request.user)
-        )
     ).order_by('-updated_at')
     
+    # 为每个群聊计算未读消息数量
+    groups_with_unread = []
+    for group in user_groups:
+        # 计算该群聊中用户未读的消息数量
+        unread_count = GroupMessage.objects.filter(
+            group=group
+        ).exclude(
+            messagereadstatus__user=request.user
+        ).count()
+        
+        # 将未读数量添加到群聊对象
+        group.unread_count = unread_count
+        groups_with_unread.append(group)
+    
     context = {
-        'groups': user_groups,
+        'groups': groups_with_unread,
     }
     return render(request, 'friends/group_list.html', context)
 
@@ -327,6 +365,13 @@ def group_chat_detail(request, group_id):
     unread_messages = group.messages.exclude(read_by=request.user)
     for msg in unread_messages:
         MessageReadStatus.objects.get_or_create(message=msg, user=request.user)
+    
+    # 确保所有消息都被标记为已读（包括刚刚创建的已读状态）
+    # 这一步是为了确保数据一致性
+    all_messages = group.messages.all()
+    for msg in all_messages:
+        if not msg.read_by.filter(id=request.user.id).exists():
+            MessageReadStatus.objects.get_or_create(message=msg, user=request.user)
     
     # 更新最后阅读时间
     membership.last_read_at = timezone.now()
@@ -410,6 +455,12 @@ def get_new_group_messages_ajax(request, group_id):
     for msg in new_messages:
         MessageReadStatus.objects.get_or_create(message=msg, user=request.user)
     
+    # 更新用户在该群聊的最后阅读时间
+    membership = group.members.filter(user=request.user, is_active=True).first()
+    if membership:
+        membership.last_read_at = timezone.now()
+        membership.save()
+    
     # 构建响应数据
     messages_data = []
     for msg in new_messages:
@@ -446,3 +497,80 @@ def group_members(request, group_id):
         'members': members,
     }
     return render(request, 'friends/group_members.html', context)
+
+@login_required
+def refresh_group_read_status(request):
+    """
+    刷新用户的群聊消息已读状态
+    这是一个调试/修复功能，用于解决已读状态不同步的问题
+    """
+    if request.method == 'POST':
+        # 获取用户参与的所有群聊
+        user_groups = ChatGroup.objects.filter(
+            members__user=request.user,
+            members__is_active=True,
+            is_active=True
+        )
+        
+        total_marked = 0
+        for group in user_groups:
+            # 获取该群聊的所有消息
+            all_messages = group.messages.all()
+            for msg in all_messages:
+                # 如果用户还没有已读记录，创建一个
+                read_status, created = MessageReadStatus.objects.get_or_create(
+                    message=msg, 
+                    user=request.user
+                )
+                if created:
+                    total_marked += 1
+            
+            # 更新最后阅读时间
+            membership = group.members.filter(user=request.user, is_active=True).first()
+            if membership:
+                membership.last_read_at = timezone.now()
+                membership.save()
+        
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': True,
+                'marked_count': total_marked,
+                'message': f'已标记 {total_marked} 条消息为已读'
+            })
+        else:
+            messages.success(request, f'已刷新群聊已读状态，标记了 {total_marked} 条消息为已读')
+            return redirect('friends:group_list')
+    
+    return JsonResponse({'success': False, 'error': '无效的请求方法'})
+
+@login_required
+def get_group_unread_counts_ajax(request):
+    """
+    通过AJAX获取所有群聊的未读消息数量
+    用于实时更新群聊列表页面的未读消息显示
+    """
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        # 获取用户参与的所有群聊
+        user_groups = ChatGroup.objects.filter(
+            members__user=request.user,
+            members__is_active=True,
+            is_active=True
+        )
+        
+        group_counts = {}
+        for group in user_groups:
+            # 计算该群聊中用户未读的消息数量
+            unread_count = GroupMessage.objects.filter(
+                group=group
+            ).exclude(
+                messagereadstatus__user=request.user
+            ).count()
+            
+            group_counts[group.id] = unread_count
+        
+        return JsonResponse({
+            'success': True,
+            'group_counts': group_counts
+        })
+    
+    return JsonResponse({'success': False, 'error': '无效的请求'})

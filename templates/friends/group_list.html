@@ -12,13 +12,13 @@
                     <h5 class="card-title">社交功能</h5>
                     <div class="list-group list-group-flush">
                         <a href="{% url 'friends:home' %}" class="list-group-item list-group-item-action">
-                            <i class="fas fa-user-friends"></i> 好友列表
+                            <i class="bi bi-person-lines-fill"></i> 好友列表
                         </a>
                         <a href="{% url 'friends:chat_list' %}" class="list-group-item list-group-item-action">
-                            <i class="fas fa-comments"></i> 私聊消息
+                            <i class="bi bi-chat-dots"></i> 私聊消息
                         </a>
                         <a href="{% url 'friends:group_list' %}" class="list-group-item list-group-item-action active">
-                            <i class="fas fa-users"></i> 群聊列表
+                            <i class="bi bi-chat-square-dots"></i> 群聊列表
                         </a>
                     </div>
                 </div>
@@ -26,7 +26,12 @@
         </div>
         
         <div class="col-md-9">
-            <h2 class="mb-4">我的群聊</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">我的群聊</h2>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="refreshReadStatus">
+                    <i class="bi bi-arrow-clockwise"></i> 刷新已读状态
+                </button>
+            </div>
             
             {% if groups %}
                 <div class="list-group">
@@ -49,9 +54,9 @@
                                 {% endif %}
                             </p>
                             <small>
-                                <i class="fas fa-users"></i> {{ group.members_count }} 位成员
+                                <i class="bi bi-people"></i> {{ group.members_count }} 位成员
                                 {% if group.collaboration_project %}
-                                    | <i class="fas fa-project-diagram"></i> 协作项目群聊
+                                    | <i class="bi bi-diagram-3"></i> 协作项目群聊
                                 {% endif %}
                             </small>
                         </a>
@@ -70,10 +75,123 @@
 
 {% block extra_js %}
 <script>
-    // 可以添加实时更新未读消息数的功能
-    setInterval(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        // 实时更新未读消息数的功能
+        function updateGroupUnreadCounts() {
+            // 通过AJAX获取所有群聊的未读消息数
+            fetch('{% url "friends:get_group_unread_counts" %}', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 更新每个群聊的未读消息数显示
+                    const groupItems = document.querySelectorAll('.list-group-item[href*="group/"]');
+                    
+                    groupItems.forEach(function(item) {
+                        const href = item.getAttribute('href');
+                        const groupId = href.match(/group\/(\d+)\//);
+                        if (groupId) {
+                            const groupIdNum = parseInt(groupId[1]);
+                            const unreadCount = data.group_counts[groupIdNum] || 0;
+                            
+                            // 查找该群聊的未读消息徽章
+                            const badge = item.querySelector('.badge');
+                            
+                            if (unreadCount > 0) {
+                                if (badge) {
+                                    // 更新现有徽章
+                                    badge.textContent = unreadCount;
+                                } else {
+                                    // 创建新的徽章
+                                    const groupNameElement = item.querySelector('h5');
+                                    if (groupNameElement) {
+                                        const newBadge = document.createElement('span');
+                                        newBadge.className = 'badge bg-danger';
+                                        newBadge.textContent = unreadCount;
+                                        groupNameElement.appendChild(document.createTextNode(' '));
+                                        groupNameElement.appendChild(newBadge);
+                                    }
+                                }
+                            } else {
+                                // 移除徽章（如果存在）
+                                if (badge) {
+                                    badge.remove();
+                                }
+                            }
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('更新群聊未读消息数时出错:', error);
+            });
+        }
+        
+        // 刷新已读状态按钮事件
+        const refreshButton = document.getElementById('refreshReadStatus');
+        if (refreshButton) {
+            refreshButton.addEventListener('click', function() {
+                const button = this;
+                const originalText = button.innerHTML;
+                
+                // 显示加载状态
+                button.innerHTML = '<i class="bi bi-arrow-clockwise"></i> 刷新中...';
+                button.disabled = true;
+                
+                // 发送AJAX请求
+                fetch('{% url "friends:refresh_group_read_status" %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+                                      document.querySelector('meta[name=csrf-token]')?.getAttribute('content') ||
+                                      '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 显示成功消息
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                        alertDiv.innerHTML = `
+                            ${data.message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        `;
+                        document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.row'));
+                        
+                        // 刷新页面以显示更新后的状态
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        alert('刷新失败: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('刷新已读状态时出错:', error);
+                    alert('刷新失败，请稍后重试');
+                })
+                .finally(() => {
+                    // 恢复按钮状态
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                });
+            });
+        }
+        
         // 每30秒更新一次群聊列表，检查新消息
-        // 这里可以通过AJAX调用来更新未读消息数
-    }, 30000);
+        setInterval(updateGroupUnreadCounts, 3000);
+        
+        // 页面变为活动状态时更新
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                updateGroupUnreadCounts();
+            }
+        });
+    });
 </script>
 {% endblock %} 

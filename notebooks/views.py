@@ -699,3 +699,42 @@ def notebook_download_html(request, notebook_id):
     
     return response
 
+
+@login_required
+def ai_polish_text(request):
+    """AI文本润色接口"""
+    if request.method == 'POST':
+        try:
+            # 获取选中的文本
+            selected_text = request.POST.get('text', '').strip()
+            
+            if not selected_text:
+                return JsonResponse({
+                    'success': False,
+                    'error': '请先选中要润色的文本'
+                })
+            
+            # 导入润色函数
+            from .utils import polish_text
+            
+            # 调用AI润色
+            polished_text = polish_text(selected_text)
+            
+            # 返回润色后的文本
+            return JsonResponse({
+                'success': True,
+                'polished_text': polished_text,
+                'original_text': selected_text
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': f'润色失败：{str(e)}'
+            })
+    
+    return JsonResponse({
+        'success': False,
+        'error': '无效的请求方法'
+    })
+

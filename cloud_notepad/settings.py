@@ -81,7 +81,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'language': 'zh_CN',
     'theme': 'silver',
     'plugins': 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
-    'toolbar': 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image media customMediaUpload | help',
+    'toolbar': 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image media customMediaUpload | aiPolish | help',
     'toolbar_mode': 'sliding',
     'menubar': 'file edit view insert format tools table help',
     'statusbar': True,
@@ -222,6 +222,69 @@ TINYMCE_DEFAULT_CONFIG = {
                 };
                 
                 input.click();
+            }
+        });
+        
+        // AI润色按钮
+        editor.ui.registry.addButton('aiPolish', {
+            text: 'AI润色',
+            tooltip: '使用AI润色选中的文本',
+            icon: 'edit-block',
+            onAction: function() {
+                // 获取选中的文本
+                const selectedText = editor.selection.getContent({format: 'text'});
+                console.log('选中的文本:', selectedText);
+                
+                if (!selectedText || selectedText.trim() === '') {
+                    alert('请先选中要润色的文本！');
+                    return;
+                }
+                
+                // 显示进度提示
+                editor.setProgressState(true);
+                
+                // 获取CSRF token
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+                console.log('CSRF Token:', csrfToken);
+                
+                // 调用AI润色API
+                fetch('/notebooks/ai-polish/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: 'text=' + encodeURIComponent(selectedText)
+                })
+                .then(response => {
+                    console.log('响应状态:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('API响应数据:', data);
+                    if (data.success) {
+                        console.log('润色后的文本:', data.polished_text);
+                        // 直接替换选中的文本
+                        editor.selection.setContent(data.polished_text);
+                        // 显示成功提示
+                        editor.notificationManager.open({
+                            text: 'AI润色完成！',
+                            type: 'success',
+                            timeout: 2000
+                        });
+                    } else {
+                        console.error('润色失败:', data.error);
+                        alert('AI润色失败：' + (data.error || '未知错误'));
+                    }
+                })
+                .catch(error => {
+                    console.error('AI润色错误:', error);
+                    alert('AI润色失败，请稍后重试');
+                })
+                .finally(() => {
+                    // 隐藏进度提示
+                    editor.setProgressState(false);
+                });
             }
         });
     }''',
