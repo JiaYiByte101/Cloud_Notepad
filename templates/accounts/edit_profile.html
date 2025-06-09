@@ -19,7 +19,7 @@
                         <div class="col-12 text-center mb-4">
                             <div class="position-relative d-inline-block">
                                 <img id="avatar-preview" class="rounded-circle account-img"
-                                     src="{{ user.profile.avatar.url }}"
+                                     src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% load static %}{% static 'img/user_dark.png' %}{% endif %}"
                                      alt="Profile Picture"
                                      style="width: 120px; height: 120px; object-fit: cover; cursor: pointer;"
                                      onclick="document.getElementById('{{ p_form.avatar.id_for_label }}').click();">

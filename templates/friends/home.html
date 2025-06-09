@@ -62,7 +62,12 @@
                                     <div class="card h-100 border-0 shadow-sm hover-card">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center mb-3">
-                                                <img src="{{ friend.profile.avatar.url }}" alt="{{ friend.username }}" 
+                                                {% if friend.profile.avatar %}
+                                <img src="{{ friend.profile.avatar.url }}" alt="{{ friend.username }}"
+                                {% else %}
+                                {% load static %}
+                                <img src="{% static 'img/user_dark.png' %}" alt="{{ friend.username }}"
+                                {% endif %} 
                                                      class="rounded-circle me-3" width="60" height="60">
                                                 <div>
                                                     <h5 class="mb-1">{{ friend.username }}</h5>

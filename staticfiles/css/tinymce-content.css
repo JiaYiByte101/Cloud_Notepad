@@ -1,0 +1,121 @@
+/* TinyMCE 编辑器内容样式 */
+
+/* 视频样式 */
+video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    display: block;
+}
+
+/* 音频样式 */
+audio {
+    width: 100%;
+    max-width: 500px;
+    margin: 10px 0;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+/* 媒体容器样式 */
+.media-container {
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    border: 2px dashed #e0e0e0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.media-container:hover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+}
+
+/* 图片样式优化 */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
+}
+
+/* 响应式媒体查询 */
+@media (max-width: 768px) {
+    video, audio {
+        width: 100%;
+    }
+    
+    .media-container {
+        margin: 10px 0;
+        padding: 8px;
+    }
+}
+
+/* 媒体加载状态 */
+video:not([src]), audio:not([src]) {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+video:not([src])::before, audio:not([src])::before {
+    content: "正在加载媒体文件...";
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* 媒体控件样式 */
+video::-webkit-media-controls-panel,
+audio::-webkit-media-controls-panel {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+video::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-play-button {
+    background-color: #007bff;
+    border-radius: 50%;
+}
+
+/* 文件信息提示 */
+.file-info {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* 错误状态样式 */
+.media-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* 加载动画 */
+.media-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 

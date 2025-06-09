@@ -5,10 +5,27 @@ from django.contrib.auth.models import User
 from django.db.models import Q, Sum, Count
 from django.http import JsonResponse
 from django.utils import timezone
+from django.template.defaultfilters import date as date_filter
 from .models import FriendRequest, Friendship, Message, ChatGroup, ChatGroupMember, GroupMessage, MessageReadStatus
 import json
+import pytz
 
 from .forms import FriendSearchForm, MessageForm
+
+def format_message_time(dt):
+    """
+    将UTC时间转换为北京时间并格式化
+    """
+    # 确保时间是aware的
+    if timezone.is_naive(dt):
+        dt = timezone.make_aware(dt, timezone.utc)
+    
+    # 转换为北京时间
+    beijing_tz = pytz.timezone('Asia/Shanghai')
+    beijing_time = dt.astimezone(beijing_tz)
+    
+    # 格式化为字符串
+    return beijing_time.strftime('%Y-%m-%d %H:%M')
 
 def get_user_unread_group_messages_count(user):
     """
@@ -270,7 +287,7 @@ def send_message_ajax(request, friend_id):
             'status': 'success',
             'message_id': message.id,
             'content': message.content,
-            'timestamp': message.created_at.strftime('%Y-%m-%d %H:%M')
+            'timestamp': format_message_time(message.created_at)
         })
     
     return JsonResponse({'status': 'error', 'message': '无效的请求'})
@@ -302,7 +319,7 @@ def get_new_messages_ajax(request, friend_id):
                 'content': msg.content,
                 'sender_id': msg.sender.id,
                 'is_self': msg.sender.id == request.user.id,
-                'timestamp': msg.created_at.strftime('%Y-%m-%d %H:%M')
+                'timestamp': format_message_time(msg.created_at)
             })
         
         return JsonResponse({'messages': messages_data})
@@ -424,7 +441,7 @@ def send_group_message_ajax(request, group_id):
                 'id': message.id,
                 'sender': message.sender.username,
                 'content': message.content,
-                'created_at': message.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'created_at': format_message_time(message.created_at),
                 'message_type': message.message_type,
             }
         })
@@ -468,7 +485,7 @@ def get_new_group_messages_ajax(request, group_id):
             'id': msg.id,
             'sender': msg.sender.username if msg.sender else '系统',
             'content': msg.content,
-            'created_at': msg.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'created_at': format_message_time(msg.created_at),
             'message_type': msg.message_type,
             'is_mine': msg.sender == request.user if msg.sender else False,
         })

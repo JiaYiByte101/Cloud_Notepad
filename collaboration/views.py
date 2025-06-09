@@ -395,6 +395,9 @@ def handle_invitation(request, member_id, action):
 @login_required
 def remove_member(request, project_id, member_id):
     """从协作项目中移除成员"""
+    from friends.models import ChatGroupMember, GroupMessage
+    from django.db import transaction
+    
     project = get_object_or_404(CollaborationProject, id=project_id)
     membership = get_object_or_404(CollaborationMember, id=member_id, project=project)
     
@@ -406,13 +409,42 @@ def remove_member(request, project_id, member_id):
     user_to_remove = membership.user
     is_self_leaving = user_to_remove == request.user
     
-    membership.delete()
+    # 使用事务确保协作项目和群聊的成员同时被移除
+    with transaction.atomic():
+        # 删除协作项目成员记录
+        membership.delete()
+        
+        # 如果项目有关联的群聊，同时从群聊中移除该成员
+        chat_group = getattr(project, 'chat_group', None)
+        if chat_group:
+            try:
+                # 查找并移除群聊成员
+                chat_member = ChatGroupMember.objects.get(
+                    group=chat_group,
+                    user=user_to_remove,
+                    is_active=True
+                )
+                chat_member.is_active = False
+                chat_member.save()
+                
+                # 发送系统消息通知其他成员
+                action_text = "退出了" if is_self_leaving else "被移出了"
+                GroupMessage.objects.create(
+                    group=chat_group,
+                    sender=None,  # 系统消息
+                    content=f"{user_to_remove.username} {action_text}协作项目",
+                    message_type='system'
+                )
+                
+            except ChatGroupMember.DoesNotExist:
+                # 如果用户不在群聊中，忽略这个错误
+                pass
     
     if is_self_leaving:
-        messages.success(request, f"您已退出协作项目 '{project.name}'")
+        messages.success(request, f"您已退出协作项目 '{project.name}' 及其群聊")
         return redirect('collaboration:project_list')
     else:
-        messages.success(request, f"{user_to_remove.username} 已从项目中移除")
+        messages.success(request, f"{user_to_remove.username} 已从项目及群聊中移除")
         return redirect('collaboration:project_detail', project_id=project.id)
 
 @login_required

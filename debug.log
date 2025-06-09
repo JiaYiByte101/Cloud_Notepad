@@ -34,3 +34,60 @@ INFO 2025-06-06 19:29:56,786 views 14460 1648 ʹ��CollaborationNotebookForm
 INFO 2025-06-06 19:29:56,786 views 14460 1648 ������֤ͨ��
 INFO 2025-06-06 19:29:56,799 views 14460 1648 �޸Ĵ��: ������Ƶ�ļ��Ƿ��ܹ��ϴ��Լ����͵������㳡
 INFO 2025-06-06 19:29:56,807 views 14460 1648 �ѷ���Ⱥ��֪ͨ: test_owner �޸�����Ŀ���ݣ�2025-06-06 11:29:56-����Э����Ŀ-����Э���ʼ�1��������Ƶ�ļ��Ƿ��ܹ��ϴ��Լ����͵������㳡
+INFO 2025-06-07 20:05:49,836 views 2715277 140198363570176 处理邀请: 用户=HJY, 成员ID=5, 操作=accept, 方法=POST
+INFO 2025-06-07 20:05:49,839 views 2715277 140198363570176 找到待处理邀请: 项目=我的第一个协作项目, 邀请人=hujiaye
+INFO 2025-06-07 20:05:49,839 views 2715277 140198363570176 用户接受邀请: 用户=HJY, 项目=我的第一个协作项目
+INFO 2025-06-07 20:08:27,674 views 2715282 140198363570176 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-07 20:08:27,674 views 2715282 140198363570176 POST数据: {'csrfmiddlewaretoken': ['MeEvyauZzxKRpX0e0jeFiVHSkVAlo8k84Pniel4ZkBwqBp9Yry4PtdWlSzdhDFtr'], 'title': ['测试 测试 测试'], 'category': [''], 'content': ['<p>这是系统能力培训的一个测试文档。旨在推进云笔记本项目的开发，我深感荣幸与期待。我衷心期望能够圆满完成此项目。</p>'], 'is_public': ['on'], 'edit_summary': ['对测试文档的进一步更改']}
+INFO 2025-06-07 20:08:27,678 views 2715282 140198363570176 使用CollaborationNotebookForm
+INFO 2025-06-07 20:08:27,679 views 2715282 140198363570176 表单验证通过
+INFO 2025-06-07 20:08:27,689 views 2715282 140198363570176 修改大纲: 对测试文档的进一步更改
+INFO 2025-06-07 20:08:27,704 views 2715282 140198363570176 已发送群聊通知: hujiaye 修改了项目内容：2025-06-07 12:08:27-我的第一个协作项目-测试 测试 测试：对测试文档的进一步更改
+INFO 2025-06-07 22:29:32,250 views 2768476 140236111736832 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-07 22:29:32,250 views 2768476 140236111736832 POST数据: {'csrfmiddlewaretoken': ['Zw6Hl1G1HoYJXiVKrYDULvBBRreFJAKRkVHs1kxZ6laRiS6MztfS6eajQYukP9PM'], 'title': ['测试 测试 测试'], 'category': [''], 'content': ['<p>这是系统能力培训的一个测试文档。旨在推进云笔记本项目的开发，我深感荣幸与期待。我衷心期望能够圆满完成此项目。</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/hujiaye/20250607/images/Transformer_137285b1.jpg" width="1000" height="800" alt="" /></p>'], 'is_public': ['on'], 'edit_summary': ['一次协作文档云存储的测试']}
+INFO 2025-06-07 22:29:32,255 views 2768476 140236111736832 使用CollaborationNotebookForm
+INFO 2025-06-07 22:29:32,255 views 2768476 140236111736832 表单验证通过
+INFO 2025-06-07 22:29:32,272 views 2768476 140236111736832 修改大纲: 一次协作文档云存储的测试
+INFO 2025-06-07 22:29:32,288 views 2768476 140236111736832 已发送群聊通知: hujiaye 修改了项目内容：2025-06-07 14:29:32-我的第一个协作项目-测试 测试 测试：一次协作文档云存储的测试
+INFO 2025-06-07 22:36:22,109 views 2768475 140236111736832 处理邀请: 用户=HJY, 成员ID=6, 操作=accept, 方法=POST
+INFO 2025-06-07 22:36:22,112 views 2768475 140236111736832 找到待处理邀请: 项目=一个用于测试的协作项目, 邀请人=hujiaye
+INFO 2025-06-07 22:36:22,112 views 2768475 140236111736832 用户接受邀请: 用户=HJY, 项目=一个用于测试的协作项目
+INFO 2025-06-07 22:39:11,175 views 2768477 140236111736832 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-07 22:39:11,175 views 2768477 140236111736832 POST数据: {'csrfmiddlewaretoken': ['4udNmf6h610s8UFymwEkKvkwvDiaf6OKpTOy2yXfvYcAtuQAu1gi5eTeuayPlFTF'], 'title': ['测试 测试 测试——V2'], 'category': [''], 'content': ['<p>这是系统能力培训的一个测试文档。旨在推进云笔记本项目的开发，我深感荣幸与期待。我衷心期望能够圆满完成此项目。</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/hujiaye/20250607/images/Transformer_137285b1.jpg" width="1000" height="800" alt="" /></p>'], 'is_public': ['on'], 'edit_summary': ['V22222']}
+INFO 2025-06-07 22:39:11,179 views 2768477 140236111736832 使用CollaborationNotebookForm
+INFO 2025-06-07 22:39:11,180 views 2768477 140236111736832 表单验证通过
+INFO 2025-06-07 22:39:11,188 views 2768477 140236111736832 修改大纲: V22222
+INFO 2025-06-07 22:39:11,207 views 2768477 140236111736832 已发送群聊通知: hujiaye 修改了项目内容：2025-06-07 14:39:11-我的第一个协作项目-测试 测试 测试——V2：V22222
+INFO 2025-06-07 22:41:21,633 views 2768477 140236111736832 处理邀请: 用户=Earth, 成员ID=7, 操作=accept, 方法=POST
+INFO 2025-06-07 22:41:21,635 views 2768477 140236111736832 找到待处理邀请: 项目=项目名称, 邀请人=Toma-E
+INFO 2025-06-07 22:41:21,635 views 2768477 140236111736832 用户接受邀请: 用户=Earth, 项目=项目名称
+INFO 2025-06-07 22:50:43,514 views 2768475 140236111736832 处理邀请: 用户=HJY, 成员ID=9, 操作=accept, 方法=POST
+INFO 2025-06-07 22:50:43,517 views 2768475 140236111736832 找到待处理邀请: 项目=一个测试, 邀请人=hujiaye
+INFO 2025-06-07 22:50:43,517 views 2768475 140236111736832 用户接受邀请: 用户=HJY, 项目=一个测试
+INFO 2025-06-09 10:16:12,933 views 3431082 140441022984192 处理邀请: 用户=HJY, 成员ID=8, 操作=accept, 方法=POST
+INFO 2025-06-09 10:16:12,936 views 3431082 140441022984192 找到待处理邀请: 项目=项目名称, 邀请人=Toma-E
+INFO 2025-06-09 10:16:12,936 views 3431082 140441022984192 用户接受邀请: 用户=HJY, 项目=项目名称
+INFO 2025-06-09 10:37:28,454 utils 3439513 139650341744640 成功注册CID字体: STSong-Light
+INFO 2025-06-09 10:37:28,455 utils 3439513 139650341744640 成功注册CID字体: MSung-Light
+INFO 2025-06-09 10:37:28,455 utils 3439513 139650341744640 成功注册CID字体: HeiseiMin-W3
+INFO 2025-06-09 10:37:28,455 utils 3439513 139650341744640 成功注册CID字体: HeiseiKakuGo-W5
+INFO 2025-06-09 10:37:28,568 utils 3439513 139650341744640 成功注册TTF字体: WenQuanYi-Micro-Hei
+INFO 2025-06-09 10:37:28,666 utils 3439513 139650341744640 成功注册TTF字体: WenQuanYi-Zen-Hei
+INFO 2025-06-09 10:37:28,705 utils 3439513 139650341744640 成功注册TTF字体: DejaVu-Sans
+INFO 2025-06-09 10:37:28,706 utils 3439513 139650341744640 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']
+INFO 2025-06-09 10:38:16,391 utils 3439748 140466285731840 成功注册CID字体: STSong-Light
+INFO 2025-06-09 10:38:16,391 utils 3439748 140466285731840 成功注册CID字体: MSung-Light
+INFO 2025-06-09 10:38:16,391 utils 3439748 140466285731840 成功注册CID字体: HeiseiMin-W3
+INFO 2025-06-09 10:38:16,392 utils 3439748 140466285731840 成功注册CID字体: HeiseiKakuGo-W5
+INFO 2025-06-09 10:38:16,517 utils 3439748 140466285731840 成功注册TTF字体: WenQuanYi-Micro-Hei
+INFO 2025-06-09 10:38:16,644 utils 3439748 140466285731840 成功注册TTF字体: WenQuanYi-Zen-Hei
+INFO 2025-06-09 10:38:16,655 utils 3439748 140466285731840 成功注册TTF字体: DejaVu-Sans
+INFO 2025-06-09 10:38:16,656 utils 3439748 140466285731840 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']
+INFO 2025-06-09 10:38:17,191 utils 3439749 140466285731840 成功注册CID字体: STSong-Light
+INFO 2025-06-09 10:38:17,191 utils 3439749 140466285731840 成功注册CID字体: MSung-Light
+INFO 2025-06-09 10:38:17,191 utils 3439749 140466285731840 成功注册CID字体: HeiseiMin-W3
+INFO 2025-06-09 10:38:17,191 utils 3439749 140466285731840 成功注册CID字体: HeiseiKakuGo-W5
+INFO 2025-06-09 10:38:17,316 utils 3439749 140466285731840 成功注册TTF字体: WenQuanYi-Micro-Hei
+INFO 2025-06-09 10:38:17,442 utils 3439749 140466285731840 成功注册TTF字体: WenQuanYi-Zen-Hei
+INFO 2025-06-09 10:38:17,454 utils 3439749 140466285731840 成功注册TTF字体: DejaVu-Sans
+INFO 2025-06-09 10:38:17,454 utils 3439749 140466285731840 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']

@@ -15,3 +15,5 @@ beautifulsoup4==4.12.3
 django-debug-toolbar==4.3.0
 whitenoise==6.6.0
 gunicorn==22.0.0
+cos-python-sdk-v5==1.9.25
+pytz

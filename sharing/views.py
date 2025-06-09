@@ -11,6 +11,15 @@ from notebooks.models import Notebook
 from .models import Like, Comment, CommentLike
 from .forms import CommentForm
 from .utils import check_sensitive_words # Import aħna l-funzjoni l-ġdida
+from django.http import JsonResponse
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.conf import settings
+from django.http import JsonResponse
+from django.core.files.storage import default_storage
+from django.conf import settings
+import os
+
 
 
 @login_required
@@ -196,3 +205,4 @@ def toggle_like(request, notebook_id):
         messages.success(request, '已点赞！')
 
     return redirect('sharing:view_note', notebook_id=notebook.id)
+    
