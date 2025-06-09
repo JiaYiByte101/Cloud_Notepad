@@ -63,7 +63,12 @@
                     <div class="card-body">
                         <h5 class="card-title text-truncate">{{ notebook.title }}</h5>
                         <div class="d-flex mb-3">
+                            {% if notebook.user.profile.avatar %}
                             <img src="{{ notebook.user.profile.avatar.url }}" class="rounded-circle me-2" width="30" height="30" alt="{{ notebook.user.username }}">
+                            {% else %}
+                            {% load static %}
+                            <img src="{% static 'img/user_dark.png' %}" class="rounded-circle me-2" width="30" height="30" alt="{{ notebook.user.username }}">
+                            {% endif %}
                             <div class="text-muted small">
                                 <div>{{ notebook.user.username }}</div>
                                 <div><i class="bi bi-calendar3 me-1"></i>{{ notebook.created_at|date:"Y-m-d" }}</div>

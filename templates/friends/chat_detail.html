@@ -115,7 +115,12 @@
                 <div class="card-header bg-primary text-white rounded-top-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <img src="{{ friend.profile.avatar.url }}" alt="{{ friend.username }}" 
+                            {% if friend.profile.avatar %}
+                <img src="{{ friend.profile.avatar.url }}" alt="{{ friend.username }}"
+                {% else %}
+                {% load static %}
+                <img src="{% static 'img/user_dark.png' %}" alt="{{ friend.username }}"
+                {% endif %} 
                                  class="rounded-circle me-2" width="40" height="40">
                             <h5 class="mb-0">{{ friend.username }}</h5>
                         </div>

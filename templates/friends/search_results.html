@@ -23,7 +23,12 @@
                                 <div class="list-group-item border-0 mb-3 shadow-sm rounded-4">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" 
+                                            {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}"
+                        {% else %}
+                        {% load static %}
+                        <img src="{% static 'img/user_dark.png' %}" alt="{{ user.username }}"
+                        {% endif %} 
                                                  class="rounded-circle me-3" width="50" height="50">
                                             <div>
                                                 <h6 class="mb-1">{{ user.username }}</h6>

@@ -24,7 +24,12 @@
                                    class="list-group-item list-group-item-action border-0 p-3">
                                     <div class="d-flex">
                                         <div class="position-relative me-3">
-                                            <img src="{{ chat.friend.profile.avatar.url }}" 
+                                            {% if chat.friend.profile.avatar %}
+                            <img src="{{ chat.friend.profile.avatar.url }}"
+                            {% else %}
+                            {% load static %}
+                            <img src="{% static 'img/user_dark.png' %}"
+                            {% endif %} 
                                                  alt="{{ chat.friend.username }}" 
                                                  class="rounded-circle" width="50" height="50">
                                             {% if chat.unread_count > 0 %}

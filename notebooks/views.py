@@ -531,49 +531,55 @@ def upload_file(request):
                     'error': f'文件大小超过限制（最大 {size_mb}MB）'
                 }, status=400)
             
-            # 创建存储目录
-            today = datetime.datetime.now().strftime('%Y%m%d')
-            
-            # 根据文件类型创建不同的子目录
-            if file_extension in allowed_image_types:
-                sub_dir = 'images'
-            elif file_extension in allowed_video_types:
-                sub_dir = 'videos'
-            else:
-                sub_dir = 'audios'
+            try:
+                # 使用Django的存储系统保存文件
+                from django.core.files.storage import default_storage
+                import uuid
                 
-            upload_dir = os.path.join(settings.MEDIA_ROOT, 'uploads', request.user.username, today, sub_dir)
-            os.makedirs(upload_dir, exist_ok=True)
-            
-            # 生成唯一文件名避免冲突
-            import uuid
-            file_name, file_ext = os.path.splitext(file_obj.name)
-            unique_filename = f"{file_name}_{uuid.uuid4().hex[:8]}{file_ext}"
-            
-            # 保存文件
-            file_path = os.path.join(upload_dir, unique_filename)
-            with open(file_path, 'wb+') as destination:
-                for chunk in file_obj.chunks():
-                    destination.write(chunk)
-                    
-            # 生成URL
-            relative_path = os.path.join('uploads', request.user.username, today, sub_dir, unique_filename)
-            file_url = settings.MEDIA_URL + relative_path.replace('\\', '/')  # 确保URL使用正斜杠
-            
-            # 根据文件类型返回不同的响应
-            response_data = {'location': file_url}
-            
-            # 为视频和音频添加额外信息
-            if file_extension in allowed_video_types:
-                response_data['file_type'] = 'video'
-                response_data['mime_type'] = f'video/{file_extension[1:]}'
-            elif file_extension in allowed_audio_types:
-                response_data['file_type'] = 'audio'
-                response_data['mime_type'] = f'audio/{file_extension[1:]}'
-            else:
-                response_data['file_type'] = 'image'
-            
-            return JsonResponse(response_data)
+                # 创建文件路径
+                today = datetime.datetime.now().strftime('%Y%m%d')
+                
+                # 根据文件类型创建不同的子目录
+                if file_extension in allowed_image_types:
+                    sub_dir = 'images'
+                elif file_extension in allowed_video_types:
+                    sub_dir = 'videos'
+                else:
+                    sub_dir = 'audios'
+                
+                # 生成唯一文件名避免冲突
+                file_name, file_ext = os.path.splitext(file_obj.name)
+                unique_filename = f"{file_name}_{uuid.uuid4().hex[:8]}{file_ext}"
+                
+                # 构建存储路径
+                storage_path = f"uploads/{request.user.username}/{today}/{sub_dir}/{unique_filename}"
+                
+                # 使用默认存储系统保存文件（会自动使用腾讯云COS）
+                saved_path = default_storage.save(storage_path, file_obj)
+                
+                # 获取文件URL
+                file_url = default_storage.url(saved_path)
+                
+                # 根据文件类型返回不同的响应
+                response_data = {'location': file_url}
+                
+                # 为视频和音频添加额外信息
+                if file_extension in allowed_video_types:
+                    response_data['file_type'] = 'video'
+                    response_data['mime_type'] = f'video/{file_extension[1:]}'
+                elif file_extension in allowed_audio_types:
+                    response_data['file_type'] = 'audio'
+                    response_data['mime_type'] = f'audio/{file_extension[1:]}'
+                else:
+                    response_data['file_type'] = 'image'
+                
+                return JsonResponse(response_data)
+                
+            except Exception as e:
+                import logging
+                logger = logging.getLogger('notebooks')
+                logger.error(f"文件上传到云存储失败: {str(e)}")
+                return JsonResponse({'error': f'文件上传失败: {str(e)}'}, status=500)
             
     # 上传失败
     return JsonResponse({'error': '文件上传失败'}, status=400)
@@ -642,13 +648,20 @@ def notebook_download_pdf(request, notebook_id):
     
     # 创建HTTP响应
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{slugify(notebook.title)}.pdf"'
+    # 处理文件名，确保中文字符正确显示
+    safe_filename = notebook.title.replace('/', '_').replace('\\', '_').replace(':', '_').replace('*', '_').replace('?', '_').replace('"', '_').replace('<', '_').replace('>', '_').replace('|', '_')
+    response['Content-Disposition'] = f'attachment; filename="{safe_filename}.pdf"'
     
     # 将CSS链接转换为绝对路径，确保在PDF中能正确加载样式
     base_url = request.build_absolute_uri('/')[:-1]  # 移除末尾的斜杠
     
     # 创建PDF
     buffer = BytesIO()
+    
+    # 使用专门的字体配置函数
+    from .utils import prepare_pdf_html
+    html_string = prepare_pdf_html(html_string)
+    
     pisa_status = pisa.CreatePDF(
         html_string,
         dest=buffer,
@@ -694,7 +707,9 @@ def notebook_download_html(request, notebook_id):
     
     # 创建HTTP响应
     response = HttpResponse(content_type='text/html')
-    response['Content-Disposition'] = f'attachment; filename="{slugify(notebook.title)}.html"'
+    # 处理文件名，确保中文字符正确显示
+    safe_filename = notebook.title.replace('/', '_').replace('\\', '_').replace(':', '_').replace('*', '_').replace('?', '_').replace('"', '_').replace('<', '_').replace('>', '_').replace('|', '_')
+    response['Content-Disposition'] = f'attachment; filename="{safe_filename}.html"'
     response.write(html_string)
     
     return response

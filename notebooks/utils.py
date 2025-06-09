@@ -59,3 +59,88 @@ def polish_text(text):
     except Exception as e:
         print(f"AI润色失败: {str(e)}")
         return text 
+
+def configure_pdf_fonts():
+    """配置PDF生成的中文字体支持"""
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.lib.fonts import addMapping
+    import logging
+    import os
+    
+    logger = logging.getLogger('notebooks')
+    registered_fonts = []
+    
+    try:
+        # 方法1: 使用ReportLab内置的CID字体（优先级从高到低）
+        cid_fonts = ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5']
+        
+        for font_name in cid_fonts:
+            try:
+                pdfmetrics.registerFont(UnicodeCIDFont(font_name))
+                addMapping(font_name, 0, 0, font_name)
+                addMapping(font_name, 1, 0, font_name)
+                addMapping(font_name, 0, 1, font_name)
+                addMapping(font_name, 1, 1, font_name)
+                registered_fonts.append(font_name)
+                logger.info(f"成功注册CID字体: {font_name}")
+            except Exception as e:
+                logger.warning(f"CID字体 {font_name} 注册失败: {e}")
+        
+        # 方法2: 尝试注册系统中的中文字体
+        font_configs = [
+            ('/usr/share/fonts/truetype/wqy/wqy-microhei.ttc', 'WenQuanYi-Micro-Hei'),
+            ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', 'WenQuanYi-Zen-Hei'),
+            ('/System/Library/Fonts/PingFang.ttc', 'PingFang-SC'),  # macOS
+            ('/Windows/Fonts/msyh.ttc', 'Microsoft-YaHei'),  # Windows
+            ('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 'DejaVu-Sans'),  # 备选
+        ]
+        
+        for font_path, font_name in font_configs:
+            try:
+                if os.path.exists(font_path):
+                    pdfmetrics.registerFont(TTFont(font_name, font_path))
+                    addMapping(font_name, 0, 0, font_name)
+                    addMapping(font_name, 1, 0, font_name)
+                    addMapping(font_name, 0, 1, font_name)
+                    addMapping(font_name, 1, 1, font_name)
+                    registered_fonts.append(font_name)
+                    logger.info(f"成功注册TTF字体: {font_name}")
+            except Exception as e:
+                logger.warning(f"TTF字体 {font_path} 注册失败: {e}")
+        
+        if registered_fonts:
+            logger.info(f"总共注册了 {len(registered_fonts)} 个字体: {registered_fonts}")
+            return True
+        else:
+            logger.warning("没有成功注册任何中文字体")
+            return False
+        
+    except Exception as e:
+        logger.error(f"字体配置失败: {e}")
+        return False
+
+def prepare_pdf_html(html_string):
+    """为PDF生成准备HTML字符串，替换字体名称"""
+    # 配置字体
+    configure_pdf_fonts()
+    
+    # 构建字体回退列表（优先级从高到低）
+    font_fallback = 'STSong-Light, WenQuanYi-Micro-Hei, WenQuanYi-Zen-Hei, MSung-Light, HeiseiMin-W3, DejaVu-Sans, Arial, sans-serif'
+    
+    # 替换字体名称为已注册的字体
+    replacements = [
+        ('font-family: "WenQuanYi Micro Hei", Arial, sans-serif', f'font-family: {font_fallback}'),
+        ('font-family: "WenQuanYi Micro Hei"', f'font-family: {font_fallback}'),
+        ('font-family: "WenQuanYi Zen Hei"', f'font-family: {font_fallback}'),
+        ('font-family: "SimSun"', f'font-family: {font_fallback}'),
+        ('font-family: "Microsoft YaHei"', f'font-family: {font_fallback}'),
+        ('Arial, sans-serif', font_fallback),
+        ('sans-serif', font_fallback),
+    ]
+    
+    for old, new in replacements:
+        html_string = html_string.replace(old, new)
+    
+    return html_string 

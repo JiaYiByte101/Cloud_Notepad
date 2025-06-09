@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
@@ -13,7 +14,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'your-secret-key'  # 在生产环境中应该保密
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,10 +82,14 @@ TINYMCE_DEFAULT_CONFIG = {
     'language': 'zh_CN',
     'theme': 'silver',
     'plugins': 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
-    'toolbar': 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image media customMediaUpload | aiPolish | help',
+    'toolbar': 'undo redo | blocks fontselect fontsizeselect | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link customMediaUpload | aiPolish | help',
     'toolbar_mode': 'sliding',
     'menubar': 'file edit view insert format tools table help',
     'statusbar': True,
+    
+    # 字体配置
+    'font_formats': '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;宋体=SimSun,serif;黑体=SimHei,sans-serif;楷体=KaiTi,serif;仿宋=FangSong,serif;Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Courier New=courier new,courier,monospace',
+    'fontsize_formats': '8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt',
     'image_advtab': True,
     'images_upload_url': '/notebooks/upload/',
     'automatic_uploads': True,
@@ -178,12 +183,13 @@ TINYMCE_DEFAULT_CONFIG = {
     # 自定义按钮设置
     'setup': '''function(editor) {
         editor.ui.registry.addButton('customMediaUpload', {
-            text: '视频/音频',
-            tooltip: '上传视频或音频文件',
+            text: '媒体文件',
+            tooltip: '上传图片、视频或音频文件',
+            icon: 'upload',
             onAction: function() {
                 const input = document.createElement('input');
                 input.setAttribute('type', 'file');
-                input.setAttribute('accept', 'video/*,audio/*');
+                input.setAttribute('accept', 'image/*,video/*,audio/*');
                 
                 input.onchange = function() {
                     const file = this.files[0];
@@ -204,7 +210,10 @@ TINYMCE_DEFAULT_CONFIG = {
                     .then(response => response.json())
                     .then(data => {
                         if (data.location) {
-                            if (data.file_type === 'video') {
+                            if (data.file_type === 'image') {
+                                const imgHtml = '<img src="' + data.location + '" alt="' + file.name + '" style="max-width: 100%; height: auto;" />';
+                                editor.insertContent(imgHtml);
+                            } else if (data.file_type === 'video') {
                                 const videoHtml = '<div class="media-container"><video controls style="max-width: 100%; height: auto;"><source src="' + data.location + '" type="' + (data.mime_type || 'video/mp4') + '">您的浏览器不支持视频播放。</video><div class="file-info">视频文件: ' + file.name + '</div></div>';
                                 editor.insertContent(videoHtml);
                             } else if (data.file_type === 'audio') {
@@ -329,6 +338,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
+# 当使用云存储时，MEDIA_URL会被存储后端的url()方法覆盖
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -381,3 +391,46 @@ LOGGING = {
         },
     },
 }
+
+# === 腾讯云 COS 设置 ===
+COS_REGION = "ap-nanjing"
+COS_SECRET_ID = "AKID64ykIdkv1we8QVM0RflgOwGNH0Wovxwk"
+COS_SECRET_KEY = "x8LfqrgIrgLqxxoUxQgihV5qV1KSN6f4"
+COS_BUCKET_NAME = "cloud-notepad-1330914960"
+COS_DOMAIN = "https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com"
+
+# 使用 COS 作为默认文件存储系统
+DEFAULT_FILE_STORAGE = 'cloud_notepad.storage_backends.TencentCOSStorage'
+
+# Django 4.2+ 新的存储配置方式
+STORAGES = {
+    "default": {
+        "BACKEND": "cloud_notepad.storage_backends.TencentCOSStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+import sys
+print("✅ DEFAULT_FILE_STORAGE =", DEFAULT_FILE_STORAGE, file=sys.stderr)
+
+# === 文件上传配置 ===
+# 设置文件上传大小限制
+# Django默认限制为2.5MB，我们需要增加到支持更大的文件
+
+# 数据上传最大内存大小 (100MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # 100MB
+
+# 文件上传最大内存大小 (100MB) 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # 100MB
+
+# 请求体最大大小 (100MB)
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000  # 增加字段数量限制
+
+# 文件上传处理器
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+

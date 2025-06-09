@@ -24,7 +24,12 @@
                                 <div class="list-group-item border-0 mb-3 shadow-sm rounded-4">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ request.sender.profile.avatar.url }}" 
+                                            {% if request.sender.profile.avatar %}
+                            <img src="{{ request.sender.profile.avatar.url }}"
+                            {% else %}
+                            {% load static %}
+                            <img src="{% static 'img/user_dark.png' %}"
+                            {% endif %} 
                                                  alt="{{ request.sender.username }}" 
                                                  class="rounded-circle me-3" width="50" height="50">
                                             <div>
