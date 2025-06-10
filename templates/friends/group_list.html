@@ -28,9 +28,6 @@
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="mb-0">我的群聊</h2>
-                <button type="button" class="btn btn-outline-secondary btn-sm" id="refreshReadStatus">
-                    <i class="bi bi-arrow-clockwise"></i> 刷新已读状态
-                </button>
             </div>
             
             {% if groups %}
@@ -127,59 +124,6 @@
             })
             .catch(error => {
                 console.error('更新群聊未读消息数时出错:', error);
-            });
-        }
-        
-        // 刷新已读状态按钮事件
-        const refreshButton = document.getElementById('refreshReadStatus');
-        if (refreshButton) {
-            refreshButton.addEventListener('click', function() {
-                const button = this;
-                const originalText = button.innerHTML;
-                
-                // 显示加载状态
-                button.innerHTML = '<i class="bi bi-arrow-clockwise"></i> 刷新中...';
-                button.disabled = true;
-                
-                // 发送AJAX请求
-                fetch('{% url "friends:refresh_group_read_status" %}', {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
-                                      document.querySelector('meta[name=csrf-token]')?.getAttribute('content') ||
-                                      '{{ csrf_token }}'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // 显示成功消息
-                        const alertDiv = document.createElement('div');
-                        alertDiv.className = 'alert alert-success alert-dismissible fade show';
-                        alertDiv.innerHTML = `
-                            ${data.message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        `;
-                        document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.row'));
-                        
-                        // 刷新页面以显示更新后的状态
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
-                    } else {
-                        alert('刷新失败: ' + data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('刷新已读状态时出错:', error);
-                    alert('刷新失败，请稍后重试');
-                })
-                .finally(() => {
-                    // 恢复按钮状态
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                });
             });
         }
         

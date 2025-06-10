@@ -3,46 +3,59 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="mb-4">存储与同步</h1>
+    <h1 class="mb-4">云端版本控制</h1>
 
     <div class="row">
-        <!-- 备份功能 -->
-        <div class="col-md-6">
+        <!-- 云版本备份功能 -->
+        <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-0">本地备份</h5>
+                    <h5 class="mb-0">云端版本备份</h5>
                 </div>
                 <div class="card-body">
-                    <p>备份可以将您的笔记导出为ZIP文件，便于您保存和迁移数据。</p>
-                    <form method="post" action="{% url 'storage:backup' %}">
+                    <p>云端版本备份将您的笔记安全存储到腾讯云COS，实现智能版本控制功能。</p>
+                    <div class="alert alert-info">
+                        <h6><i class="bi bi-info-circle"></i> 智能版本控制说明</h6>
+                        <ul class="mb-0">
+                            <li><strong>UUID标识</strong>：每个笔记都有唯一的UUID标识符，不受标题变更影响</li>
+                            <li><strong>选择性恢复</strong>：恢复时只处理版本文件中存在的笔记，其他笔记保持不变</li>
+                            <li><strong>智能匹配</strong>：基于UUID精确匹配，避免重复创建或误操作</li>
+                            <li><strong>云端存储</strong>：数据安全存储在腾讯云COS，支持跨设备访问</li>
+                        </ul>
+                    </div>
+                    
+                    <form method="post" action="{% url 'storage:create_cloud_backup' %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-download"></i> 创建新备份
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-cloud-upload"></i> 创建版本备份
                         </button>
                     </form>
 
                     <hr>
 
-                    <h6>备份历史</h6>
-                    {% if backups %}
+                    <h6>版本备份历史</h6>
+                    {% if cloud_backups %}
                         <div class="list-group">
-                            {% for backup in backups %}
+                            {% for backup in cloud_backups %}
                             <div class="list-group-item">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">备份 #{{ backup.id }}</h6>
+                                    <h6 class="mb-1">
+                                        {{ backup.get_version_display }}
+                                        <span class="badge bg-success">云端</span>
+                                    </h6>
                                     <small>{{ backup.created_at|date:"Y-m-d H:i" }}</small>
                                 </div>
                                 <p class="mb-1">包含 {{ backup.notebook_count }} 个笔记，大小：{{ backup.file_size|filesizeformat }}</p>
                                 <div class="btn-group btn-group-sm mt-2">
-                                    <a href="{% url 'storage:download_backup' backup.id %}" class="btn btn-outline-primary">
-                                        <i class="bi bi-download"></i> 下载
+                                    <a href="{% url 'storage:download_cloud_backup' backup.id %}" class="btn btn-outline-primary" target="_blank">
+                                        <i class="bi bi-cloud-download"></i> 下载
                                     </a>
                                     <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
-                                            data-bs-target="#restoreModal" data-backup-id="{{ backup.id }}">
-                                        <i class="bi bi-arrow-clockwise"></i> 恢复
+                                            data-bs-target="#restoreModal" data-backup-id="{{ backup.id }}" data-backup-type="cloud">
+                                        <i class="bi bi-arrow-clockwise"></i> 选择性恢复
                                     </button>
                                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteBackupModal" data-backup-id="{{ backup.id }}">
+                                            data-bs-target="#deleteBackupModal" data-backup-id="{{ backup.id }}" data-backup-type="cloud">
                                         <i class="bi bi-trash"></i> 删除
                                     </button>
                                 </div>
@@ -51,76 +64,42 @@
                         </div>
                     {% else %}
                         <div class="alert alert-info">
-                            您还没有创建任何备份。
+                            您还没有创建任何版本备份。
                         </div>
                     {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- 云同步功能 -->
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">云端同步</h5>
-                </div>
-                <div class="card-body">
-                    <div id="syncStatus">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <h6 class="mb-0">同步状态</h6>
-                                {% if sync_status.last_sync %}
-                                <p class="text-muted mb-0">上次同步：{{ sync_status.last_sync|date:"Y-m-d H:i:s" }}</p>
-                                {% else %}
-                                <p class="text-muted mb-0">尚未同步</p>
-                                {% endif %}
-                            </div>
-
-                            <form method="post" action="{% url 'storage:sync_now' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary" {% if sync_status.is_syncing %}disabled{% endif %}>
-                                    {% if sync_status.is_syncing %}
-                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    同步中...
-                                    {% else %}
-                                    <i class="bi bi-cloud-upload"></i> 立即同步
-                                    {% endif %}
-                                </button>
-                            </form>
-                        </div>
-
-                        {% if sync_status.sync_error %}
-                        <div class="alert alert-danger">
-                            <h6>同步错误</h6>
-                            <p>{{ sync_status.sync_error }}</p>
-                        </div>
-                        {% endif %}
-
-                        <div class="card bg-light">
-                            <div class="card-body">
-                                <h6 class="card-title">云同步功能说明</h6>
-                                <ul class="mb-0">
-                                    <li>云同步可以将您的笔记自动保存到云端服务器</li>
-                                    <li>支持多设备访问和编辑笔记</li>
-                                    <li>数据安全加密传输和存储</li>
-                                    <li>同步包括笔记内容、分类、标签和附件</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <!-- 备份统计 -->
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">存储空间</h5>
+                    <h5 class="mb-0">版本统计</h5>
                 </div>
                 <div class="card-body">
-                    <div class="progress mb-3">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 25%;"
-                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    <div class="text-center mb-3">
+                        <h6 class="text-muted">版本备份数量</h6>
+                        <h4 class="text-success">{{ cloud_backups|length }}</h4>
+                        <p class="mb-0">个版本</p>
                     </div>
-                    <p class="mb-0">已使用 25MB / 100MB 存储空间</p>
+                    
+                    <div class="text-center mb-3">
+                        <h6 class="text-muted">总存储大小</h6>
+                        <h4 class="text-info">{{ backup_stats.total_backup_size|filesizeformat }}</h4>
+                        <p class="mb-0">云端存储</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h6 class="text-muted">最新备份</h6>
+                        {% if backup_stats.latest_backup %}
+                            <h4 class="text-warning">{{ backup_stats.latest_backup|date:"m-d" }}</h4>
+                            <p class="mb-0">{{ backup_stats.latest_backup|date:"H:i" }}</p>
+                        {% else %}
+                            <h4 class="text-muted">--</h4>
+                            <p class="mb-0">暂无</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,17 +111,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">恢复备份</h5>
+                <h5 class="modal-title">选择性版本恢复</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="" id="restoreForm">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <div class="alert alert-warning">
-                        <h6>注意！</h6>
-                        <p>恢复备份将覆盖当前数据，如有必要请先创建备份。</p>
+                    <div class="alert alert-info">
+                        <h6><i class="bi bi-info-circle"></i> 智能恢复机制</h6>
+                        <p class="mb-0">系统将基于UUID智能匹配笔记：</p>
+                        <ul class="mb-0 mt-2">
+                            <li>存在于版本文件中的笔记将恢复到版本状态</li>
+                            <li>不存在于版本文件中的笔记保持不变</li>
+                            <li>避免重复创建和数据冲突</li>
+                        </ul>
                     </div>
-                    <p>您确定要从此备份恢复数据吗？</p>
+                    <p>您确定要从此版本进行选择性恢复吗？</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -158,13 +142,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">删除备份</h5>
+                <h5 class="modal-title">删除版本备份</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="" id="deleteBackupForm">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <p>您确定要删除此备份吗？此操作不可撤销。</p>
+                    <p>您确定要删除此版本备份吗？此操作不可撤销。</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -181,7 +165,7 @@
     document.querySelectorAll('[data-bs-target="#restoreModal"]').forEach(button => {
         button.addEventListener('click', function() {
             const backupId = this.dataset.backupId;
-            document.getElementById('restoreForm').action = `{% url 'storage:restore_backup' 0 %}`.replace('0', backupId);
+            document.getElementById('restoreForm').action = `{% url 'storage:restore_cloud_backup' 0 %}`.replace('0', backupId);
         });
     });
 
@@ -189,7 +173,7 @@
     document.querySelectorAll('[data-bs-target="#deleteBackupModal"]').forEach(button => {
         button.addEventListener('click', function() {
             const backupId = this.dataset.backupId;
-            document.getElementById('deleteBackupForm').action = `{% url 'storage:delete_backup' 0 %}`.replace('0', backupId);
+            document.getElementById('deleteBackupForm').action = `{% url 'storage:delete_cloud_backup' 0 %}`.replace('0', backupId);
         });
     });
 </script>

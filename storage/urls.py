@@ -7,10 +7,10 @@ app_name = 'storage'
 
 urlpatterns = [
     path('', views.storage_home, name='home'),
-    path('backup/', views.backup, name='backup'),
-    path('backup/<int:backup_id>/download/', views.download_backup, name='download_backup'),
-    path('backup/<int:backup_id>/delete/', views.delete_backup, name='delete_backup'),
-    path('backup/<int:backup_id>/restore/', views.restore_backup, name='restore_backup'),
-    path('sync/status/', views.sync_status, name='sync_status'),
-    path('sync/now/', views.sync_now, name='sync_now'),
+    
+    # 云版本备份相关路由
+    path('cloud-backup/', views.create_cloud_backup, name='create_cloud_backup'),
+    path('cloud-backup/<int:backup_id>/download/', views.download_cloud_backup, name='download_cloud_backup'),
+    path('cloud-backup/<int:backup_id>/delete/', views.delete_cloud_backup, name='delete_cloud_backup'),
+    path('cloud-backup/<int:backup_id>/restore/', views.restore_cloud_backup, name='restore_cloud_backup'),
 ]

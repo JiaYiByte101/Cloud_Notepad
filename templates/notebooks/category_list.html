@@ -15,41 +15,45 @@
             <div class="card">
                 <div class="card-body">
                     {% if categories %}
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>名称</th>
-                                        <th>父分类</th>
-                                        <th>笔记数量</th>
-                                        <th>创建时间</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for category in categories %}
-                                    <tr>
-                                        <td>{{ category.name }}</td>
-                                        <td>{% if category.parent %}{{ category.parent.name }}{% else %}-{% endif %}</td>
-                                        <td>{{ category.notebooks.count }}</td>
-                                        <td>{{ category.created_at|date:"Y-m-d" }}</td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-outline-primary edit-category"
-                                                        data-id="{{ category.id }}" data-name="{{ category.name }}"
-                                                        data-parent="{% if category.parent %}{{ category.parent.id }}{% endif %}">
-                                                    编辑
-                                                </button>
-                                                <button type="button" class="btn btn-outline-danger delete-category"
-                                                        data-id="{{ category.id }}" data-name="{{ category.name }}">
-                                                    删除
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                        <div class="category-tree">
+                            {% for category in categories %}
+                            <div class="category-item" data-level="{{ category.level }}">
+                                <div class="category-content d-flex align-items-center justify-content-between p-3 mb-2 border rounded">
+                                    <div class="category-info d-flex align-items-center">
+                                        <!-- 层级缩进 -->
+                                        {% for i in "x"|ljust:category.level %}
+                                            <span class="category-indent"></span>
+                                        {% endfor %}
+                                        
+                                        <!-- 分类图标和名称 -->
+                                        <div class="category-details">
+                                            {% if category.level == 0 %}
+                                                <i class="bi bi-folder-fill text-primary me-2"></i>
+                                            {% else %}
+                                                <i class="bi bi-folder text-secondary me-2"></i>
+                                            {% endif %}
+                                            <span class="category-name fw-bold">{{ category.name }}</span>
+                                            <small class="text-muted ms-2">({{ category.notebooks.count }} 篇笔记)</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="category-actions">
+                                        <small class="text-muted me-3">{{ category.created_at|date:"Y-m-d" }}</small>
+                                        <div class="btn-group btn-group-sm">
+                                            <button type="button" class="btn btn-outline-primary edit-category"
+                                                    data-id="{{ category.id }}" data-name="{{ category.name }}"
+                                                    data-parent="{% if category.parent %}{{ category.parent.id }}{% endif %}">
+                                                <i class="bi bi-pencil"></i> 编辑
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger delete-category"
+                                                    data-id="{{ category.id }}" data-name="{{ category.name }}">
+                                                <i class="bi bi-trash"></i> 删除
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
                     {% else %}
                         <div class="alert alert-info">
@@ -88,7 +92,7 @@
                         <label for="parentCategory" class="form-label">父分类（可选）</label>
                         <select class="form-select" id="parentCategory" name="parent">
                             <option value="">无</option>
-                            {% for category in categories %}
+                            {% for category in all_categories %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
@@ -123,7 +127,7 @@
                         <label for="editParentCategory" class="form-label">父分类（可选）</label>
                         <select class="form-select" id="editParentCategory" name="parent">
                             <option value="">无</option>
-                            {% for category in categories %}
+                            {% for category in all_categories %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
@@ -161,6 +165,93 @@
         </div>
     </div>
 </div>
+
+{% block extra_css %}
+<style>
+    .category-tree {
+        max-width: 100%;
+    }
+    
+    .category-item {
+        transition: all 0.2s ease;
+    }
+    
+    .category-content {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6 !important;
+        transition: all 0.2s ease;
+    }
+    
+    .category-content:hover {
+        background: #e9ecef;
+        border-color: #adb5bd !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .category-indent {
+        display: inline-block;
+        width: 24px;
+        height: 1px;
+        margin-right: 8px;
+    }
+    
+    .category-item[data-level="0"] .category-content {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none !important;
+    }
+    
+    .category-item[data-level="0"] .category-content:hover {
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        transform: translateY(-1px);
+    }
+    
+    .category-item[data-level="0"] .text-muted {
+        color: rgba(255,255,255,0.8) !important;
+    }
+    
+    .category-item[data-level="1"] .category-content {
+        background: #e3f2fd;
+        border-left: 4px solid #2196f3 !important;
+        margin-left: 20px;
+    }
+    
+    .category-item[data-level="1"] .category-content:hover {
+        background: #bbdefb;
+    }
+    
+    .category-item[data-level="2"] .category-content {
+        background: #f3e5f5;
+        border-left: 4px solid #9c27b0 !important;
+        margin-left: 40px;
+    }
+    
+    .category-item[data-level="2"] .category-content:hover {
+        background: #e1bee7;
+    }
+    
+    .category-name {
+        font-size: 1.1rem;
+    }
+    
+    .category-actions .btn {
+        border-radius: 20px;
+        padding: 0.25rem 0.75rem;
+    }
+    
+    .category-item[data-level="0"] .btn {
+        background: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.3);
+        color: white;
+    }
+    
+    .category-item[data-level="0"] .btn:hover {
+        background: rgba(255,255,255,0.3);
+        border-color: rgba(255,255,255,0.5);
+        color: white;
+    }
+</style>
+{% endblock %}
 
 {% block extra_js %}
 <script>

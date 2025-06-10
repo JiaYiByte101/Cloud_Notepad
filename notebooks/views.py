@@ -31,7 +31,22 @@ def notebook_list(request):
 
     # 根据分类筛选
     if category_id:
-        notebooks = notebooks.filter(category_id=category_id)
+        try:
+            selected_category = Category.objects.get(id=category_id, user=request.user)
+            # 获取该分类及其所有子分类的笔记
+            category_ids = [selected_category.id]
+            
+            def get_subcategory_ids(category):
+                """递归获取所有子分类ID"""
+                subcategories = Category.objects.filter(parent=category, user=request.user)
+                for subcategory in subcategories:
+                    category_ids.append(subcategory.id)
+                    get_subcategory_ids(subcategory)
+            
+            get_subcategory_ids(selected_category)
+            notebooks = notebooks.filter(category_id__in=category_ids)
+        except Category.DoesNotExist:
+            pass
 
     # 根据标签筛选
     if tag_id:
@@ -44,13 +59,48 @@ def notebook_list(request):
             Q(content__icontains=search_query)
         )
 
-    # 获取用户的所有分类和标签，用于侧边栏
-    categories = Category.objects.filter(user=request.user)
+    # 构建层级分类结构
+    all_categories = Category.objects.filter(user=request.user).order_by('name')
+    
+    def build_category_tree(categories):
+        """构建分类树结构"""
+        tree = []
+        category_dict = {cat.id: cat for cat in categories}
+        
+        # 为每个分类添加子分类列表和层级信息
+        for cat in categories:
+            cat.children = []
+            cat.level = 0
+            cat.notebook_count = cat.notebooks.count()
+        
+        # 构建父子关系
+        for cat in categories:
+            if cat.parent_id and cat.parent_id in category_dict:
+                parent = category_dict[cat.parent_id]
+                parent.children.append(cat)
+                cat.level = parent.level + 1
+            else:
+                tree.append(cat)
+        
+        # 计算父分类的笔记总数（包括子分类）
+        def calculate_total_count(category):
+            total = category.notebook_count
+            for child in category.children:
+                total += calculate_total_count(child)
+            category.total_notebook_count = total
+            return total
+        
+        for category in tree:
+            calculate_total_count(category)
+        
+        return tree
+    
+    category_tree = build_category_tree(all_categories)
     tags = Tag.objects.filter(user=request.user)
 
     context = {
         'notebooks': notebooks,
-        'categories': categories,
+        'category_tree': category_tree,
         'tags': tags,
         'selected_category': category_id,
         'selected_tag': tag_id,
@@ -375,8 +425,51 @@ def notebook_delete(request, notebook_id):
 @login_required
 def category_list(request):
     """显示用户的分类列表"""
-    categories = Category.objects.filter(user=request.user)
-    return render(request, 'notebooks/category_list.html', {'categories': categories})
+    # 获取所有分类
+    all_categories = Category.objects.filter(user=request.user).order_by('name')
+    
+    # 构建层级结构
+    def build_category_tree(categories):
+        """构建分类树结构"""
+        tree = []
+        category_dict = {cat.id: cat for cat in categories}
+        
+        # 为每个分类添加子分类列表和层级信息
+        for cat in categories:
+            cat.children = []
+            cat.level = 0
+        
+        # 构建父子关系
+        for cat in categories:
+            if cat.parent_id and cat.parent_id in category_dict:
+                parent = category_dict[cat.parent_id]
+                parent.children.append(cat)
+                cat.level = parent.level + 1
+            else:
+                tree.append(cat)
+        
+        return tree
+    
+    def flatten_tree(tree, result=None):
+        """将树结构扁平化为有层级信息的列表"""
+        if result is None:
+            result = []
+        
+        for category in tree:
+            result.append(category)
+            if hasattr(category, 'children') and category.children:
+                flatten_tree(category.children, result)
+        
+        return result
+    
+    # 构建树结构并扁平化
+    category_tree = build_category_tree(all_categories)
+    categories_with_hierarchy = flatten_tree(category_tree)
+    
+    return render(request, 'notebooks/category_list.html', {
+        'categories': categories_with_hierarchy,
+        'all_categories': all_categories  # 用于模态框中的选择
+    })
 
 
 @login_required

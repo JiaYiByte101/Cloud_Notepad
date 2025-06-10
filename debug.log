@@ -91,3 +91,479 @@ INFO 2025-06-09 10:38:17,316 utils 3439749 140466285731840 成功注册TTF字体
 INFO 2025-06-09 10:38:17,442 utils 3439749 140466285731840 成功注册TTF字体: WenQuanYi-Zen-Hei
 INFO 2025-06-09 10:38:17,454 utils 3439749 140466285731840 成功注册TTF字体: DejaVu-Sans
 INFO 2025-06-09 10:38:17,454 utils 3439749 140466285731840 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']
+INFO 2025-06-09 12:57:00,240 utils 3464897 139900480208896 成功注册CID字体: STSong-Light
+INFO 2025-06-09 12:57:00,241 utils 3464897 139900480208896 成功注册CID字体: MSung-Light
+INFO 2025-06-09 12:57:00,241 utils 3464897 139900480208896 成功注册CID字体: HeiseiMin-W3
+INFO 2025-06-09 12:57:00,242 utils 3464897 139900480208896 成功注册CID字体: HeiseiKakuGo-W5
+INFO 2025-06-09 12:57:00,374 utils 3464897 139900480208896 成功注册TTF字体: WenQuanYi-Micro-Hei
+INFO 2025-06-09 12:57:00,528 utils 3464897 139900480208896 成功注册TTF字体: WenQuanYi-Zen-Hei
+INFO 2025-06-09 12:57:00,539 utils 3464897 139900480208896 成功注册TTF字体: DejaVu-Sans
+INFO 2025-06-09 12:57:00,539 utils 3464897 139900480208896 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']
+INFO 2025-06-09 12:57:02,595 utils 3464897 139900480208896 成功注册CID字体: STSong-Light
+INFO 2025-06-09 12:57:02,595 utils 3464897 139900480208896 成功注册CID字体: MSung-Light
+INFO 2025-06-09 12:57:02,596 utils 3464897 139900480208896 成功注册CID字体: HeiseiMin-W3
+INFO 2025-06-09 12:57:02,596 utils 3464897 139900480208896 成功注册CID字体: HeiseiKakuGo-W5
+INFO 2025-06-09 12:57:02,680 utils 3464897 139900480208896 成功注册TTF字体: WenQuanYi-Micro-Hei
+INFO 2025-06-09 12:57:02,806 utils 3464897 139900480208896 成功注册TTF字体: WenQuanYi-Zen-Hei
+INFO 2025-06-09 12:57:02,818 utils 3464897 139900480208896 成功注册TTF字体: DejaVu-Sans
+INFO 2025-06-09 12:57:02,818 utils 3464897 139900480208896 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']
+INFO 2025-06-09 14:27:55,346 utils 3464896 139900480208896 成功注册CID字体: STSong-Light
+INFO 2025-06-09 14:27:55,346 utils 3464896 139900480208896 成功注册CID字体: MSung-Light
+INFO 2025-06-09 14:27:55,346 utils 3464896 139900480208896 成功注册CID字体: HeiseiMin-W3
+INFO 2025-06-09 14:27:55,347 utils 3464896 139900480208896 成功注册CID字体: HeiseiKakuGo-W5
+INFO 2025-06-09 14:27:55,476 utils 3464896 139900480208896 成功注册TTF字体: WenQuanYi-Micro-Hei
+INFO 2025-06-09 14:27:55,614 utils 3464896 139900480208896 成功注册TTF字体: WenQuanYi-Zen-Hei
+INFO 2025-06-09 14:27:55,626 utils 3464896 139900480208896 成功注册TTF字体: DejaVu-Sans
+INFO 2025-06-09 14:27:55,626 utils 3464896 139900480208896 总共注册了 7 个字体: ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5', 'WenQuanYi-Micro-Hei', 'WenQuanYi-Zen-Hei', 'DejaVu-Sans']
+INFO 2025-06-09 14:32:54,907 views 3464896 139900480208896 处理邀请: 用户=Amia, 成员ID=11, 操作=accept, 方法=POST
+INFO 2025-06-09 14:32:54,909 views 3464896 139900480208896 找到待处理邀请: 项目=胡家使xc大王, 邀请人=沙泉胡家本人
+INFO 2025-06-09 14:32:54,909 views 3464896 139900480208896 用户接受邀请: 用户=Amia, 项目=胡家使xc大王
+INFO 2025-06-09 14:33:12,497 views 3464896 139900480208896 处理邀请: 用户=rzh, 成员ID=10, 操作=accept, 方法=POST
+INFO 2025-06-09 14:33:12,501 views 3464896 139900480208896 找到待处理邀请: 项目=胡家使xc大王, 邀请人=沙泉胡家本人
+INFO 2025-06-09 14:33:12,501 views 3464896 139900480208896 用户接受邀请: 用户=rzh, 项目=胡家使xc大王
+INFO 2025-06-09 14:33:14,139 views 3464897 139900480208896 change_member_role called: member_id=11, method=POST, user=沙泉胡家本人
+INFO 2025-06-09 14:33:14,141 views 3464897 139900480208896 Found membership: user=Amia, project=胡家使xc大王, current_role=viewer
+INFO 2025-06-09 14:33:14,142 views 3464897 139900480208896 POST data received: new_role=editor
+INFO 2025-06-09 14:33:14,142 views 3464897 139900480208896 Available role choices: {'editor': '编辑者', 'viewer': '查看者'}
+INFO 2025-06-09 14:33:14,151 views 3464897 139900480208896 Role change attempt: viewer -> editor, actual result: editor
+INFO 2025-06-09 14:33:14,152 views 3464897 139900480208896 Role change successful for user=Amia
+INFO 2025-06-09 14:33:22,420 views 3464898 139900480208896 change_member_role called: member_id=11, method=POST, user=沙泉胡家本人
+INFO 2025-06-09 14:33:22,422 views 3464898 139900480208896 Found membership: user=Amia, project=胡家使xc大王, current_role=editor
+INFO 2025-06-09 14:33:22,423 views 3464898 139900480208896 POST data received: new_role=editor
+INFO 2025-06-09 14:33:22,423 views 3464898 139900480208896 Available role choices: {'editor': '编辑者', 'viewer': '查看者'}
+INFO 2025-06-09 14:33:22,425 views 3464898 139900480208896 Role change attempt: editor -> editor, actual result: editor
+INFO 2025-06-09 14:33:22,425 views 3464898 139900480208896 Role change successful for user=Amia
+INFO 2025-06-09 14:33:27,875 views 3464898 139900480208896 change_member_role called: member_id=10, method=POST, user=沙泉胡家本人
+INFO 2025-06-09 14:33:27,877 views 3464898 139900480208896 Found membership: user=rzh, project=胡家使xc大王, current_role=viewer
+INFO 2025-06-09 14:33:27,878 views 3464898 139900480208896 POST data received: new_role=editor
+INFO 2025-06-09 14:33:27,878 views 3464898 139900480208896 Available role choices: {'editor': '编辑者', 'viewer': '查看者'}
+INFO 2025-06-09 14:33:27,890 views 3464898 139900480208896 Role change attempt: viewer -> editor, actual result: editor
+INFO 2025-06-09 14:33:27,891 views 3464898 139900480208896 Role change successful for user=rzh
+INFO 2025-06-09 16:35:26,287 views 3539590 140247043420160 编辑笔记 29, 是否为协作笔记: False
+INFO 2025-06-09 16:35:26,287 views 3539590 140247043420160 POST数据: {'csrfmiddlewaretoken': ['V7AArJWg3cVHKNdNpbgT61MJA8bvBBfS8eJvj1nJaPKmwvnJio5FJ4fo0sZ75Jup'], 'title': ['图片'], 'category': [''], 'content': ['<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/Toma-E/20250609/images/72363dd7988a4c81-1674206288756_a6687d81.png" alt="" width="600" height="369" /></p>'], 'is_public': ['on']}
+INFO 2025-06-09 16:35:26,290 views 3539590 140247043420160 使用NotebookForm
+INFO 2025-06-09 16:35:26,290 views 3539590 140247043420160 表单验证通过
+INFO 2025-06-09 16:38:02,269 views 3539591 140247043420160 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-09 16:38:02,269 views 3539591 140247043420160 POST数据: {'csrfmiddlewaretoken': ['JjxfP4ibNQKhcLQiwICJjT4lR6CpV33iKQGi1y2bZR2Fa3Gvk5i9ZJWUXlPV0jh0'], 'title': ['图片测试'], 'category': ['2'], 'tags': ['1'], 'content': ['<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/HJY/20250609/images/th_6b04a7b8.jpg" alt="th.jpg" width="370" style="max-width: 100%; height: 231px;" /></p>\r\n<p>这是一个图片的相关测试</p>'], 'is_public': ['on']}
+INFO 2025-06-09 16:38:02,272 views 3539591 140247043420160 使用NotebookForm
+INFO 2025-06-09 16:38:02,275 views 3539591 140247043420160 表单验证通过
+INFO 2025-06-09 16:44:04,391 views 3539592 140247043420160 编辑笔记 31, 是否为协作笔记: False
+INFO 2025-06-09 16:44:04,391 views 3539592 140247043420160 POST数据: {'csrfmiddlewaretoken': ['Zih8OBuI3lckN8jsJf7JvK1psTnxZWDjVTGp2PNsL1uFCaMkLopHYky1Ctp15Uom'], 'title': ['图片测试'], 'category': [''], 'content': ['<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/诶呦学校咋这坏啊/20250609/images/6403881001e9390125b8f7b976ec54e734d196dc_c53a3a0a.jpg" width="601" height="338" alt="6403881001e9390125b8f7b976ec54e734d196dc.jpg" /></p>'], 'is_public': ['on']}
+INFO 2025-06-09 16:44:04,394 views 3539592 140247043420160 使用NotebookForm
+INFO 2025-06-09 16:44:04,394 views 3539592 140247043420160 表单验证通过
+INFO 2025-06-09 16:44:48,992 views 3539592 140247043420160 编辑笔记 31, 是否为协作笔记: False
+INFO 2025-06-09 16:44:48,992 views 3539592 140247043420160 POST数据: {'csrfmiddlewaretoken': ['l5de41fPIy8G6m9RITKC79u4MJilFmgrhGCvifyzqeq1VoCJK22AAJ1GWjkPLk1u'], 'title': ['图片测试'], 'category': [''], 'content': ['<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/诶呦学校咋这坏啊/20250609/images/6403881001e9390125b8f7b976ec54e734d196dc_c53a3a0a.jpg" width="1131" height="636" alt="6403881001e9390125b8f7b976ec54e734d196dc.jpg" /></p>'], 'is_public': ['on']}
+INFO 2025-06-09 16:44:48,995 views 3539592 140247043420160 使用NotebookForm
+INFO 2025-06-09 16:44:48,995 views 3539592 140247043420160 表单验证通过
+INFO 2025-06-10 17:36:07,724 views 4018194 140498357805056 编辑笔记 10, 是否为协作笔记: False
+INFO 2025-06-10 17:36:07,724 views 4018194 140498357805056 POST数据: {'csrfmiddlewaretoken': ['QRR7gPU8FIEcqPZKetjJ2cC9HW6nOkBO5jL5W2Ci3JCKKvnb2yvJiCQHpS3zEzTF'], 'title': ['并发的编辑冲突测试'], 'category': [''], 'content': ['<p>22222222222222222222222222</p>']}
+INFO 2025-06-10 17:36:07,727 views 4018194 140498357805056 使用NotebookForm
+INFO 2025-06-10 17:36:07,727 views 4018194 140498357805056 表单验证通过
+INFO 2025-06-10 17:36:29,154 views 4018194 140498357805056 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-10 17:36:29,154 views 4018194 140498357805056 POST数据: {'csrfmiddlewaretoken': ['4PAO5Z2wlZ8Bb6uLGe0a27vv0jhVGIKcjhuMLcKGJ069vMScujcaixJ3Ife7wX23'], 'title': ['我要测试我要测试我要测试'], 'category': ['2'], 'tags': ['1'], 'content': ['<p>我要测试我要测试我要测试</p>\r\n<p></p>'], 'is_public': ['on']}
+INFO 2025-06-10 17:36:29,157 views 4018194 140498357805056 使用NotebookForm
+INFO 2025-06-10 17:36:29,159 views 4018194 140498357805056 表单验证通过
+INFO 2025-06-10 17:36:38,046 views 4018194 140498357805056 编辑笔记 10, 是否为协作笔记: False
+INFO 2025-06-10 17:36:38,047 views 4018194 140498357805056 POST数据: {'csrfmiddlewaretoken': ['HHO8Hk22Z7ax0Qyt0OycZV32LCQVJTCjW9I6nxKcn885kwWUOTKcflhAtyN7z8Ua'], 'title': ['我要测试我要测试我要测试'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试</p>']}
+INFO 2025-06-10 17:36:38,049 views 4018194 140498357805056 使用NotebookForm
+INFO 2025-06-10 17:36:38,050 views 4018194 140498357805056 表单验证通过
+INFO 2025-06-10 17:37:12,369 views 4018193 140498357805056 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-10 17:37:12,369 views 4018193 140498357805056 POST数据: {'csrfmiddlewaretoken': ['KPhaeD77auwXYUnK7ISoneiPUYpUKMmBZhb8UQPhyvuviALbVN4oDEwnCUm6A1Es'], 'title': ['我要测试我要测试我要测试'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试</p>\r\n<p></p>'], 'is_public': ['on']}
+INFO 2025-06-10 17:37:12,372 views 4018193 140498357805056 使用NotebookForm
+INFO 2025-06-10 17:37:12,372 views 4018193 140498357805056 表单验证通过
+INFO 2025-06-10 19:30:19,376 views 4060502 140414209191936 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-10 19:30:19,376 views 4060502 140414209191936 POST数据: {'csrfmiddlewaretoken': ['FgnZq8recUvrihMHMgf6OpsYc9gSgbToUIhX6l9oAVtZCXa8Alr64PGwU5d46qbf'], 'title': ['我要测试我要测试我要测试------V1'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试</p>\r\n<p></p>'], 'is_public': ['on']}
+INFO 2025-06-10 19:30:19,379 views 4060502 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:30:19,379 views 4060502 140414209191936 表单验证通过
+INFO 2025-06-10 19:30:27,214 views 4060503 140414209191936 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-10 19:30:27,214 views 4060503 140414209191936 POST数据: {'csrfmiddlewaretoken': ['GO6WqhBEBmqAvQNuhh7iF8VeA6z1MTMzVg0U6ujOZno8PwbV5mjiVy9Mi2wdC84q'], 'title': ['我要测试我要测试我要测试------V1'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试------V1</p>\r\n<p></p>'], 'is_public': ['on']}
+INFO 2025-06-10 19:30:27,217 views 4060503 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:30:27,218 views 4060503 140414209191936 表单验证通过
+INFO 2025-06-10 19:30:47,338 views 4060503 140414209191936 编辑笔记 10, 是否为协作笔记: False
+INFO 2025-06-10 19:30:47,339 views 4060503 140414209191936 POST数据: {'csrfmiddlewaretoken': ['MsYqEuNcQ7t3X0R6ecbtLPbhvNQWEJFA1USokHvme8rBhGfx2hnt1fpPdJN8uYXr'], 'title': ['我要测试我要测试我要测试------V2'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试------V2</p>']}
+INFO 2025-06-10 19:30:47,341 views 4060503 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:30:47,342 views 4060503 140414209191936 表单验证通过
+INFO 2025-06-10 19:30:59,284 views 4060502 140414209191936 编辑笔记 10, 是否为协作笔记: False
+INFO 2025-06-10 19:30:59,284 views 4060502 140414209191936 POST数据: {'csrfmiddlewaretoken': ['0e51lJWqcrvfWLY4RBhXDBjbvqaI2NqSfGZZ1WEAAstNgrmvFGtXT1xJdm7US2IJ'], 'title': ['我要测试我要测试我要测试------V2'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试------V2</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/HJY/20250610/images/10MB_cba9a460.png" alt="10MB.png" style="max-width: 100%; height: auto;" /></p>']}
+INFO 2025-06-10 19:30:59,287 views 4060502 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:30:59,287 views 4060502 140414209191936 表单验证通过
+INFO 2025-06-10 19:31:44,509 views 4060501 140414209191936 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-10 19:31:44,509 views 4060501 140414209191936 POST数据: {'csrfmiddlewaretoken': ['dBhhfjbu8UQy9mWDzt00bCPOJhcUXsL2s3bfVwTEwVO6t2k4nyc0r23mrd96NH3T'], 'title': ['我要测试我要测试我要测试'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/HJY/20250610/images/10MB_73d5c794.png" alt="10MB.png" style="max-width: 100%; height: auto;" /></p>'], 'is_public': ['on']}
+INFO 2025-06-10 19:31:44,512 views 4060501 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:31:44,514 views 4060501 140414209191936 表单验证通过
+INFO 2025-06-10 19:33:12,180 views 4060503 140414209191936 编辑笔记 10, 是否为协作笔记: False
+INFO 2025-06-10 19:33:12,181 views 4060503 140414209191936 POST数据: {'csrfmiddlewaretoken': ['rElgOnjsAagGibGHD9vcNMwwwdL3mdmIG6feuA1CYbeeCR48reHc3cK4e9IfcsEz'], 'title': ['我要测试我要测试我要测试——V1'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试</p>']}
+INFO 2025-06-10 19:33:12,184 views 4060503 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:33:12,184 views 4060503 140414209191936 表单验证通过
+INFO 2025-06-10 19:33:20,945 views 4060501 140414209191936 编辑笔记 5, 是否为协作笔记: False
+INFO 2025-06-10 19:33:20,945 views 4060501 140414209191936 POST数据: {'csrfmiddlewaretoken': ['qf7Kfc7PDQjgYJHnucxZ3DbyrSF9MgF8FH1IVpPZ1RhOip5OihJZj3p69OClCvXZ'], 'title': ['我要测试我要测试我要测试------V2'], 'category': [''], 'content': ['<p>我要测试我要测试我要测试</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/HJY/20250610/images/10MB_73d5c794.png" alt="10MB.png" style="max-width: 100%; height: auto;" /></p>'], 'is_public': ['on']}
+INFO 2025-06-10 19:33:20,948 views 4060501 140414209191936 使用NotebookForm
+INFO 2025-06-10 19:33:20,948 views 4060501 140414209191936 表单验证通过
+INFO 2025-06-10 19:40:24,233 views 4063861 139718041026560 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:40:24,234 views 4063861 139718041026560 POST数据: {'csrfmiddlewaretoken': ['6kYPGTuPqN2JoeQr9CAd5HMKSkh2NGp6lMSNm6cZOO0hIUeSXHMdl70iAgeeDVHX'], 'title': ['测试一下'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:40:24,236 views 4063861 139718041026560 使用NotebookForm
+INFO 2025-06-10 19:40:24,237 views 4063861 139718041026560 表单验证通过
+INFO 2025-06-10 19:46:11,222 views 4066920 140554687811584 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:46:11,223 views 4066920 140554687811584 POST数据: {'csrfmiddlewaretoken': ['zV2djk8jN4VKaGiY0f6p8fkpvVsyPzpTOnWbZxQtb5TiumGpOkipoFyXdRpKFOHK'], 'title': ['版本恢复失败：File is not a zip file'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:46:11,226 views 4066920 140554687811584 使用NotebookForm
+INFO 2025-06-10 19:46:11,226 views 4066920 140554687811584 表单验证通过
+INFO 2025-06-10 19:51:11,156 views 4069080 140006805483520 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:51:11,156 views 4069080 140006805483520 POST数据: {'csrfmiddlewaretoken': ['Rs5eo3YZoiH1mmAeWR2QlbWWTOwUpbmM6UZc4gG9MjFzG2YFKWeQBBauBKt6fqED'], 'title': ['测试一下，能恢复吗？'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:51:11,159 views 4069080 140006805483520 使用NotebookForm
+INFO 2025-06-10 19:51:11,159 views 4069080 140006805483520 表单验证通过
+INFO 2025-06-10 19:52:48,782 views 4069079 140006805483520 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:52:48,782 views 4069079 140006805483520 POST数据: {'csrfmiddlewaretoken': ['RbnvEcwwlu9EMwxcYsDFfb6iKIeTOZyB6DhtkpeGJv7c6cVDMxPFvBkQsEb5EeQs'], 'title': ['版本恢复失败：File is not a zip file'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:52:48,785 views 4069079 140006805483520 使用NotebookForm
+INFO 2025-06-10 19:52:48,785 views 4069079 140006805483520 表单验证通过
+INFO 2025-06-10 19:54:45,716 views 4069079 140006805483520 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:54:45,716 views 4069079 140006805483520 POST数据: {'csrfmiddlewaretoken': ['ISwz2HAuWb4G5Luh6pG4F2yWbT4mPAqyXkqxIUiEkc2eprSIUuS4VsMuTP1yFPIp'], 'title': ['zzzzzzzzz'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:54:45,719 views 4069079 140006805483520 使用NotebookForm
+INFO 2025-06-10 19:54:45,719 views 4069079 140006805483520 表单验证通过
+INFO 2025-06-10 19:58:15,686 views 4071962 140126684180480 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:58:15,686 views 4071962 140126684180480 POST数据: {'csrfmiddlewaretoken': ['eoxZbebhStwG332QlQq9zafoMw6Tx1owtQrXRrTrguuenJqh9VC9PAtWus35ngGn'], 'title': ['版本恢复失败：File is not a zip file'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:58:15,689 views 4071962 140126684180480 使用NotebookForm
+INFO 2025-06-10 19:58:15,690 views 4071962 140126684180480 表单验证通过
+INFO 2025-06-10 19:59:00,605 views 4071962 140126684180480 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 19:59:00,606 views 4071962 140126684180480 POST数据: {'csrfmiddlewaretoken': ['KXAnsKbXmmDkAtDXcBnBB1q7e47M9GDYZpul8XT7KnBSU91o0GzBRrEFW04YZVVP'], 'title': ['cccccccc'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 19:59:00,608 views 4071962 140126684180480 使用NotebookForm
+INFO 2025-06-10 19:59:00,609 views 4071962 140126684180480 表单验证通过
+INFO 2025-06-10 20:03:17,723 views 4073899 139724750958592 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 20:03:17,723 views 4073899 139724750958592 POST数据: {'csrfmiddlewaretoken': ['qTCwWtNwZmz3IAXOnqyEchESE56Bn1YBFlwuCGvGnnxB2glfbvKEsHSqm13Ndggs'], 'title': ['fffffffffffffffffff'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 20:03:17,726 views 4073899 139724750958592 使用NotebookForm
+INFO 2025-06-10 20:03:17,726 views 4073899 139724750958592 表单验证通过
+INFO 2025-06-10 20:15:44,931 views 4079397 139686936481792 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 20:15:44,932 views 4079397 139686936481792 POST数据: {'csrfmiddlewaretoken': ['dE4KOGXTZipVCGVPdnoHO6TtF2ER3YbLs6YIuTF3njntWmjg1sAH4w71nYB3TdtC'], 'title': ['sudo systemctl restart gunicorn'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 20:15:44,934 views 4079397 139686936481792 使用NotebookForm
+INFO 2025-06-10 20:15:44,935 views 4079397 139686936481792 表单验证通过
+INFO 2025-06-10 20:16:59,532 views 4079398 139686936481792 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 20:16:59,532 views 4079398 139686936481792 POST数据: {'csrfmiddlewaretoken': ['fPsJWvPvB2WdUoeVXHJGQGnaNwLCDI2xuhmHCIxFZ3ULe4CmLMVG66BIvsIOtXko'], 'title': ['TEst'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 20:16:59,535 views 4079398 139686936481792 使用NotebookForm
+INFO 2025-06-10 20:16:59,535 views 4079398 139686936481792 表单验证通过
+INFO 2025-06-10 20:32:57,938 cloud 4085647 140388401881088 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:32:57,938 cloud 4085647 140388401881088 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:32:57,954 cloud 4085647 140388401881088 临时文件路径: /tmp/tmp92d7733_.zip
+INFO 2025-06-10 20:32:57,954 cloud 4085647 140388401881088 临时文件路径: /tmp/tmp92d7733_.zip
+INFO 2025-06-10 20:32:57,954 cloud 4085647 140388401881088 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:32:57,954 cloud 4085647 140388401881088 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:32:57,955 cloud 4085647 140388401881088 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:32:57,955 cloud 4085647 140388401881088 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:32:57,971 cloud 4085647 140388401881088 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:32:57,971 cloud 4085647 140388401881088 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:32:58,001 cloud 4085647 140388401881088 下载响应状态: unknown
+INFO 2025-06-10 20:32:58,001 cloud 4085647 140388401881088 下载响应状态: unknown
+INFO 2025-06-10 20:32:58,001 cloud 4085647 140388401881088 下载文件大小: 1024 字节
+INFO 2025-06-10 20:32:58,001 cloud 4085647 140388401881088 下载文件大小: 1024 字节
+INFO 2025-06-10 20:32:58,002 cloud 4085647 140388401881088 文件开头字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:32:58,002 cloud 4085647 140388401881088 文件开头字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:32:58,002 cloud 4085647 140388401881088 文件开头字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:32:58,002 cloud 4085647 140388401881088 文件开头字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:32:58,003 cloud 4085647 140388401881088 文件开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:32:58,003 cloud 4085647 140388401881088 文件开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:32:58,003 cloud 4085647 140388401881088 本地文件大小: 1024 字节
+INFO 2025-06-10 20:32:58,003 cloud 4085647 140388401881088 本地文件大小: 1024 字节
+WARNING 2025-06-10 20:32:58,004 cloud 4085647 140388401881088 文件大小不匹配 - 云端: 1244, 本地: 1024
+WARNING 2025-06-10 20:32:58,004 cloud 4085647 140388401881088 文件大小不匹配 - 云端: 1244, 本地: 1024
+INFO 2025-06-10 20:32:58,004 cloud 4085647 140388401881088 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:32:58,004 cloud 4085647 140388401881088 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:32:58,004 cloud 4085647 140388401881088 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:32:58,004 cloud 4085647 140388401881088 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+ERROR 2025-06-10 20:32:58,005 cloud 4085647 140388401881088 ZIP文件格式错误: File is not a zip file
+ERROR 2025-06-10 20:32:58,005 cloud 4085647 140388401881088 ZIP文件格式错误: File is not a zip file
+ERROR 2025-06-10 20:32:58,005 cloud 4085647 140388401881088 文件开头内容: b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+ERROR 2025-06-10 20:32:58,005 cloud 4085647 140388401881088 文件开头内容: b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:33:54,275 cloud 4086023 139751887843328 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:33:54,275 cloud 4086023 139751887843328 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:33:54,291 cloud 4086023 139751887843328 临时文件路径: /tmp/tmpf5sxvznp.zip
+INFO 2025-06-10 20:33:54,291 cloud 4086023 139751887843328 临时文件路径: /tmp/tmpf5sxvznp.zip
+INFO 2025-06-10 20:33:54,292 cloud 4086023 139751887843328 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:33:54,292 cloud 4086023 139751887843328 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:33:54,292 cloud 4086023 139751887843328 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:33:54,292 cloud 4086023 139751887843328 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:33:54,303 cloud 4086023 139751887843328 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:33:54,303 cloud 4086023 139751887843328 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 下载响应状态: unknown
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 下载响应状态: unknown
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 下载文件大小: 1024 字节
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 下载文件大小: 1024 字节
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 文件开头字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 文件开头字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 文件开头字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:33:54,371 cloud 4086023 139751887843328 文件开头字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:33:54,372 cloud 4086023 139751887843328 文件开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:33:54,372 cloud 4086023 139751887843328 文件开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:33:54,372 cloud 4086023 139751887843328 本地文件大小: 1024 字节
+INFO 2025-06-10 20:33:54,372 cloud 4086023 139751887843328 本地文件大小: 1024 字节
+WARNING 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 文件大小不匹配 - 云端: 1244, 本地: 1024
+WARNING 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 文件大小不匹配 - 云端: 1244, 本地: 1024
+INFO 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+ERROR 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 ZIP文件格式错误: File is not a zip file
+ERROR 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 ZIP文件格式错误: File is not a zip file
+ERROR 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 文件开头内容: b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+ERROR 2025-06-10 20:33:54,373 cloud 4086023 139751887843328 文件开头内容: b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:35:51,594 cloud 4086806 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:35:51,594 cloud 4086806 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:35:51,664 cloud 4086806 139825584226304 临时文件路径: /tmp/tmp6n6hnvqb.zip
+INFO 2025-06-10 20:35:51,664 cloud 4086806 139825584226304 临时文件路径: /tmp/tmp6n6hnvqb.zip
+INFO 2025-06-10 20:35:51,664 cloud 4086806 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:35:51,664 cloud 4086806 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:35:51,665 cloud 4086806 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:35:51,665 cloud 4086806 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:35:51,679 cloud 4086806 139825584226304 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:35:51,679 cloud 4086806 139825584226304 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:35:51,746 cloud 4086806 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:35:51,746 cloud 4086806 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:35:51,747 cloud 4086806 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:35:51,747 cloud 4086806 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:35:51,747 cloud 4086806 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:35:51,747 cloud 4086806 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk大小: 1244 字节
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk大小: 1244 字节
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk开头 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk开头 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 总共读取: 1244 字节
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 总共读取: 1244 字节
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 文件读取完整
+INFO 2025-06-10 20:35:51,748 cloud 4086806 139825584226304 文件读取完整
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 本地文件大小: 1244 字节
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 本地文件大小: 1244 字节
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:35:51,749 cloud 4086806 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:35:51,750 cloud 4086806 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:35:51,750 cloud 4086806 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:35:51,751 cloud 4086806 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:35:51,751 cloud 4086806 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:35:51,765 cloud 4086806 139825584226304 版本恢复完成: 新建 0 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:35:51,765 cloud 4086806 139825584226304 版本恢复完成: 新建 0 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:36:04,088 views 4086805 139825584226304 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 20:36:04,088 views 4086805 139825584226304 POST数据: {'csrfmiddlewaretoken': ['2UjMdV60xBTmjegZQ0D5afoIGebGetxQhmdKT8OaVCRUDUEqE5P5qFCgoa8S4IPH'], 'title': ['fffffffffffffff'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 20:36:04,091 views 4086805 139825584226304 使用NotebookForm
+INFO 2025-06-10 20:36:04,092 views 4086805 139825584226304 表单验证通过
+INFO 2025-06-10 20:36:07,917 cloud 4086805 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:07,917 cloud 4086805 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:08,000 cloud 4086805 139825584226304 临时文件路径: /tmp/tmprn5fql92.zip
+INFO 2025-06-10 20:36:08,000 cloud 4086805 139825584226304 临时文件路径: /tmp/tmprn5fql92.zip
+INFO 2025-06-10 20:36:08,001 cloud 4086805 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:08,001 cloud 4086805 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:08,001 cloud 4086805 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:36:08,001 cloud 4086805 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:36:08,018 cloud 4086805 139825584226304 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:36:08,018 cloud 4086805 139825584226304 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:36:08,063 cloud 4086805 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:36:08,063 cloud 4086805 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:36:08,063 cloud 4086805 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:36:08,063 cloud 4086805 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:36:08,063 cloud 4086805 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:36:08,063 cloud 4086805 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:36:08,064 cloud 4086805 139825584226304 第一个chunk大小: 1244 字节
+INFO 2025-06-10 20:36:08,064 cloud 4086805 139825584226304 第一个chunk大小: 1244 字节
+INFO 2025-06-10 20:36:08,064 cloud 4086805 139825584226304 第一个chunk开头 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:36:08,064 cloud 4086805 139825584226304 第一个chunk开头 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:36:08,064 cloud 4086805 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:36:08,064 cloud 4086805 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:36:08,065 cloud 4086805 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:36:08,065 cloud 4086805 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:36:08,065 cloud 4086805 139825584226304 总共读取: 1244 字节
+INFO 2025-06-10 20:36:08,065 cloud 4086805 139825584226304 总共读取: 1244 字节
+INFO 2025-06-10 20:36:08,065 cloud 4086805 139825584226304 文件读取完整
+INFO 2025-06-10 20:36:08,065 cloud 4086805 139825584226304 文件读取完整
+INFO 2025-06-10 20:36:08,066 cloud 4086805 139825584226304 本地文件大小: 1244 字节
+INFO 2025-06-10 20:36:08,066 cloud 4086805 139825584226304 本地文件大小: 1244 字节
+INFO 2025-06-10 20:36:08,066 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:36:08,066 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:36:08,067 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:36:08,067 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:36:08,067 cloud 4086805 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:36:08,067 cloud 4086805 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:36:08,068 cloud 4086805 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:36:08,068 cloud 4086805 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:36:08,068 cloud 4086805 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:36:08,068 cloud 4086805 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:36:08,080 cloud 4086805 139825584226304 版本恢复完成: 新建 0 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:36:08,080 cloud 4086805 139825584226304 版本恢复完成: 新建 0 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:36:48,123 views 4086806 139825584226304 编辑笔记 37, 是否为协作笔记: False
+INFO 2025-06-10 20:36:48,124 views 4086806 139825584226304 POST数据: {'csrfmiddlewaretoken': ['muEqBAfAfz16W1H6mevFchjpjqdoBSOvBWyohNXKDAZEgH5xajHFsHxX1maAr76m'], 'title': ['FFFFFFFFFFF'], 'category': [''], 'content': ['<p><span style="color: #212529; font-family: Nunito, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; font-size: 16px; background-color: #f8f9fc;">版本恢复失败：File is not a zip file</span></p>']}
+INFO 2025-06-10 20:36:48,126 views 4086806 139825584226304 使用NotebookForm
+INFO 2025-06-10 20:36:48,127 views 4086806 139825584226304 表单验证通过
+INFO 2025-06-10 20:36:52,139 cloud 4086807 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:52,139 cloud 4086807 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:52,216 cloud 4086807 139825584226304 临时文件路径: /tmp/tmpi8ddrj52.zip
+INFO 2025-06-10 20:36:52,216 cloud 4086807 139825584226304 临时文件路径: /tmp/tmpi8ddrj52.zip
+INFO 2025-06-10 20:36:52,216 cloud 4086807 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:52,216 cloud 4086807 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:36:52,217 cloud 4086807 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:36:52,217 cloud 4086807 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:36:52,231 cloud 4086807 139825584226304 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:36:52,231 cloud 4086807 139825584226304 云端文件信息 - 大小: 1244 字节, 类型: application/zip
+INFO 2025-06-10 20:36:52,274 cloud 4086807 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:36:52,274 cloud 4086807 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:36:52,275 cloud 4086807 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:36:52,275 cloud 4086807 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:36:52,275 cloud 4086807 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:36:52,275 cloud 4086807 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:36:52,275 cloud 4086807 139825584226304 第一个chunk大小: 1244 字节
+INFO 2025-06-10 20:36:52,275 cloud 4086807 139825584226304 第一个chunk大小: 1244 字节
+INFO 2025-06-10 20:36:52,276 cloud 4086807 139825584226304 第一个chunk开头 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:36:52,276 cloud 4086807 139825584226304 第一个chunk开头 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:36:52,276 cloud 4086807 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:36:52,276 cloud 4086807 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:36:52,276 cloud 4086807 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:36:52,276 cloud 4086807 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 总共读取: 1244 字节
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 总共读取: 1244 字节
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 文件读取完整
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 文件读取完整
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 本地文件大小: 1244 字节
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 本地文件大小: 1244 字节
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:36:52,277 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (hex): 504b03041400000008001aa2ca5a8b156fdb7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:36:52,278 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:36:52,278 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\x1a\xa2\xcaZ\x8b\x15o\xdb\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:36:52,278 cloud 4086807 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:36:52,278 cloud 4086807 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:36:52,279 cloud 4086807 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:36:52,279 cloud 4086807 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:36:52,279 cloud 4086807 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:36:52,279 cloud 4086807 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:36:52,292 cloud 4086807 139825584226304 版本恢复完成: 新建 0 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:36:52,292 cloud 4086807 139825584226304 版本恢复完成: 新建 0 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:37:01,557 cloud 4086806 139825584226304 云备份删除成功: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:37:01,557 cloud 4086806 139825584226304 云备份删除成功: backups/2/versions/version_backup_HJY_20250610_121652.zip
+INFO 2025-06-10 20:37:02,949 cloud 4086806 139825584226304 云版本备份创建成功: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:37:02,949 cloud 4086806 139825584226304 云版本备份创建成功: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:37:10,617 views 4086807 139825584226304 编辑笔记 39, 是否为协作笔记: False
+INFO 2025-06-10 20:37:10,617 views 4086807 139825584226304 POST数据: {'csrfmiddlewaretoken': ['qWzo4ly8gPmUxgHew8B358fqPFF6ex8KFotmKygiEQksRW5FkdN3lytYxBCi4MqB'], 'title': ['版本控制图片测试'], 'category': [''], 'content': ['']}
+INFO 2025-06-10 20:37:10,620 views 4086807 139825584226304 使用NotebookForm
+ERROR 2025-06-10 20:37:10,621 views 4086807 139825584226304 表单验证失败: <ul class="errorlist"><li>content<ul class="errorlist"><li>这个字段是必填项。</li></ul></li></ul>
+ERROR 2025-06-10 20:37:10,621 views 4086807 139825584226304 表单数据: <QueryDict: {'csrfmiddlewaretoken': ['qWzo4ly8gPmUxgHew8B358fqPFF6ex8KFotmKygiEQksRW5FkdN3lytYxBCi4MqB'], 'title': ['版本控制图片测试'], 'category': [''], 'content': ['']}>
+ERROR 2025-06-10 20:37:10,622 views 4086807 139825584226304 表单cleaned_data: {'title': '版本控制图片测试', 'category': None, 'tags': <QuerySet []>, 'is_public': False}
+INFO 2025-06-10 20:37:20,242 views 4086806 139825584226304 编辑笔记 39, 是否为协作笔记: False
+INFO 2025-06-10 20:37:20,242 views 4086806 139825584226304 POST数据: {'csrfmiddlewaretoken': ['JEuuCIA1jnE7z7inTQcwHJmSW2BE6UpXY6osiVibHoCFTNGOHVowX9AqEYyQW9HO'], 'title': ['版本控制图片测试'], 'category': [''], 'content': ['<p>图片</p>']}
+INFO 2025-06-10 20:37:20,245 views 4086806 139825584226304 使用NotebookForm
+INFO 2025-06-10 20:37:20,245 views 4086806 139825584226304 表单验证通过
+INFO 2025-06-10 20:37:24,822 cloud 4086807 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:37:24,822 cloud 4086807 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:37:24,835 cloud 4086807 139825584226304 临时文件路径: /tmp/tmpxw6ix7be.zip
+INFO 2025-06-10 20:37:24,835 cloud 4086807 139825584226304 临时文件路径: /tmp/tmpxw6ix7be.zip
+INFO 2025-06-10 20:37:24,836 cloud 4086807 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:37:24,836 cloud 4086807 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:37:24,836 cloud 4086807 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:37:24,836 cloud 4086807 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:37:24,849 cloud 4086807 139825584226304 云端文件信息 - 大小: 1457 字节, 类型: application/zip
+INFO 2025-06-10 20:37:24,849 cloud 4086807 139825584226304 云端文件信息 - 大小: 1457 字节, 类型: application/zip
+INFO 2025-06-10 20:37:24,878 cloud 4086807 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:37:24,878 cloud 4086807 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:37:24,878 cloud 4086807 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:37:24,878 cloud 4086807 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:37:24,878 cloud 4086807 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:37:24,878 cloud 4086807 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:37:24,879 cloud 4086807 139825584226304 第一个chunk大小: 1457 字节
+INFO 2025-06-10 20:37:24,879 cloud 4086807 139825584226304 第一个chunk大小: 1457 字节
+INFO 2025-06-10 20:37:24,879 cloud 4086807 139825584226304 第一个chunk开头 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:37:24,879 cloud 4086807 139825584226304 第一个chunk开头 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:37:24,879 cloud 4086807 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:37:24,879 cloud 4086807 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 总共读取: 1457 字节
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 总共读取: 1457 字节
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 文件读取完整
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 文件读取完整
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 本地文件大小: 1457 字节
+INFO 2025-06-10 20:37:24,880 cloud 4086807 139825584226304 本地文件大小: 1457 字节
+INFO 2025-06-10 20:37:24,881 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:37:24,881 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:37:24,881 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:37:24,881 cloud 4086807 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:37:24,881 cloud 4086807 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:37:24,881 cloud 4086807 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:37:24,882 cloud 4086807 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:37:24,882 cloud 4086807 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:37:24,882 cloud 4086807 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:37:24,882 cloud 4086807 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:37:24,904 cloud 4086807 139825584226304 版本恢复完成: 新建 0 个笔记，更新 2 个笔记
+INFO 2025-06-10 20:37:24,904 cloud 4086807 139825584226304 版本恢复完成: 新建 0 个笔记，更新 2 个笔记
+INFO 2025-06-10 20:38:07,574 cloud 4086805 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:38:07,574 cloud 4086805 139825584226304 开始恢复版本备份: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:38:07,656 cloud 4086805 139825584226304 临时文件路径: /tmp/tmp5n7c3dt9.zip
+INFO 2025-06-10 20:38:07,656 cloud 4086805 139825584226304 临时文件路径: /tmp/tmp5n7c3dt9.zip
+INFO 2025-06-10 20:38:07,657 cloud 4086805 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:38:07,657 cloud 4086805 139825584226304 开始下载云端文件: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:38:07,657 cloud 4086805 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:38:07,657 cloud 4086805 139825584226304 存储桶: cloud-notepad-1330914960
+INFO 2025-06-10 20:38:07,673 cloud 4086805 139825584226304 云端文件信息 - 大小: 1457 字节, 类型: application/zip
+INFO 2025-06-10 20:38:07,673 cloud 4086805 139825584226304 云端文件信息 - 大小: 1457 字节, 类型: application/zip
+INFO 2025-06-10 20:38:07,717 cloud 4086805 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:38:07,717 cloud 4086805 139825584226304 下载响应状态: unknown
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 响应头Content-Length: unknown
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 响应体类型: <class 'qcloud_cos.streambody.StreamBody'>
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 第一个chunk大小: 1457 字节
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 第一个chunk大小: 1457 字节
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 第一个chunk开头 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:38:07,718 cloud 4086805 139825584226304 第一个chunk开头 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 第一个chunk开头 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2'
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 第一个chunk开头符合ZIP格式 (PK魔数)
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 总共读取: 1457 字节
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 总共读取: 1457 字节
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 文件读取完整
+INFO 2025-06-10 20:38:07,719 cloud 4086805 139825584226304 文件读取完整
+INFO 2025-06-10 20:38:07,720 cloud 4086805 139825584226304 本地文件大小: 1457 字节
+INFO 2025-06-10 20:38:07,720 cloud 4086805 139825584226304 本地文件大小: 1457 字节
+INFO 2025-06-10 20:38:07,720 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:38:07,720 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (hex): 504b0304140000000800a1a4ca5a17c4962c7f0000009e0000000d0000006d657461646174612e6a736f6eabe6520002a5d2e2d422252b05250faf48251d88506a6e62660e482c2b33b132d5d8c0cc211d24a2979c9f0b539294989c5d5a109f9258920a
+INFO 2025-06-10 20:38:07,720 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:38:07,720 cloud 4086805 139825584226304 本地文件验证 - 前100字节 (ascii): b'PK\x03\x04\x14\x00\x00\x00\x08\x00\xa1\xa4\xcaZ\x17\xc4\x96,\x7f\x00\x00\x00\x9e\x00\x00\x00\r\x00\x00\x00metadata.json\xab\xe6R\x00\x02\xa5\xd2\xe2\xd4"%+\x05%\x0f\xafH%\x1d\x88Pjnbf\x0eH,+3\xb12\xd5\xd8\xc0\xcc!\x1d$\xa2\x97\x9c\x9f\x0bS\x92\x94\x98\x9c]Z\x10\x9f\x92X\x92\n'
+INFO 2025-06-10 20:38:07,721 cloud 4086805 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:38:07,721 cloud 4086805 139825584226304 ✅ 本地文件ZIP格式验证通过
+INFO 2025-06-10 20:38:07,721 cloud 4086805 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:38:07,721 cloud 4086805 139825584226304 ZIP文件内容: ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
+INFO 2025-06-10 20:38:07,721 cloud 4086805 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:38:07,721 cloud 4086805 139825584226304 备份版本: 2.0
+INFO 2025-06-10 20:38:07,743 cloud 4086805 139825584226304 版本恢复完成: 新建 1 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:38:07,743 cloud 4086805 139825584226304 版本恢复完成: 新建 1 个笔记，更新 1 个笔记
+INFO 2025-06-10 20:45:32,126 cloud 4086805 139825584226304 云备份删除成功: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:45:32,126 cloud 4086805 139825584226304 云备份删除成功: backups/2/versions/version_backup_HJY_20250610_123702.zip
+INFO 2025-06-10 20:58:45,956 views 4094182 139905637445632 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-10 20:58:45,956 views 4094182 139905637445632 POST数据: {'csrfmiddlewaretoken': ['6oz1Vqx6QArLlsNK6t2bfWHLWVZFyjUtSzs09EdUbFHNqXZaP0hCQI7q4E9GBg9E'], 'title': ['测试 测试 测试——V22312'], 'category': [''], 'content': ['<p>这是系统能力培训的一个测试文档。旨在推进云笔记本项目的开发，我深感荣幸与期待。我衷心期望能够圆满完成此项目。</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/hujiaye/20250607/images/Transformer_137285b1.jpg" width="1000" height="800" alt="" /></p>'], 'is_public': ['on'], 'edit_summary': ['用于测试版本控制']}
+INFO 2025-06-10 20:58:45,961 views 4094182 139905637445632 使用CollaborationNotebookForm
+INFO 2025-06-10 20:58:45,961 views 4094182 139905637445632 表单验证通过
+INFO 2025-06-10 20:58:45,970 views 4094182 139905637445632 修改大纲: 用于测试版本控制
+INFO 2025-06-10 20:58:45,984 views 4094182 139905637445632 已发送群聊通知: hujiaye 修改了项目内容：2025-06-10 12:58:45-我的第一个协作项目-测试 测试 测试——V22312：用于测试版本控制
+INFO 2025-06-10 20:58:56,319 cloud 4094183 139905637445632 云版本备份创建成功: backups/4/versions/version_backup_hujiaye_20250610_125856.zip
+INFO 2025-06-10 20:58:56,319 cloud 4094183 139905637445632 云版本备份创建成功: backups/4/versions/version_backup_hujiaye_20250610_125856.zip
+INFO 2025-06-10 20:59:18,260 views 4094182 139905637445632 编辑笔记 7, 是否为协作笔记: True
+INFO 2025-06-10 20:59:18,260 views 4094182 139905637445632 POST数据: {'csrfmiddlewaretoken': ['2SLIHxLt5mBmm8h5A1HTsbf3yZn9joMwO3EHVLrhqrRorDtvjyWk3XFIGIxaml1H'], 'title': ['测试 测试 测试——V2'], 'category': [''], 'content': ['<p>这是系统能力培训的一个测试文档。旨在推进云笔记本项目的开发，我深感荣幸与期待。我衷心期望能够圆满完成此项目。</p>\r\n<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/hujiaye/20250607/images/Transformer_137285b1.jpg" width="1000" height="800" alt="" /></p>'], 'is_public': ['on'], 'edit_summary': ['用于测试版本控制']}
+INFO 2025-06-10 20:59:18,264 views 4094182 139905637445632 使用CollaborationNotebookForm
+INFO 2025-06-10 20:59:18,265 views 4094182 139905637445632 表单验证通过
+INFO 2025-06-10 20:59:18,272 views 4094182 139905637445632 修改大纲: 用于测试版本控制
+INFO 2025-06-10 20:59:18,298 views 4094182 139905637445632 已发送群聊通知: hujiaye 修改了项目内容：2025-06-10 12:59:18-我的第一个协作项目-测试 测试 测试——V2：用于测试版本控制
+INFO 2025-06-10 20:59:30,176 cloud 4094182 139905637445632 开始恢复版本备份: backups/4/versions/version_backup_hujiaye_20250610_125856.zip
+INFO 2025-06-10 20:59:30,176 cloud 4094182 139905637445632 开始恢复版本备份: backups/4/versions/version_backup_hujiaye_20250610_125856.zip
+INFO 2025-06-10 20:59:30,327 cloud 4094182 139905637445632 版本恢复完成: 新建 0 个笔记，更新 3 个笔记
+INFO 2025-06-10 20:59:30,327 cloud 4094182 139905637445632 版本恢复完成: 新建 0 个笔记，更新 3 个笔记
+INFO 2025-06-10 21:00:55,879 views 4094183 139905637445632 编辑笔记 17, 是否为协作笔记: False
+INFO 2025-06-10 21:00:55,880 views 4094183 139905637445632 POST数据: {'csrfmiddlewaretoken': ['YIxbnVVZZDB2NDpNshdOBZ4nSn7Ujy90KTqaB9BNkIR4S8BdbOsfcLu206hVmvob'], 'title': ['文件上传测试'], 'category': [''], 'content': ['<div class="media-container">\r\n<div class="file-info">视频文件: QQ2025415-224341.mp4</div>\r\n<div class="file-info"></div>\r\n<div class="file-info">\r\n<div class="media-container">\r\n<div class="file-info">音频文件: dark-engine-logo-141942.mp3</div>\r\n<div class="file-info"></div>\r\n<div class="file-info"><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/hujiaye/20250609/images/10MB_75c7f9f0.png" alt="10MB.png" style="max-width: 100%; height: auto;" /></div>\r\n</div>\r\n</div>\r\n</div>']}
+INFO 2025-06-10 21:00:55,883 views 4094183 139905637445632 使用NotebookForm
+INFO 2025-06-10 21:00:55,883 views 4094183 139905637445632 表单验证通过
+INFO 2025-06-10 21:01:05,249 cloud 4094183 139905637445632 开始恢复版本备份: backups/4/versions/version_backup_hujiaye_20250610_125856.zip
+INFO 2025-06-10 21:01:05,249 cloud 4094183 139905637445632 开始恢复版本备份: backups/4/versions/version_backup_hujiaye_20250610_125856.zip
+INFO 2025-06-10 21:01:05,409 cloud 4094183 139905637445632 版本恢复完成: 新建 0 个笔记，更新 3 个笔记
+INFO 2025-06-10 21:01:05,409 cloud 4094183 139905637445632 版本恢复完成: 新建 0 个笔记，更新 3 个笔记
+INFO 2025-06-10 21:05:54,620 views 4094183 139905637445632 编辑笔记 18, 是否为协作笔记: False
+INFO 2025-06-10 21:05:54,620 views 4094183 139905637445632 POST数据: {'csrfmiddlewaretoken': ['RYGnS6TlE5cKEWn4VfN2WFGj7uFDLkAKD9zm6kz9ZasMJrzuEM2txr6YfdPEOhPV'], 'title': ['安全漏洞修复后文件测试'], 'category': [''], 'content': ['<p><img src="https://cloud-notepad-1330914960.cos.ap-nanjing.myqcloud.com/uploads/hujiaye/20250609/images/133776963898016298_a3025765.jpg" alt="133776963898016298.jpg" style="max-width: 100%; height: auto;" /></p>\r\n<p></p>\r\n<p>当前阶段正在进行测试的实施及性能评估工作。</p>']}
+INFO 2025-06-10 21:05:54,623 views 4094183 139905637445632 使用NotebookForm
+INFO 2025-06-10 21:05:54,623 views 4094183 139905637445632 表单验证通过

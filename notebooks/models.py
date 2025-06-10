@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from tinymce.models import HTMLField
+import uuid
 
 
 class Category(models.Model):
@@ -41,6 +42,7 @@ class Tag(models.Model):
 
 class Notebook(models.Model):
     """笔记模型"""
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="唯一标识符")
     title = models.CharField(max_length=200, verbose_name="标题")
     content = HTMLField(verbose_name="内容")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notebooks", verbose_name="所属用户")

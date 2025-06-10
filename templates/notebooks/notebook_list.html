@@ -137,6 +137,81 @@
         right: 10px;
         font-size: 0.7rem;
     }
+    
+    /* 分类层级样式 */
+    .category-filter {
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .category-group {
+        border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .category-group:last-child {
+        border-bottom: none;
+    }
+    
+    .parent-category .list-group-item {
+        border: none;
+        border-radius: 0;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-weight: 600;
+        padding: 0.75rem 1rem;
+    }
+    
+    .parent-category .list-group-item:hover {
+        background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    }
+    
+    .parent-category .list-group-item.active {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+        color: white;
+    }
+    
+    .subcategory-item {
+        border: none !important;
+        border-radius: 0 !important;
+        padding-left: 2.5rem !important;
+        background: #f8f9fa;
+        border-top: 1px solid #e9ecef !important;
+        font-size: 0.9rem;
+    }
+    
+    .subcategory-item:hover {
+        background: #e9ecef;
+    }
+    
+    .subcategory-item.active {
+        background: #cfe2ff;
+        color: #0d6efd;
+        border-left: 3px solid #0d6efd !important;
+    }
+    
+    .category-toggle {
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        font-size: 0.8rem;
+    }
+    
+    .category-toggle.expanded {
+        transform: rotate(180deg);
+    }
+    
+    .subcategories {
+        background: #f8f9fa;
+        display: none;
+    }
+    
+    .subcategories.show {
+        display: block;
+    }
+    
+    .badge.rounded-pill {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
 </style>
 {% endblock %}
 
@@ -169,17 +244,46 @@
 
                 <!-- 分类列表 -->
                 <h6 class="mt-3 mb-2 fw-bold">分类</h6>
-                <div class="list-group mb-3">
+                <div class="category-filter mb-3">
                     <a href="{% url 'notebooks:list' %}" class="list-group-item list-group-item-action
                               {% if not selected_category %}active{% endif %}">
-                        全部
+                        <i class="bi bi-grid-3x3-gap me-2"></i>全部分类
                     </a>
-                    {% for category in categories %}
-                    <a href="{% url 'notebooks:list' %}?category={{ category.id }}"
-                       class="list-group-item list-group-item-action
-                              {% if selected_category == category.id|stringformat:'i' %}active{% endif %}">
-                        {{ category.name }}
-                    </a>
+                    {% for category in category_tree %}
+                    <div class="category-group">
+                        <!-- 父分类 -->
+                        <div class="parent-category">
+                            <a href="{% url 'notebooks:list' %}?category={{ category.id }}"
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center
+                                      {% if selected_category == category.id|stringformat:'i' %}active{% endif %}">
+                                <div>
+                                    <i class="bi bi-folder-fill me-2 text-primary"></i>
+                                    <span class="fw-bold">{{ category.name }}</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-primary rounded-pill me-2">{{ category.total_notebook_count }}</span>
+                                    {% if category.children %}
+                                    <i class="bi bi-chevron-down category-toggle" data-target="subcategories-{{ category.id }}"></i>
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <!-- 子分类 -->
+                        {% if category.children %}
+                        <div class="subcategories collapse" id="subcategories-{{ category.id }}">
+                            {% for subcategory in category.children %}
+                            <a href="{% url 'notebooks:list' %}?category={{ subcategory.id }}"
+                               class="list-group-item list-group-item-action subcategory-item
+                                      {% if selected_category == subcategory.id|stringformat:'i' %}active{% endif %}">
+                                <i class="bi bi-folder me-2 text-secondary"></i>
+                                <span>{{ subcategory.name }}</span>
+                                <span class="badge bg-secondary rounded-pill ms-auto">{{ subcategory.notebook_count }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
                     {% endfor %}
                 </div>
 
@@ -341,6 +445,41 @@
 
 {% block extra_js %}
 <script>
+    // 分类下拉菜单功能
+    document.addEventListener('DOMContentLoaded', function() {
+        // 处理分类展开/收起
+        document.querySelectorAll('.category-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const targetId = this.dataset.target;
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement.classList.contains('show')) {
+                    targetElement.classList.remove('show');
+                    this.classList.remove('expanded');
+                } else {
+                    targetElement.classList.add('show');
+                    this.classList.add('expanded');
+                }
+            });
+        });
+        
+        // 如果当前选中的是子分类，自动展开对应的父分类
+        const selectedSubcategory = document.querySelector('.subcategory-item.active');
+        if (selectedSubcategory) {
+            const parentSubcategories = selectedSubcategory.closest('.subcategories');
+            if (parentSubcategories) {
+                parentSubcategories.classList.add('show');
+                const parentToggle = document.querySelector(`[data-target="${parentSubcategories.id}"]`);
+                if (parentToggle) {
+                    parentToggle.classList.add('expanded');
+                }
+            }
+        }
+    });
+
     // 删除笔记功能
     document.addEventListener('DOMContentLoaded', function() {
         const deleteButtons = document.querySelectorAll('.delete-notebook-btn');
