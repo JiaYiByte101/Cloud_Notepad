@@ -15,9 +15,18 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-your-secret-key-here')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+# 根据DEBUG模式设置ALLOWED_HOSTS
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    # 生产环境下的允许主机列表
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        '119.45.114.184', 
+    ]
 
 # Application definition
 INSTALLED_APPS = [
@@ -73,7 +82,7 @@ TEMPLATES = [
 
 # TinyMCE 配置
 TINYMCE_DEFAULT_CONFIG = {
-    'height': 400,
+    'height': '700',
     'width': 'auto',
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
@@ -99,67 +108,6 @@ TINYMCE_DEFAULT_CONFIG = {
     # 媒体插件配置
     'media_live_embeds': True,
     'media_filter_html': False,
-    
-    # 文件上传配置
-    'file_picker_callback': '''function(callback, value, meta) {
-        console.log('File picker called with meta:', meta);
-        
-        const input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        
-        if (meta.filetype === 'image') {
-            input.setAttribute('accept', 'image/*');
-        } else if (meta.filetype === 'media') {
-            input.setAttribute('accept', 'video/*,audio/*');
-        } else {
-            input.setAttribute('accept', 'image/*,video/*,audio/*');
-        }
-        
-        input.onchange = function() {
-            const file = this.files[0];
-            if (!file) return;
-            
-            const formData = new FormData();
-            formData.append('file', file);
-            
-            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
-            
-            fetch('/notebooks/upload/', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.location) {
-                    if (data.file_type === 'video') {
-                        const videoHtml = '<div class="media-container"><video controls style="max-width: 100%; height: auto;"><source src="' + data.location + '" type="' + (data.mime_type || 'video/mp4') + '">您的浏览器不支持视频播放。</video><div class="file-info">视频文件: ' + file.name + '</div></div>';
-                        tinymce.activeEditor.insertContent(videoHtml);
-                        callback('', {title: file.name});
-                    } else if (data.file_type === 'audio') {
-                        const audioHtml = '<div class="media-container"><audio controls style="width: 100%; max-width: 500px;"><source src="' + data.location + '" type="' + (data.mime_type || 'audio/mpeg') + '">您的浏览器不支持音频播放。</audio><div class="file-info">音频文件: ' + file.name + '</div></div>';
-                        tinymce.activeEditor.insertContent(audioHtml);
-                        callback('', {title: file.name});
-                    } else {
-                        callback(data.location, {
-                            title: file.name,
-                            alt: file.name
-                        });
-                    }
-                } else {
-                    alert('上传失败：' + (data.error || '未知错误'));
-                }
-            })
-            .catch(error => {
-                console.error('上传错误:', error);
-                alert('上传失败，请重试');
-            });
-        };
-        
-        input.click();
-    }''',
     
     # 自定义 CSS
     'content_css': [
@@ -204,10 +152,10 @@ TINYMCE_DEFAULT_CONFIG = {
                                 const imgHtml = '<img src="' + data.location + '" alt="' + file.name + '" style="max-width: 100%; height: auto;" />';
                                 editor.insertContent(imgHtml);
                             } else if (data.file_type === 'video') {
-                                const videoHtml = '<div class="media-container"><video controls style="max-width: 100%; height: auto;"><source src="' + data.location + '" type="' + (data.mime_type || 'video/mp4') + '">您的浏览器不支持视频播放。</video><div class="file-info">视频文件: ' + file.name + '</div></div>';
+                                const videoHtml = '<video controls style="max-width: 100%; height: auto;"><source src="' + data.location + '" type="' + (data.mime_type || 'video/mp4') + '"></video>';
                                 editor.insertContent(videoHtml);
                             } else if (data.file_type === 'audio') {
-                                const audioHtml = '<div class="media-container"><audio controls style="width: 100%; max-width: 500px;"><source src="' + data.location + '" type="' + (data.mime_type || 'audio/mpeg') + '">您的浏览器不支持音频播放。</audio><div class="file-info">音频文件: ' + file.name + '</div></div>';
+                                const audioHtml = '<audio controls style="width: 100%; max-width: 500px;"><source src="' + data.location + '" type="' + (data.mime_type || 'audio/mpeg') + '"></audio>';
                                 editor.insertContent(audioHtml);
                             }
                         } else {
@@ -310,7 +258,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# 静态文件存储配置
+# 在生产环境中禁用压缩以避免source map问题
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
@@ -392,11 +343,9 @@ STORAGES = {
         "BACKEND": "cloud_notepad.storage_backends.TencentCOSStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
-
-print("✅ DEFAULT_FILE_STORAGE =", DEFAULT_FILE_STORAGE, file=sys.stderr)
 
 # === 文件上传配置 ===
 # 数据上传最大内存大小 (100MB)

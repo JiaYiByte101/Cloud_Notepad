@@ -3,6 +3,7 @@ from django.apps import AppConfig
 class StorageConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'storage'
+    verbose_name = "存储管理"
 
     def ready(self):
         from django.conf import settings
@@ -15,9 +16,8 @@ class StorageConfig(AppConfig):
             module = import_module(module_path)
             storage_class = getattr(module, class_name)
 
-            # 重新绑定 Django 的 default_storage 实例
+            # 重新绑定 Django 的 default_storage 实例，即绑定腾讯云COS存储
             storages._storages.clear()
             storages._storages["default"] = storage_class()
 
             import sys
-            print(f"✅ 强制绑定 default_storage 为 {storage_class}", file=sys.stderr)

@@ -26,6 +26,12 @@ class Profile(models.Model):
         storage=default_storage  # 明确指定使用默认存储（云存储）
     )
 
+    class Meta:
+        verbose_name = "用户档案"
+        verbose_name_plural = "用户档案"
+        ordering = ['user__username']
+        unique_together = ('user', 'avatar')
+
     def __str__(self):
         return f'{self.user.username} 的个人资料'
     

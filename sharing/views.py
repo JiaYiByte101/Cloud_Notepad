@@ -4,13 +4,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Q
-from django.utils import timezone # Import timezone for 5-minute rule later
-from django.http import JsonResponse # For AJAX responses
-from django.views.decorators.http import require_POST # For cancel_comment
+from django.utils import timezone 
+from django.http import JsonResponse 
+from django.views.decorators.http import require_POST
 from notebooks.models import Notebook
 from .models import Like, Comment, CommentLike
 from .forms import CommentForm
-from .utils import check_sensitive_words # Import aħna l-funzjoni l-ġdida
+from .utils import check_sensitive_words
 from django.http import JsonResponse
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -95,7 +95,6 @@ def view_shared_note(request, notebook_id):
         instance_to_edit = None
         
         if comment_id:
-            # This is a rewrite attempt
             instance_to_edit = get_object_or_404(Comment, id=comment_id, user=request.user, notebook=notebook)
         
         comment_form = CommentForm(request.POST, instance=instance_to_edit)
@@ -103,7 +102,7 @@ def view_shared_note(request, notebook_id):
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             
-            if not instance_to_edit:  # If it's a new comment
+            if not instance_to_edit: 
                 comment.notebook = notebook
                 comment.user = request.user
                 if parent_comment_id:
@@ -123,10 +122,9 @@ def view_shared_note(request, notebook_id):
                 else:
                     messages.success(request, '评论发表成功！')
             
-            comment.save()  # Save new or updated comment
+            comment.save()
             return redirect('sharing:view_note', notebook_id=notebook.id)
         else:
-            # Form is not valid, errors will be displayed by the template
             if instance_to_edit:
                 messages.error(request, "评论修改失败，请检查表单错误。")
             else:

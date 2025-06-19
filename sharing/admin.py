@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Like, Comment # 导入 Comment 模型
+from .models import Like, Comment, CommentLike # 导入 Comment 模型
 
 
 @admin.register(Like)
@@ -25,3 +25,14 @@ class CommentAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         # 优化查询，预取关联对象
         return super().get_queryset(request).select_related('user', 'notebook', 'parent_comment')
+
+
+@admin.register(CommentLike)
+class CommentLikeAdmin(admin.ModelAdmin):
+    list_display = ('comment', 'user', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('comment__content', 'user__username')
+    date_hierarchy = 'created_at'
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('comment', 'user')

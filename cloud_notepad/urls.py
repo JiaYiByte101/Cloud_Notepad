@@ -19,6 +19,5 @@ urlpatterns = [
     path('collaboration/', include('collaboration.urls')),
 ]
 
-# 添加媒体文件URL配置（仅在开发环境中）
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

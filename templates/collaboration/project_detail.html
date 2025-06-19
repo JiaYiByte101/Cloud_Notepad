@@ -103,19 +103,6 @@
           <a href="{% url 'collaboration:invite_member' project.id %}" class="btn btn-outline-success">
             <i class="fas fa-user-plus"></i> 邀请成员
           </a>
-          <div class="btn-group">
-            <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-download"></i> 下载项目
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_pdf' project.id %}">
-                <i class="fas fa-file-pdf"></i> PDF格式
-              </a></li>
-              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_html' project.id %}">
-                <i class="fas fa-file-code"></i> HTML格式
-              </a></li>
-            </ul>
-          </div>
           <a href="{% url 'collaboration:delete_project' project.id %}" class="btn btn-outline-danger">
             <i class="fas fa-trash"></i> 删除项目
           </a>
@@ -125,19 +112,6 @@
           <a href="#" class="btn btn-outline-danger" onclick="confirmLeaveProject(event, {{ project.id }}, {{ user.id }})">
             <i class="fas fa-sign-out-alt"></i> 退出项目
           </a>
-          <div class="btn-group">
-            <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-download"></i> 下载项目
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_pdf' project.id %}">
-                <i class="fas fa-file-pdf"></i> PDF格式
-              </a></li>
-              <li><a class="dropdown-item" href="{% url 'collaboration:download_project_html' project.id %}">
-                <i class="fas fa-file-code"></i> HTML格式
-              </a></li>
-            </ul>
-          </div>
         </div>
         {% endif %}
       </div>
@@ -188,13 +162,13 @@
                   </a>
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fas fa-download"></i>
+                      <i class="fas fa-download"></i> 导出
                     </button>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="{% url 'notebooks:download_pdf' notebook.id %}">
                         <i class="fas fa-file-pdf"></i> PDF格式
                       </a></li>
-                      <li><a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}">
+                      <li><a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}" download>
                         <i class="fas fa-file-code"></i> HTML格式
                       </a></li>
                     </ul>

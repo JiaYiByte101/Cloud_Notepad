@@ -17,7 +17,6 @@ from .models import CollaborationProject, CollaborationMember, CollaborationLock
 from notebooks.models import Notebook
 from friends.models import Friendship, Message
 
-# Create your views here.
 
 # 多人协作项目视图
 @login_required

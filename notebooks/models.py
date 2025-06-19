@@ -1,5 +1,4 @@
 # notebooks/models.py
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -68,21 +67,3 @@ class Notebook(models.Model):
         """增加浏览量"""
         self.view_count += 1
         self.save(update_fields=['view_count'])
-
-
-class Attachment(models.Model):
-    """笔记附件模型"""
-    notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE, related_name="attachments",
-                                 verbose_name="所属笔记")
-    file = models.FileField(upload_to='attachments/%Y/%m/', verbose_name="文件")
-    file_name = models.CharField(max_length=255, verbose_name="文件名")
-    file_size = models.IntegerField(verbose_name="文件大小(字节)")
-    upload_time = models.DateTimeField(auto_now_add=True, verbose_name="上传时间")
-
-    class Meta:
-        verbose_name = "附件"
-        verbose_name_plural = "附件"
-        ordering = ['-upload_time']
-
-    def __str__(self):
-        return self.file_name

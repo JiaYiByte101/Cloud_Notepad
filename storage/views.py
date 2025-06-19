@@ -18,10 +18,8 @@ from notebooks.models import Notebook, Category, Tag
 @login_required
 def storage_home(request):
     """存储页面首页"""
-    # 获取用户的云版本备份记录
     cloud_backups = CloudBackupRecord.objects.filter(user=request.user).order_by('-created_at')
     
-    # 获取备份统计信息
     try:
         from .backends.cloud import CloudBackupBackend
         cloud_backend = CloudBackupBackend()

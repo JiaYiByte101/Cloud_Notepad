@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 class FriendRequest(models.Model):
+    """好友请求模型"""
     STATUS_CHOICES = (
         ('pending', '待处理'),
         ('accepted', '已接受'),
@@ -16,25 +17,35 @@ class FriendRequest(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
+        verbose_name = "好友请求"
+        verbose_name_plural = "好友请求"
         unique_together = ('sender', 'receiver')
         ordering = ['-created_at']
     
     def __str__(self):
         return f"{self.sender.username} -> {self.receiver.username} ({self.get_status_display()})"
 
+
+
 class Friendship(models.Model):
+    """好友关系模型"""
     user = models.ForeignKey(User, related_name='friendships', on_delete=models.CASCADE)
     friend = models.ForeignKey(User, related_name='+', on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     
     class Meta:
+        verbose_name = "好友关系"
+        verbose_name_plural = "好友关系"   
         unique_together = ('user', 'friend')
         ordering = ['-created_at']
     
     def __str__(self):
         return f"{self.user.username} - {self.friend.username}"
 
+
+
 class Message(models.Model):
+    """私信模型"""
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
     content = models.TextField()
@@ -42,10 +53,14 @@ class Message(models.Model):
     is_read = models.BooleanField(default=False)
     
     class Meta:
+        verbose_name = "私信"
+        verbose_name_plural = "私信"
         ordering = ['created_at']
     
     def __str__(self):
         return f"{self.sender.username} -> {self.receiver.username} ({self.created_at.strftime('%Y-%m-%d %H:%M')})"
+
+
 
 class ChatGroup(models.Model):
     """群聊模型"""
@@ -79,11 +94,12 @@ class ChatGroup(models.Model):
         """获取群成员数量"""
         return self.members.filter(is_active=True).count()
 
+
+
 class ChatGroupMember(models.Model):
     """群聊成员模型"""
     ROLE_CHOICES = (
         ('owner', '群主'),
-        ('admin', '管理员'),
         ('member', '成员'),
     )
     
@@ -102,6 +118,8 @@ class ChatGroupMember(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.group.name} ({self.get_role_display()})"
+
+
 
 class GroupMessage(models.Model):
     """群聊消息模型"""
@@ -128,6 +146,9 @@ class GroupMessage(models.Model):
     def __str__(self):
         sender_name = self.sender.username if self.sender else "系统"
         return f"{self.group.name} - {sender_name}: {self.content[:50]}"
+
+
+
 
 class MessageReadStatus(models.Model):
     """消息已读状态模型"""

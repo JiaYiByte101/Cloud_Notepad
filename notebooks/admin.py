@@ -1,7 +1,7 @@
 # notebooks/admin.py
 
 from django.contrib import admin
-from .models import Category, Tag, Notebook, Attachment
+from .models import Category, Tag, Notebook
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,13 +17,7 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Notebook)
 class NotebookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'user', 'category', 'created_at', 'updated_at', 'is_public', 'is_featured']
+    list_display = ['uuid', 'title', 'user', 'category', 'created_at', 'updated_at', 'is_public', 'is_featured']
     list_filter = ['user', 'category', 'is_public', 'is_featured', 'created_at', 'updated_at']
     search_fields = ['title', 'content']
     filter_horizontal = ['tags']
-
-@admin.register(Attachment)
-class AttachmentAdmin(admin.ModelAdmin):
-    list_display = ('notebook', 'file_name', 'file_size', 'upload_time')
-    search_fields = ('file_name', 'notebook__title')
-    list_filter = ('upload_time',)

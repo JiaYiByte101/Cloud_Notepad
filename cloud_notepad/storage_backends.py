@@ -120,12 +120,6 @@ class TencentCOSStorage(Storage):
             return None
 
     def path(self, name):
-        """
-        COS存储不支持本地路径，但为了兼容性，我们返回一个虚拟路径
-        注意：这个路径不能用于实际的文件操作
-        """
-        # 对于云存储，我们不能提供真实的本地路径
-        # 但某些Django组件可能会调用这个方法，所以我们返回一个标识性的路径
         return f"cos://{self.bucket}/{name}"
 
     def get_available_name(self, name, max_length=None):

@@ -30,7 +30,6 @@ def format_message_time(dt):
 def get_user_unread_group_messages_count(user):
     """
     获取用户的群聊未读消息数量
-    这个函数提供更准确的未读消息统计
     """
     # 获取用户参与的所有活跃群聊
     user_groups = ChatGroup.objects.filter(
@@ -399,7 +398,7 @@ def group_chat_detail(request, group_id):
     
     context = {
         'group': group,
-        'messages_list': messages_list,  # 修改变量名避免冲突
+        'messages_list': messages_list,
         'members': members,
         'membership': membership,
     }
@@ -519,7 +518,7 @@ def group_members(request, group_id):
 def refresh_group_read_status(request):
     """
     刷新用户的群聊消息已读状态
-    这是一个调试/修复功能，用于解决已读状态不同步的问题
+    (一个调试/修复功能，用于解决已读状态不同步的问题)
     """
     if request.method == 'POST':
         # 获取用户参与的所有群聊

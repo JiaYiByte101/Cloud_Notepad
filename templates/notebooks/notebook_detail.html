@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}">
+                            <a class="dropdown-item" href="{% url 'notebooks:download_html' notebook.id %}" download>
                                 <i class="far fa-file-code me-2"></i> HTML格式
                             </a>
                         </li>
@@ -210,28 +210,7 @@
         </div>
     </div>
 
-    {% if notebook.attachments.all %}
-    <div class="card mt-4">
-        <div class="card-header">
-            <h5 class="mb-0">附件</h5>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                {% for attachment in notebook.attachments.all %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="fas fa-file"></i>
-                        <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file_name }}</a>
-                    </div>
-                    <span class="badge bg-primary rounded-pill">
-                        {{ attachment.file_size|filesizeformat }}
-                    </span>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-    {% endif %}
+
     
     {% if notebook.collaboration_projects.exists %}
     <div class="card mt-4 collaboration-section">

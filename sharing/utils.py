@@ -2,7 +2,7 @@
 import re
 import jieba
 
-# 敏感词库 - 分类存储
+# 敏感词库 - 分类存储（实现过于朴素，后续考虑AI过滤）
 SENSITIVE_WORDS = {
     # 侮辱性词汇
     'insult': [
@@ -63,7 +63,12 @@ def normalize_text(text):
 def check_sensitive_words(content):
     """
     检查内容中是否包含敏感词
-    返回值：如果包含敏感词，返回 (True, 检测到的敏感词); 否则返回 (False, None)
+
+    Args:
+        content: 待检查的文本内容
+        
+    Returns:
+         (True, 检测到的敏感词); 否则返回 (False, None)
     """
     if not content or len(content.strip()) == 0:
         return False, None

@@ -5,7 +5,6 @@ import json
 def get_access_token():
     """
     使用应用API Key，应用Secret Key 获取access_token
-    使用与accounts应用相同的百度文心一言API密钥
     """
     url = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=BoJ2OkBmLJxxFTwsOW56GUpf&client_secret=oJB9brStNnvEdSQxoljotrPgM0spl3YD"
 
@@ -35,7 +34,7 @@ def polish_text(text):
         "messages": [
             {
                 "role": "user",
-                "content": f"请帮我润色以下文本，使其更加流畅、专业。保持原意不变，只改善语言表达。直接返回润色后的文本，不要有任何额外的说明。\n\n文本：{text}"
+                "content": f"请帮我润色以下文本，使其更加流畅、专业。保持原意不变，只改善语言表达。直接返回润色后的文本，不要有任何额外的说明！\n\n文本：{text}"
             }
         ]
     })
@@ -73,7 +72,7 @@ def configure_pdf_fonts():
     registered_fonts = []
     
     try:
-        # 方法1: 使用ReportLab内置的CID字体（优先级从高到低）
+        # 使用ReportLab内置的CID字体（优先级从高到低）
         cid_fonts = ['STSong-Light', 'MSung-Light', 'HeiseiMin-W3', 'HeiseiKakuGo-W5']
         
         for font_name in cid_fonts:
@@ -88,13 +87,13 @@ def configure_pdf_fonts():
             except Exception as e:
                 logger.warning(f"CID字体 {font_name} 注册失败: {e}")
         
-        # 方法2: 尝试注册系统中的中文字体
+        # 尝试注册系统中的中文字体
         font_configs = [
             ('/usr/share/fonts/truetype/wqy/wqy-microhei.ttc', 'WenQuanYi-Micro-Hei'),
             ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', 'WenQuanYi-Zen-Hei'),
-            ('/System/Library/Fonts/PingFang.ttc', 'PingFang-SC'),  # macOS
-            ('/Windows/Fonts/msyh.ttc', 'Microsoft-YaHei'),  # Windows
-            ('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 'DejaVu-Sans'),  # 备选
+            ('/System/Library/Fonts/PingFang.ttc', 'PingFang-SC'), 
+            ('/Windows/Fonts/msyh.ttc', 'Microsoft-YaHei'),
+            ('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 'DejaVu-Sans'), 
         ]
         
         for font_path, font_name in font_configs:

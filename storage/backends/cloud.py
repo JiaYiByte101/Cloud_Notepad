@@ -11,7 +11,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CloudBackupBackend:
-    """云备份后端，专注于版本控制功能"""
+    """云备份后端"""
     
     def __init__(self):
         self.storage = default_storage
@@ -44,16 +44,16 @@ class CloudBackupBackend:
                     'email': user.email,
                     'backup_date': timezone.now().isoformat(),
                     'notebook_count': notebooks.count(),
-                    'version': '2.0',  # 新版本标识，支持UUID
+                    'version': '2.0',  # 支持UUID的新版本的版本控制标识
                 }
                 zipf.writestr('metadata.json', json.dumps(metadata, indent=4, ensure_ascii=False))
                 
-                # 添加笔记数据（包含UUID）
+                # 添加笔记数据
                 notebooks_data = []
                 for notebook in notebooks:
                     notebook_data = {
                         'uuid': str(notebook.uuid),  # 使用UUID作为主要标识符
-                        'id': notebook.id,  # 保留ID用于兼容性
+                        'id': notebook.id,
                         'title': notebook.title,
                         'content': notebook.content,
                         'created_at': notebook.created_at.isoformat(),
@@ -106,7 +106,6 @@ class CloudBackupBackend:
             cloud_url = self.storage.url(saved_path)
             file_size = os.path.getsize(temp_path)
             
-            # 清理临时文件
             os.unlink(temp_path)
             
             logger.info(f"云版本备份创建成功: {saved_path}")
@@ -129,8 +128,7 @@ class CloudBackupBackend:
     
     def restore_version_backup(self, user, cloud_path):
         """
-        从云版本备份中选择性恢复数据
-        基于UUID匹配：存在于版本文件中的笔记恢复到版本状态，不存在的笔记保持不动
+        从云版本备份中选择性恢复数据（基于UUID匹配：存在于版本文件中的笔记恢复到版本状态，不存在的笔记保持不动）
         
         Args:
             user: 用户对象
@@ -157,7 +155,7 @@ class CloudBackupBackend:
                 
             # 从云端下载文件
             try:
-                # 直接使用COS客户端下载文件，避免Django存储接口的问题
+                # 直接使用COS客户端下载文件，避免Django存储接口的问题，否则会导致无法识别云端保存的ZIP文件
                 response = self.storage.client.get_object(
                     Bucket=self.storage.bucket,
                     Key=cloud_path
@@ -167,7 +165,7 @@ class CloudBackupBackend:
                 with open(temp_path, 'wb') as local_file:
                     body = response['Body']
                     
-                    # 分块读取以避免内存问题
+                    # 分块读取
                     while True:
                         chunk = body.read(8192)  # 8KB chunks
                         if not chunk:
@@ -195,7 +193,7 @@ class CloudBackupBackend:
                 with zipfile.ZipFile(temp_path, 'r') as test_zipf:
                     file_list = test_zipf.namelist()
                     
-                    # 检查必要的文件是否存在
+                    # 检查必要的JSON文件是否存在
                     required_files = ['metadata.json', 'notebooks.json', 'categories.json', 'tags.json']
                     missing_files = [f for f in required_files if f not in file_list]
                     if missing_files:
@@ -220,7 +218,6 @@ class CloudBackupBackend:
             
             # 解析备份文件
             with zipfile.ZipFile(temp_path, 'r') as zipf:
-                # 检查版本
                 metadata_json = zipf.read('metadata.json').decode('utf-8')
                 metadata = json.loads(metadata_json)
                 backup_version = metadata.get('version', '1.0')
@@ -283,9 +280,8 @@ class CloudBackupBackend:
                 if notebook_data.get('category'):
                     category = category_map.get(notebook_data['category'])
 
-                # 根据版本处理UUID
+                # 处理UUID，如果存在UUID，则更新现有笔记到版本状态，否则创建新笔记
                 if backup_version >= '2.0' and 'uuid' in notebook_data:
-                    # 新版本：使用UUID查找
                     try:
                         existing_notebook = Notebook.objects.get(
                             user=user,
@@ -326,7 +322,7 @@ class CloudBackupBackend:
                         
                         restored_count += 1
                 else:
-                    # 旧版本：使用标题查找（兼容性处理）
+                    # 旧版本：使用标题查找（兼容性处理，可以考虑删除，同时删除数据库相关存储字段）
                     try:
                         existing_notebook = Notebook.objects.get(
                             user=user,
@@ -406,7 +402,7 @@ class CloudBackupBackend:
 
     def get_storage_usage(self, user):
         """
-        获取用户的存储使用情况
+        获取用户的存储使用情况，返回前端进行展示
         
         Args:
             user: 用户对象
